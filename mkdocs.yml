@@ -1,3 +1,4 @@
 site_name: Sublime 官方文档
 theme:
-  name: material
+  # name: material 
+  name : readthedocs
