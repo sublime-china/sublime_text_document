@@ -2,7 +2,7 @@
 
 [DOCUMENTATION](index)[TOC](themes#toc)[TOP](themes#)
 
-Themes
+主题
 
 Version:  
 [Dev](themes#ver-dev)[3.2](themes#ver-3.2)[3.1](themes#ver-3.1)[3.0](themes#ver-3.0)
