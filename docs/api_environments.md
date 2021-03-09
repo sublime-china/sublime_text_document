@@ -2,12 +2,12 @@
 
 [DOCUMENTATION](index)[TOC](api_environments#toc)[TOP](api_environments#)
 
-API Environments
+API 环境变量
 
 Version:  
 [Dev](api_environments#ver-dev)[3.2](api_environments#ver-3.2)[3.1](api_environments#ver-3.1)[3.0](api_environments#ver-3.0)
 
-Plugins in Sublime Text are Python files located in the root of a[package](packages). The following document describes the Python environment the plugins are run in.
+ Sublime Text 中的插件是由 在[package](包)根下的python文件。以下文档描述了运行插件的Python环境。
 
 *   [Overview](api_environments#overview)
 *   [Python Version](api_environments#python_version)
@@ -17,31 +17,31 @@ Plugins in Sublime Text are Python files located in the root of a[package](packa
 
 ## Overview
 
-Sublime Text runs plugins in a separate process from the main editor UI. This process runs an executable namedplugin\_host.
+Sublime Text在主编辑器UI的单独进程中运行插件。此进程运行名为 plugin\_host 的可执行文件。
 
-Running plugins in a separate process ensures the entire editor will not crash due to a poorly written plugin. If a plugin does cause theplugin\_hostto crash, a user may still save their work before re-starting Sublime Text.
+在单独的进程中运行插件可确保整个编辑器不会因插件编写不当而崩溃。如果插件确实导致 plugin\_host 崩溃，用户仍然可以在重新启动Sublime Text之前保存他们的工作。
 
-All plugins are run in a singleplugin\_hostprocess, and share a single Python environment. Each plugin is loaded as a sub-module of a module named after the package. For example, a plugin in the fileMyPackage/my\_plugin.pywill be loaded as the Python module`MyPackage.my_plugin`.
+所有插件都在单个 plugin\_host 进程中运行，并共享单个Python环境。每个插件都作为以包命名的模块的子模块加载。例如，在MyPackage/my\_plugin.py 中的插件将作为Python模块 `MyPackage.my_plugin`加载。
 
-Theplugin\_hostprocess contains an embedded version of the Python programming language, and exposes an[API](api_reference)to plugins. Theplugin\_hostexecutable always uses its own embedded version of Python, even if the end-user has Python installed on their machine.
+plugin_host 进程包含Python编程语言的嵌入式版本，并暴露 [API](api_reference)给插件。即使最终用户在其计算机上安装了Python，该文件始终使用其自己的嵌入式版本的Python。
 
 ## Python Version
 
-By default, all plugins are run using Python 3.3.6.*Sublime Text‘s build of Python 3.3.6 includes a handful of patches backported from Python 3.4 to fix issues with unicode paths and crashes with the`ctypes`module on 64bit versions of Windows.*
+默认情况下，所有插件均使用Python 3.3.6运行。* Sublime Text的Python 3.3.6版本包括从Python 3.4返回的一些补丁，用于修复64位版本的Windows上unicode路径和 `ctypes`模块崩溃的问题。*
 
-Starting in build 4050, plugins may also be run using Python 3.8. Python 3.8 features many improvements to the language, better performance and continued support and bug fixes from the Python Software Foundtion.4050
+从内部版本4050开始，插件也可以使用Python 3.8运行。Python 3.8对语言进行了许多改进，具有更好的性能，并从Python软件基金会获得了持续的支持和错误修复。4050
 
-### SELECTING THE PYTHON VERSION4050
+### 选择 PYTHON 版本4050
 
-To provide for backward compatibility, Sublime Text 4050 will continue to run all plugins using Python 3.3.
+为了提供向下兼容性，Sublime Text 4050将继续在 Python 3.3 上运行所有插件。
 
-Any package that wishes to use Python 3.8 must create a file named.python-versionin the root of the packages. This file should contain either the text`3.3`or`3.8`to select the version of Python to use.*If a file named.python-versionis not present, or it contains any value other than`3.8`, then Python 3.3 will be used.*
+任何希望使用Python 3.8的包都必须在包的根目录中创建一个名为.python-version的文件。此文件应包含文本 `3.3` 或 `3.8` 以选择要使用的Python版本。* 如果文件名为。python-versionis不存在，或者它包含除 `3.8` 以外的任何值，则将使用Python 3.3。*
 
-All plugins in a package will use the same version of Python.*Any package with a.python-versionfile containing`3.8`loaded in older builds of Sublime Text will try to run the plugins using Python 3.3.*
+包中的所有插件都将使用相同版本的Python。项目完结，系统自动填充内容包含在旧版本的Sublime Text中加载的 `3.8` 的python-versionfile将尝试使用Python 3.3运行插件。*
 
-## Modules
+## 模块
 
-The Python environment withinplugin\_hostcontains all of the modules in[The Python Standard Library](https://docs.python.org/3.3/library/), except for:
+处于plugin\_host 的 Python environment 包含了所有的[Python 标准库](https://docs.python.org/3.3/library/), 除了:
 
 *   audioop
 *   cryptLINUX
@@ -63,8 +63,8 @@ The Python environment withinplugin\_hostcontains all of the modules in[The Pyth
 *   turtle
 *   wave
 
-## Pre-Installed Packages4050
+## 预装的包4050
 
-The following the packages are pre-installed in both the Python 3.3 and 3.8 environments:
+以下包在Python 3.3 和 3.8 环境变量里都预装了：
 
-*   [certifi](https://pypi.org/project/certifi/): A collection of SSL root certs for use with urllib
+*   [certifi](https://pypi.org/project/certifi/): urllib使用的一组SSL root 证书
