@@ -2,11 +2,11 @@
 
 [DOCUMENTATION](index)[TOC](settings#toc)[TOP](settings#)
 
-Settings
+设置
 
-Sublime Text has many different settings to customize its behavior. Settings are changed by editing text files: while this is a little trickier than using a GUI, you're rewarded with a flexible system.
+Sublime Text有许多不同的设置来自定义其行为。通过编辑文本文件来更改设置: 虽然这比使用图形用户界面要复杂一点，但你会得到一个灵活的系统。
 
-Settings are accessed via thePreferences![▶](https://www.sublimetext.com/images/right.svg)Settingsmenu item. The left-hand pane contains all of the default settings, along with a description of each. The right-hand pane is where customization can be saved.
+通过首选项访问![▶](images/right.svg) 设置菜单项目。左侧窗格包含所有默认设置以及每个设置的说明。右侧窗格可保存自定义。
 
 *   [Categories](settings#categories)
 *   [Settings Files](settings#settings_files)
@@ -17,12 +17,13 @@ Settings are accessed via thePreferences![▶](https://www.sublimetext.com/image
 *   [Troubleshooting](settings#troubleshooting)
 
 ## Categories
+ 
+分类 
+Sublime Text 中的设置 组织成为三个分类。 默认设置文件将设置组织成几个部分，以便于区分。
 
-The settings in Sublime Text are organized into three categories. The default settings file organizes the settings into sections for easier distinction.
-
-*   **Editor Settings**: These settings affect the behavior and functionality presented when editing text in a file. Examples include thefont\_face,tab\_sizeandspell\_check. These settings are presented in the first section of the default settings file.
-*   **User Interface Settings**: These settings affect the general user interface, across all open windows. Examples include thetheme,animation\_enabledandoverlay\_scroll\_bars. These settings are presented in the second section of the default settings file.
-*   **Application Behavior Settings**: These settings affect the behavior of the application, across all open windows. Examples include thehot\_exit,index\_filesandignored\_packages. These settings are presented in the third section of the default settings file.
+*   **编辑设置**: 这些设置会影响编辑文件中的文本时呈现的行为和功能。示例包括 font\_face, tab\_size 和 spell\_check。这些设置显示在默认设置文件的第一部分中。 
+*   **用户界面设置**: 这些设置会影响所有打开的窗口的常规用户界面。示例包括主题、动画启用和覆盖滚动条。这些设置显示在默认设置文件的第二部分。 
+*   **应用行为设置**: 这些设置会在所有打开的窗口中影响应用程序的行为。示例包括 hot\_exit、index\_files 和 ignored\_packages。这些设置显示在默认设置文件的第三部分。
 
 *The User Interface Settings and Application Behavior Settings are global to the entire application and can not be controlled by a syntax specific settings file, nor thesettingskey in a.sublime-project.*
 
@@ -38,13 +39,13 @@ Settings files are consulted in this order:
 6.  **Packages/User/**.sublime-settings**
 7.  **
 
-In general, you should place your settings inPackages/User/Preferences.sublime-settings, which is opened in the right-hand pane when selecting the menu itemPreferences![▶](https://www.sublimetext.com/images/right.svg)Settings. If you want to specify settings for a certain file type, for example, Python, you should place them inPackages/User/Python.sublime-settings. This can be accessed via the right-hand pane when a Python file is open, and the menu itemPreferences![▶](https://www.sublimetext.com/images/right.svg)Settings – Syntax Specificis selected.
+In general, you should place your settings inPackages/User/Preferences.sublime-settings, which is opened in the right-hand pane when selecting the menu itemPreferences![▶](images/right.svg)Settings. If you want to specify settings for a certain file type, for example, Python, you should place them inPackages/User/Python.sublime-settings. This can be accessed via the right-hand pane when a Python file is open, and the menu itemPreferences![▶](images/right.svg)Settings – Syntax Specificis selected.
 
 ## Syntax-Specific Settings
 
 Settings may be specified on a per-syntax basis. Common uses for this are to have different indentation settings or the color scheme vary by file type.
 
-You can edit the settings for the syntax of the current file by selecting thePreferences![▶](https://www.sublimetext.com/images/right.svg)Settings – Syntax Specificmenu item.
+You can edit the settings for the syntax of the current file by selecting thePreferences![▶](images/right.svg)Settings – Syntax Specificmenu item.
 
 *Note that only Editor Settings can be specified in syntax-specific settings.*
 
@@ -56,11 +57,13 @@ Settings can be set on a per-project basis, details are in the[Project Documenta
 
 ## Distraction Free Settings
 
-[Distraction Free Mode](distraction_free)has an additional settings file applied (Distraction Free.sublime-settings). You can place file settings in here to have them only apply when in Distraction Free Mode – access it from thePreferences![▶](https://www.sublimetext.com/images/right.svg)Settings – Distraction Freemenu item.
+[Distraction Free Mode](distraction_free)has an additional settings file applied (Distraction Free.sublime-settings). You can place file settings in here to have them only apply when in Distraction Free Mode – access it from thePreferences![▶](images/right.svg)Settings – Distraction Freemenu item.
 
 ## Changing Settings with a Key Binding
 
-Thetoggle\_settingcommand can be used to toggle a setting. For example, to make a key binding that toggles theword\_wrapsetting on the current file, you can use (inPreferences![▶](https://www.sublimetext.com/images/right.svg)Key Bindings):
+toggle\_setting 命令可用于切换设置。例如，要创建一个键绑定来切换当前文件的 word\_wrap 设置，您可以使用
+
+ (在首选项[▶](images/right.svg)快捷键设置):
 
 ~~~
 {
@@ -74,7 +77,7 @@ Thetoggle\_settingcommand can be used to toggle a setting. For example, to make 
 
 ~~~
 
-Theset\_settingcommand can be used to set a setting to a specific value. For example, this key binding makes the current file use the Cobalt color scheme:
+set\_settings 命令可用于将设置设置为特定值。例如，此键绑定使当前文件使用钴色方案:
 
 ~~~
 {
@@ -89,10 +92,10 @@ Theset\_settingcommand can be used to set a setting to a specific value. For exa
 
 ~~~
 
-The settings modified here are buffer specific settings: they override any settings placed in a settings file, but apply to the current file only.
+此处修改的设置是特定于缓冲区的设置: 它们覆盖设置文件中的所有设置，但仅应用于当前文件。
 
-## Troubleshooting
+## 故障排除
 
-As settings can be specified in several different places, sometimes in can be helpful to view the applied setting that's actually being used by the current file. You can do this by using the console:
+由于可以在多个不同的位置指定设置，因此有时可以帮助查看当前文件实际使用的应用设置。您可以使用控制台执行此操作:
 
 `view.settings().get('font_face')`
