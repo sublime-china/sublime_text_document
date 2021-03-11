@@ -2,11 +2,11 @@
 
 [DOCUMENTATION](index)[TOC](vintage#toc)[TOP](vintage#)
 
-Vintage Mode
+Vintage Mode 复古模式
 
-Vintage is a vi mode editing package for Sublime Text. It allows you to combine vi's command mode with Sublime Text's features, including multiple selections.
+Vintage是一个用于Sublime Text的vi模式编辑包。它允许您将vi的命令模式与Sublime Text的功能相结合，包括多种选择。
 
-Vintage mode is developed in the open, and patches are more than welcome. If you'd like to contribute, details are in the[GitHub repo](https://github.com/sublimehq/Vintage).
+复古模式是公开开发的，补丁是非常受欢迎的。如果你想贡献参见[GitHub repo](https://github.com/sublimehq/Vintage).
 
 *   [Enabling Vintage](vintage#enabling_vintage)
 *   [What’s Included](vintage#included)
@@ -16,39 +16,38 @@ Vintage mode is developed in the open, and patches are more than welcome. If you
 *   [Ctrl Keys](vintage#ctrl_keys)
 *   [Ex Mode](vintage#ex_mode)
 
-## Enabling Vintage
+## 启用
+默认情况下，通过 ignored\_packages 设置禁用Vintage。如果您从被忽略的包列表中删除 `"Vintage"`，您将能够使用vi键进行编辑:
 
-Vintage is disabled by default, via theignored\_packagessetting. If you remove`"Vintage"`from the list of ignored packages, you'll be able to edit with vi keys:
+1.  选择首选项 ![▶](images/right.svg)设置菜单项
+2.  编辑 ignored\_packages setting, 改变:`"ignored_packages": ["Vintage"]` 到:`"ignored_packages": []` 设置 然后保存文件.
+3.  复古模式启用了 – 你会看到  "INSERT MODE" 列在状态栏上
 
-1.  Select thePreferences![▶](images/right.svg)Settingsmenu item
-2.  Edit theignored\_packagessetting, changing it from:`"ignored_packages": ["Vintage"]`to:`"ignored_packages": []`now save the file.
-3.  Vintage mode is now enabled – you'll see "INSERT MODE" listed in the status bar
-
-Vintage starts in insert mode by default. This can be changed by adding the following setting to your user settings:
+默认情况下，Vintage以插入模式开始。可以通过在用户设置中添加以下设置来更改此设置:
 
 ~~~
 "vintage_start_in_command_mode": true
 ~~~
 
-## What’s Included
+## 包含什么
 
-Vintage includes most basic actions:d(delete),y(copy),c(change),gu(lower case),gU(upper case),g~(swap case),g?(rot13),(indent).
+Vintage包括最基本的动作: d (删除) 、y (复制) 、c (更改) 、gu (小写) 、gU (大写) 、g ~ (交换大小写) 、g？(第13页)，(缩进)。
 
-It also includes many motions, includingl,h,j,k,W,w,e,E,b,B,alt+w(move by sub-words),alt+W(move backwards by sub-words),$,^,%,0,G,gg,f,F,t,T,^f,^b,H,M, andL.
+它还包括许多动作，包括l、h、j、k、W、w、e、E、b、B、alt + w (子词移动)，alt + W (通过子词向后移动)，$，^，%，0，G，gg，f，F，t，T，^ f，^ b，H，M，和l。
 
-Text objects are supported, including words, quotes, brackets and tags.
+支持文本对象，包括单词、引号、括号和标签。
 
-Repeat (.) is in there, as is specifying counts for commands and motions. Registers are supported, as are macros and bookmarks. Many other miscellaneous commands are supported too, such and\*,/,n,N,s,Sand more.
+重复 (.) 在那里，就像指定命令和动作的计数一样。支持寄存器，宏和书签也是如此。也支持许多其他杂项命令，例如 \ * 、/、n、N、s、Sand更多。
 
-## What’s Not
+## 不做什么
 
-Insert mode is regular Sublime Text editing, with the usual Sublime Text key bindings: vi insert mode key bindings are not emulated.
+插入模式是常规的 Sublime Text 编辑，具有通常的 Sublime Text 键绑定: vi插入模式键绑定不被模拟。
+除了通过命令选项板工作的: 魔杖: e之外，没有实现Ex命令。
 
-Ex commands are not implemented, apart from:wand:e, which work via the command palette.
 
 ## Under the Hood
 
-Vintage mode is implemented entirely via key bindings and the plugin API – feel free to browse through the Vintage package and see how it's put together. As an example, if you'd like to bindjjto exit insert mode, you can add this key binding:
+复古模式完全通过键绑定和插件API实现 -- 请随意浏览复古包，看看它是如何组合在一起的。例如，如果要绑定 jj 到退出插入模式，可以添加此键绑定:
 
 ~~~
 {
@@ -65,7 +64,7 @@ Vintage mode is implemented entirely via key bindings and the plugin API – fee
 
 ## Mac
 
-By default on Mac, holding down a key won't repeat it, but will instead show a popup menu to select between character variations. This doesn't work well with command mode, so you may want to disable it. This can be done via executing the following in Terminal.app:
+默认情况下，在Mac上，按住一个键不会重复，而是会显示一个弹出菜单来在字符变化之间进行选择。这在命令模式下不能很好地工作，因此您可能需要禁用它。这可以通过在 Terminal.app 中执行以下操作来完成:
 
 ~~~
 defaults write com.sublimetext.2 ApplePressAndHoldEnabled -bool false
@@ -73,7 +72,7 @@ defaults write com.sublimetext.2 ApplePressAndHoldEnabled -bool false
 
 ## Ctrl Keys
 
-Vintage supports these**Ctrl**key bindings:
+Vintage 支持以下**Ctrl**key 绑定:
 
 *   **Ctrl***+***\[**: Escape
 *   **Ctrl***+***R**: Redo
@@ -82,12 +81,13 @@ Vintage supports these**Ctrl**key bindings:
 *   **Ctrl***+***F**: Page Down
 *   **Ctrl***+***B**: Page Up
 
-However, because they conflict with other Sublime Text key bindings, these are disabled by default on Windows and Linux. They can be enabled with thevintage\_ctrl\_keyssetting:
+然而，由于和Sublime Text 快捷键绑定冲突，它们默认在Windows和Linux上禁用的。它们可以通过 vintage\_ctrl\_key 设置:
 
 ~~~
 "vintage_ctrl_keys": true
 ~~~
+启用。
 
-## Ex Mode
+## Ex 模式
 
-Please take a look at[VintageEx](https://github.com/SublimeText/VintageEx)for an Ex mode for Vintage
+看一下[VintageEx](https://github.com/SublimeText/VintageEx)来了解 VintageEx 的ex模式。
