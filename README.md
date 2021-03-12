@@ -1,13 +1,15 @@
 # sublime_text_document
 sublime中文手册
 
-# 数据来源：https://www.sublimetext.com/docs/index.html
+## 数据来源：https://www.sublimetext.com/docs/index.html
 
-# markdown化 ： 看云粘贴html自动转markdown
+## 在线阅读：https://sublime-text-document.readthedocs.io/zh/latest/
 
-# 构建：mkdocs
+## markdown化 ： 看云粘贴html自动转markdown
 
-## 主题 
+## 构建：mkdocs
+
+### 主题 
 
 material
 
