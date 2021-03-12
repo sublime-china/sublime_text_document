@@ -12,12 +12,12 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [Multiple Selection with the Keyboard](multiple_selection_with_the_keyboard)
 *   [Completions](completions)Updated
 *   [Distraction Free Mode](distraction_free)
-*   [Vintage Mode](vintage)
+*   [复古模式](vintage)
 *   [Projects](projects)
 
 ## Customization
 
-*   [Settings](settings)
+*   [设置](settings)
 *   [Key Bindings](key_bindings)
 *   [Changing the Font](font)
 *   [Indentation](indentation)
@@ -41,7 +41,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [Color Schemes](color_schemes)Updated
 *   [Themes](themes)Updated
 *   [Menus](menus)
-*   [API Environments](api_environments)New!
+*   [API 环境变量](api_environments)New!
 *   [API Reference](api_reference)Updated
 *   [Syntax Definitions](syntax)Updated
 *   [Scope Naming](scope_naming)

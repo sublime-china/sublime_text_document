@@ -25,11 +25,11 @@ Sublime Text 中的设置 组织成为三个分类。 默认设置文件将设�
 *   **用户界面设置**: 这些设置会影响所有打开的窗口的常规用户界面。示例包括主题、动画启用和覆盖滚动条。这些设置显示在默认设置文件的第二部分。 
 *   **应用行为设置**: 这些设置会在所有打开的窗口中影响应用程序的行为。示例包括 hot\_exit、index\_files 和 ignored\_packages。这些设置显示在默认设置文件的第三部分。
 
-*The User Interface Settings and Application Behavior Settings are global to the entire application and can not be controlled by a syntax specific settings file, nor thesettingskey in a.sublime-project.*
+* 用户界面设置和应用程序行为设置对整个应用程序是全局的，不能由特定于语法的设置文件或.sublime-project中的设置键控制。*
 
 ## Settings Files
 
-Settings files are consulted in this order:
+按以下顺序查阅设置文件:
 
 1.  Packages/Default/Preferences.sublime-settings
 2.  Packages/Default/Preferences (**).sublime-settings
@@ -39,25 +39,25 @@ Settings files are consulted in this order:
 6.  **Packages/User/**.sublime-settings**
 7.  **
 
-In general, you should place your settings inPackages/User/Preferences.sublime-settings, which is opened in the right-hand pane when selecting the menu itemPreferences![▶](images/right.svg)Settings. If you want to specify settings for a certain file type, for example, Python, you should place them inPackages/User/Python.sublime-settings. This can be accessed via the right-hand pane when a Python file is open, and the menu itemPreferences![▶](images/right.svg)Settings – Syntax Specificis selected.
+通常，你应该放置你的设置在 Packages/User/Preferences.sublime-settings, 在选择了首选项[▶](images/right.svg)设置后打开的面板右侧。 如果要指定特定文件类型 (例如Python) 的设置，则应将其放置在package/User/Python.sublime-settings中。这个可以通过打开Python文件时，选择首选项[▶](images/right.svg)设置 – 特定语法选中时打开的面板右侧去定义。
 
 ## Syntax-Specific Settings
 
-Settings may be specified on a per-syntax basis. Common uses for this are to have different indentation settings or the color scheme vary by file type.
+可以按语法指定设置。此操作的常见用途是具有不同的缩进设置或配色方案因文件类型而异。
 
-You can edit the settings for the syntax of the current file by selecting thePreferences![▶](images/right.svg)Settings – Syntax Specificmenu item.
+你可以通过选择 选择 首选项 [▶](images/right.svg)- 语法 语法指定菜单项来编辑当前文件的语法。
 
-*Note that only Editor Settings can be specified in syntax-specific settings.*
+* 请注意，只能在特定于语法的设置中指定编辑器设置。*
 
 ## Project Settings
 
-Settings can be set on a per-project basis, details are in the[Project Documentation](projects).
+设置可以在每个项目的基础上设置，详细信息在[Project Documentation](projects).
 
-*Note that only Editor Settings can be specified in project settings.*
+* 请注意，只能在项目设置中指定编辑器设置。*
 
 ## Distraction Free Settings
 
-[Distraction Free Mode](distraction_free)has an additional settings file applied (Distraction Free.sublime-settings). You can place file settings in here to have them only apply when in Distraction Free Mode – access it from thePreferences![▶](images/right.svg)Settings – Distraction Freemenu item.
+[Distraction Free Mode](distraction_free) 应用了附加设置文件 (Distraction Free.sublime-settings)。您可以在此处放置文件设置，以使它们仅在无干扰模式下应用 – 访问首选项[▶](images/right.svg)无干扰模式。
 
 ## Changing Settings with a Key Binding
 
