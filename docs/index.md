@@ -9,7 +9,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [Indexing](indexing)Updated
 *   [Command Line Interface](command_line)Updated
 *   [列选择](column_selection)
-*   [Multiple Selection with the Keyboard](multiple_selection_with_the_keyboard)
+*   [使用快捷键进行多重选择](multiple_selection_with_the_keyboard)
 *   [Completions](completions)Updated
 *   [Distraction Free Mode](distraction_free)
 *   [复古模式](vintage)
