@@ -13,7 +13,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [Completions](completions)Updated
 *   [Distraction Free Mode](distraction_free)
 *   [复古模式](vintage)
-*   [Projects](projects)
+*   [项目](projects)
 
 ## Customization
 
