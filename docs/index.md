@@ -8,7 +8,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [Incremental Diff](incremental_diff)
 *   [Indexing](indexing)Updated
 *   [Command Line Interface](command_line)Updated
-*   [Column Selection](column_selection)
+*   [列选择](column_selection)
 *   [Multiple Selection with the Keyboard](multiple_selection_with_the_keyboard)
 *   [Completions](completions)Updated
 *   [Distraction Free Mode](distraction_free)

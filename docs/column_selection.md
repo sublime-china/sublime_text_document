@@ -1,46 +1,48 @@
-# 
+#
 
 [DOCUMENTATION](index)[TOC](column_selection#toc)[TOP](column_selection#)
 
 Column Selection
 
-Column selection can be used to select a rectangular area of a file. Column selection doesn't operate via a separate mode, instead it makes use of multiple selections.
+列选择可用于选择文件的矩形区域。 列选择不通过单独的模式操作，而是使用多个选择。
 
-You can use additive selections to select multiple blocks of text, or subtractive selections to remove a block.
+您可以使用添加剂选择来选择多个文本块，或使用减色选择来删除块。
 
-*   [Using the Mouse](column_selection#using_the_mouse)
-*   [Using the Keyboard](column_selection#using_the_keyboard)
+*   [使用鼠标](column_selection#using_the_mouse)
+*   [使用键盘](column_selection#using_the_keyboard)
 
-## Using the Mouse
 
-Different mouse buttons are used on each platform:
 
-### MAC
+## 使用鼠标
 
-*   Left Mouse Button*+***⌥**
-*   OR:Middle Mouse Button
+每个平台使用不同的鼠标按钮：
 
-*   Add to selection:**⌘**
-*   Subtract from selection:**⇧***+***⌘**
+### OS X
+
+*   鼠标左键*+***⌥**
+*   OR:鼠标中键
+
+*   新增选择：**⌘**
+*   取消选择：**⇧***+***⌘**
 
 ### WINDOWS
 
-*   Right Mouse Button*+***Shift**
-*   OR:Middle Mouse Button
+*   鼠标右键*+***Shift**
+*   OR:鼠标中键
 
-*   Add to selection:**Ctrl**
-*   Subtract from selection:**Alt**
+*   新增选择：**Ctrl**
+*   取消选择：**Alt**
 
 ### LINUX
 
-*   Right Mouse Button*+***Shift**
+*   鼠标右键*+***Shift**
 
-*   Add to selection:**Ctrl**
-*   Subtract from selection:**Alt**
+*   新增选择：**Ctrl**
+*   取消选择：**Alt**
 
-## Using the Keyboard
+## 使用键盘
 
-### MAC
+### OS X
 
 *   **Ctrl***+***Shift***+***⬆**
 *   **Ctrl***+***Shift***+***⬇**
@@ -52,5 +54,5 @@ Different mouse buttons are used on each platform:
 
 ### LINUX
 
-*   **Alt***+***Shift***+***⬆**
-*   **Alt***+***Shift***+***⬇**
+*   **Ctrl***+***Alt***+***⬆**
+*   **Ctrl***+***Alt***+***⬇**
