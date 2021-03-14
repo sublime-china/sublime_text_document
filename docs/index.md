@@ -23,7 +23,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [缩进](indentation)
 *   [Spell Checking](spell_checking)
 *   [构建系统](build_systems)
-*   [Packages](packages)
+*   [包管理](packages)
 *   [Selectors](selectors)
 *   [File Patterns](file_patterns)New!
 
@@ -31,7 +31,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 
 *   [GPU Rendering](gpu_rendering)New!
 *   [Operating System Compatibility](os_compatibility)
-*   [Linux Package Manager Repositories](linux_repositories)
+*   [Linux Package Manager仓库](linux_repositories)
 *   [Safe Mode](safe_mode)New!
 *   [Reverting to a Freshly Installed State](revert)
 *   [Ligatures](ligatures)

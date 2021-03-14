@@ -1,12 +1,8 @@
-# 
+# [SUBLIME TEXT中文文档之](index)Linux Package Manager仓库
 
-[DOCUMENTATION](index)[TOC](linux_repositories#toc)[TOP](linux_repositories#)
+Sublime Text 3在Windows和OS X上包含一个自动升级机制，可以快速进行升级。大多数主要发行版都提供了软件包和软件包存储库，而不是违背Linux生态系统的要求。
 
-Linux Package Manager Repositories
-
-Sublime Text includes an auto-upgrade mechanism on Windows and Mac to make upgrades a snap. Instead of going against the grain of the Linux ecosystem, packages and package repositories are provided for most of the major distributions.
-
-Builds listed in the dev channel are only available to licensed users. Users who are evaluating Sublime Text before purchase will need to use the stable channel.
+开发者频道中列出的构建仅适用于许可用户。在购买前评估Sublime Text的用户需要使用Stable的频道。
 
 *   [apt](linux_repositories#apt)\-*Ubuntu, Debian*
 *   [pacman](linux_repositories#pacman)\-*Arch*
@@ -16,21 +12,21 @@ Builds listed in the dev channel are only available to licensed users. Users who
 
 ## apt
 
-Install the GPG key:
+安装GPG密钥：
 
 ~~~
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
 
 ~~~
 
-Ensure apt is set up to work with https sources:
+确保apt已设置为使用https源：
 
 ~~~
 sudo apt-get install apt-transport-https
 
 ~~~
 
-Select the channel to use:
+选择要使用的频道：
 
 Stable
 
@@ -46,7 +42,7 @@ echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/source
 
 ~~~
 
-Update apt sources and install Sublime Text
+更新apt源并安装Sublime Text
 
 ~~~
 sudo apt-get update
@@ -54,16 +50,16 @@ sudo apt-get install sublime-text
 
 ~~~
 
-## pacman
+## 吃豆子
 
-Install the GPG key:
+安装GPG密钥：
 
 ~~~
 curl -O https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
 
 ~~~
 
-Select the channel to use:
+选择要使用的频道：
 
 Stable
 
@@ -79,7 +75,7 @@ echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/dev/x8
 
 ~~~
 
-Update pacman and install Sublime Text
+更新pacman并安装Sublime Text
 
 ~~~
 sudo pacman -Syu sublime-text
@@ -88,14 +84,14 @@ sudo pacman -Syu sublime-text
 
 ## yum
 
-Install the GPG key:
+安装GPG密钥：
 
 ~~~
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 
 ~~~
 
-Select the channel to use:
+选择要使用的频道：
 
 Stable
 
@@ -111,23 +107,23 @@ sudo yum-config-manager --add-repo https://download.sublimetext.com/rpm/dev/x86_
 
 ~~~
 
-Update yum and install Sublime Text
+更新yum并安装Sublime Text
 
 ~~~
 sudo yum install sublime-text
 
 ~~~
 
-## dnf
+## DNF
 
-Install the GPG key:
+安装GPG密钥：
 
 ~~~
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 
 ~~~
 
-Select the channel to use:
+选择要使用的频道：
 
 Stable
 
@@ -143,7 +139,7 @@ sudo dnf config-manager --add-repo https://download.sublimetext.com/rpm/dev/x86_
 
 ~~~
 
-Update dnf and install Sublime Text
+更新dnf并安装Sublime Text
 
 ~~~
 sudo dnf install sublime-text
@@ -152,14 +148,14 @@ sudo dnf install sublime-text
 
 ## zypper
 
-Install the GPG key:
+安装GPG密钥：
 
 ~~~
 sudo rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 
 ~~~
 
-Select the channel to use:
+选择要使用的频道：
 
 Stable
 
@@ -175,7 +171,7 @@ sudo zypper addrepo -g -f https://download.sublimetext.com/rpm/dev/x86_64/sublim
 
 ~~~
 
-Update zypper and install Sublime Text
+更新zypper并安装Sublime Text
 
 ~~~
 sudo zypper install sublime-text

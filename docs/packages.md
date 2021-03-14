@@ -1,45 +1,36 @@
-# 
+# [SUBLIME TEXT中文文档之](index)包管理
 
-[DOCUMENTATION](index)[TOC](packages#toc)[TOP](packages#)
+包是Sublime Text使用的资源文件的集合：插件，语法突出显示定义，菜单，代码片段等。Sublime Text附带了几个包，可以使用更多用户创建的包。
 
-Packages
+包存储在.sublime-package文件中，这些文件是具有不同扩展名的zip文件。软件包也可以解压缩存储在目录中，或两者混合：软件包目录中的任何松散文件都将覆盖存储在.sublime-package文件中的文件。
 
-Packages are a collection of resource files used by Sublime Text: plugins, syntax highlighting definitions, menus, snippets and more. Sublime Text ships with several packages, and more user created ones are available.
+## 位置
 
-Packages are stored in.sublime-packagefiles, which are zip files with a different extension. Packages may also be stored unzipped within a directory, or a mix of the two: any loose files in the package directory will override files stored in the.sublime-packagefile.
+压缩包可以存储在：
 
-*   [Locations](packages#locations)
-*   [Special Packages](packages#special_packages)
-*   [Creating a New Package](packages#creating_a_new_package)
-*   [Overriding Files From a Zipped Package](packages#overriding_files_from_a_zipped_package)
+*    /封装/
+*    /已安装的包/
 
-## Locations
+松散的包裹可能存储在：
 
-Zipped packages may be stored in:
+*    /封装/
 
-*   **/Packages/
-*   **/Installed Packages/
+例如，Python包存储在 /Packages/Python.sublime-package中， / Packages / Python /目录中的任何文件都将覆盖存储在.sublime-package文件中的文件。
 
-Loose packages may be stored in:
+通常， / Packages /适用于Sublime Text附带的软件包， / Installed Packages /适用于用户安装的软件包。
 
-*   **/Packages/
+## 特别套餐
 
-For example, the packagePythonis stored in**/Packages/Python.sublime-package, and any files in the**/Packages/Python/directory will override those stored in the.sublime-packagefile.
+有两个特殊包：默认和用户。始终首先订购默认值，并始终最后订购用户。在程序包之间合并文件时，程序包顺序生效，例如Main.sublime-menu。任何包都可能包含一个名为Main.sublime-menu的文件，但是这不会覆盖主菜单，而是根据包的顺序合并文件。
 
-In general,**/Packages/is for packages that ship with Sublime Text, and**/Installed Packages/is for packages installed by the user.
+默认和用户以外的包按字母顺序排序。
 
-## Special Packages
+## 创建一个新包
 
-There are two special packages:DefaultandUser.Defaultis always ordered first, andUseris always ordered last. Package ordering comes into effect when merging files between packages, for exampleMain.sublime-menu. Any package may contain a file calledMain.sublime-menu, however this won't override the main menu, instead the files will be merged according to the order of the packages.
+要创建新包，只需在 / Installed Packages /下创建一个新目录。您可以从“首选项![▶](http://www.sublimetext.cn/images/right.svg)浏览包”菜单访问此目录。
 
-Packages other thanDefaultandUserare ordered alphabetically.
+## 从压缩包中覆盖文件
 
-## Creating a New Package
+要覆盖现有包中的文件，只需在Packages /  /目录下创建一个具有相同名称的文件。
 
-To create a new package, simply create a new directory under**/Installed Packages/. You can access this directory from thePreferences![▶](images/right.svg)Browse Packagesmenu.
-
-## Overriding Files From a Zipped Package
-
-To override a file in an existing package, just create a file with the same name under thePackages/**/directory.
-
-For example to override the filefunction.sublime-snippetin thePython.sublime-packagepackage that ships with Sublime Text, create a directory calledPythonunder the**/Packages/directory, and place yourfunction.sublime-snippetfile there.
+例如，要覆盖Sublime Text附带的Python.sublime-package包中的文件function.sublime-snippet，在 / Packages /目录下创建一个名为Python的目录，并将function.sublime-snippet文件放在那里。
