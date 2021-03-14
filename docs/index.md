@@ -11,7 +11,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [列选择](column_selection)
 *   [使用快捷键进行多重选择](multiple_selection_with_the_keyboard)
 *   [Completions](completions)Updated
-*   [Distraction Free Mode](distraction_free)
+*   [免干扰模式](distraction_free)
 *   [复古模式](vintage)
 *   [项目](projects)
 
@@ -22,7 +22,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [字体设置](font)
 *   [缩进](indentation)
 *   [Spell Checking](spell_checking)
-*   [Build Systems](build_systems)
+*   [构建系统](build_systems)
 *   [Packages](packages)
 *   [Selectors](selectors)
 *   [File Patterns](file_patterns)New!

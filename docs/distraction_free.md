@@ -1,18 +1,14 @@
-# 
+# [SUBLIME TEXT中文文档之](index)免打扰模式（Distraction Free Mode）
 
-[DOCUMENTATION](index.html)
+免打扰模式全屏显示您的文件，显示器中央只显示文字。所有UI都是隐藏的，但是可以访问。免打扰模式可以通过View![▶](http://www.sublimetext.cn/images/right.svg)Enter Distraction Free Mode菜单项输入。
 
-Distraction Free Mode
+在免打扰模式中，将隐藏所有UI（侧边栏，小地图，状态栏等）。您可以通过View菜单有选择地启用部分UI - 下次进入免打扰模式时，您的设置将被记住。
 
-Distraction Free Mode shows your files full screen, with nothing but text shown in the center of your monitor. All UI chrome is hidden, but accessible. Distraction Free Mode can be entered into via theView![▶](images/right.svg)Enter Distraction Free Modemenu item.
+## 定制
 
-When in Distraction Free Mode, all UI chrome (side bar, minimap, status bar, etc) will be hidden. You can selectively enable parts of the UI via theViewmenu – your settings will be remembered next time you enterDistraction Free Mode.
+在免打扰模式中将应用某些设置。默认设置（位于Packages/Default/Distraction Free.sublime-settings)中）是：
 
-## Customization
-
-Certain settings will be applied when inDistraction Free Mode. The default settings (located inPackages/Default/Distraction Free.sublime-settings) are:
-
-~~~
+~~~js
 {
     "line_numbers": false,
     "gutter": false,
@@ -24,6 +20,6 @@ Certain settings will be applied when inDistraction Free Mode. The default setti
 
 ~~~
 
-You can customize these via editingPackages/User/Distraction Free.sublime-settings, which is accessible via thePreferences![▶](images/right.svg)Settings – Distraction Freemenu item.
+您可以通过编辑Packages/User/Distraction Free.sublime-settings来自定义这些，可以通过Preferences![▶](http://www.sublimetext.cn/images/right.svg)Settings – Distraction Free菜单访问。
 
-It's worth noting thewrap\_widthsetting, above. The value of`80`causes wrapping to happen at 80 characters. You may want to set this to a higher value, or wrap to the window width, by setting it to`0`.
+值得注意的是上面的wrap\_width设置。值80导致包装发生在80个字符。您可能希望将其设置为更高的值，或者通过将其设置为0来换行到窗口宽度。

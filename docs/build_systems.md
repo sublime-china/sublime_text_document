@@ -1,28 +1,24 @@
-# 
+# [SUBLIME TEXT中文文档之](index)构建系统
 
-[DOCUMENTATION](index)[TOC](build_systems#toc)[TOP](build_systems#)
+Sublime Text提供了构建系统，允许用户运行外部程序。构建系统的常见用途示例包括：编译，转换，linting和执行测试。
 
-Build Systems
+构建系统通过JSON指定并保存在扩展名为.sublime-build的文件中。可以通过Tools![▶](http://www.sublimetext.cn/images/right.svg)Build System![▶](http://www.sublimetext.cn/images/right.svg)New Build System ...菜单项或Build: New Build System命令选项板条目创建新的构建系统。
 
-Sublime Text providesbuild systemsto allow users to run external programs. Examples of common uses for build systems include: compiling, transpiling, linting, and executing tests.
+构建系统有各种方式可以将自己与文件和项目相关联。使用此信息，Sublime Text可以智能地仅向用户显示可行的构建系统。内置`exec`目标提供了快速启动和运行的常用选项。对于更复杂的需求，构建系统可以定位用Python编写的自定义Sublime Text命令。
 
-Build systems are specified via JSON and saved in a file with the extension.sublime-build. A new build system can be created by theTools![▶](images/right.svg)Build System![▶](images/right.svg)New Build System…menu item or theBuild: New Build Systemcommand palette entry.
+*   [基本例子](build_systems#basic_example)
+*   [用法](build_systems#usage)
+*   [选项](build_systems#options)
+*   [`exec`目标选项](build_systems#exec_options)
+*   [自定义选项](build_systems#custom_options)
+*   [变量](build_systems#variables)
+*   [高级示例](build_systems#advanced_example)
 
-Build systems have various ways they can associate themselves with files and projects. Using this information, Sublime Text can intelligently display only viable build systems to the user. The built-in`exec`target provides common options to get up and running quickly. For more complex requirements, build systems can target custom Sublime Text commands written in Python.
+## 基本例子
 
-*   [Basic Example](build_systems#basic_example)
-*   [Usage](build_systems#usage)
-*   [Options](build_systems#options)
-*   [`exec`Target Options](build_systems#exec_options)
-*   [Custom Options](build_systems#custom_options)
-*   [Variables](build_systems#variables)
-*   [Advanced Example](build_systems#advanced_example)
+以下是构建系统的基本示例。此构建系统将执行当前打开的Python文件。
 
-## Basic Example
-
-The following is a basic example of a build system. This build system will execute the currently-open Python file.
-
-~~~
+~~~js
 {
     "cmd": ["python", "$file"],
     "selector": "source.python",
@@ -30,92 +26,88 @@ The following is a basic example of a build system. This build system will execu
 }
 ~~~
 
-The[Usage](build_systems#usage)and[Options](build_systems#options)sections will discuss how to use and customize a build system.
+的[用法](build_systems#usage)和[选项](build_systems#options)部分将讨论如何使用和定制构建系统。
 
-## Usage
+## 用法
 
-Build systems include the following functionality:
+构建系统包括以下功能：
 
-*   Automatic selection of a build system based on file type
-*   Remembering the last used build system
-*   Navigation of build system results
-*   Ability to cancel a build
+*   根据文件类型自动选择构建系统
+*   记住上次使用的构建系统
+*   构建系统结果的导航
+*   能够取消构建
 
-### RUNNING A BUILD
+### 运行构建
 
-A build can be run by one of the following methods:
+可以通过以下方法之一运行构建：
 
-| Keyboard | Menu |
+| 键盘 | 菜单 |
 | --- | --- |
-| Windows/Linux | Mac | All | Tools![▶](images/right.svg)Build |
-| **Ctrl***+***B** | **⌘***+***B** | **F7** |
+| 在Windows / Linux的 | 苹果电脑 | 所有 | 工具![▶](http://www.sublimetext.cn/images/right.svg)构建 |
+| **Ctrl***+***B.** | **⌘***+***B.** | **F7** |
 
-Output will be shown in an output panel displayed at the bottom of the Sublime Text window.
+输出将显示在Sublime Text窗口底部显示的输出面板中。
 
-### SELECTING A BUILD SYSTEM
+### 选择构建系统
 
-By default, Sublime Text uses automatic selection of build systems. When a user invokes a build, the current file's syntax and filename will be used to pick the appropriate build system.
+默认情况下，Sublime Text使用自动选择构建系统。当用户调用构建时，将使用当前文件的语法和文件名来选择适当的构建系统。
 
-If more than one build system matches the current file type, the user will be prompted to pick the build system they wish to use. Once a build system has been selected, Sublime Text will remember it until the user changes their selection.
+如果多个构建系统与当前文件类型匹配，系统将提示用户选择他们希望使用的构建系统。一旦选择了构建系统，Sublime Text将记住它，直到用户更改其选择。
 
-To manually choose a build system, use:
+要手动选择构建系统，请使用：
 
-| Menu |
+| 菜单 |
 | --- |
-| Tools![▶](images/right.svg)Build System |
+| 工具![▶](http://www.sublimetext.cn/images/right.svg)构建系统 |
 
-To change the build system, within the viable options, use one of the following methods:
+要在可行选项中更改构建系统，请使用以下方法之一：
 
-| Keyboard | Menu | Command Palette |
+| 键盘 | 菜单 | 命令调色板 |
 | --- | --- | --- |
-| Windows/Linux | Mac | Tools![▶](images/right.svg)Build With… | Build With: |
-| **Ctrl***+***Shift***+***B** | **⇧***+***⌘***+***B** |
+| 在Windows / Linux的 | 苹果电脑 | 工具![▶](http://www.sublimetext.cn/images/right.svg)构建...... | Build With: |
+| **Ctrl***+***Shift***+***B.** | **⇧***+***⌘***+***B.** |
 
-### NAVIGATING RESULTS
+### 导航结果
 
-Build systems allow navigation of files specified in the build output. Typically this is used to jump to the location of errors. Navigation can be performed via:
+构建系统允许导航构建输出中指定的文件。通常，这用于跳转到错误的位置。可通过以下方式执行导航：
 
-| Command | Keyboard | Menu |
+| 命令 | 键盘 | 菜单 |
 | --- | --- | --- |
-| Next Result | **F4** | Tools![▶](images/right.svg)Build Results![▶](images/right.svg)Next Result |
-| Previous Result | **Shift***+***F4** | Tools![▶](images/right.svg)Build Results![▶](images/right.svg)Previous Result |
+| 下一个结果 | **F4** | 工具![▶](http://www.sublimetext.cn/images/right.svg)构建结果![▶](http://www.sublimetext.cn/images/right.svg)下一步结果 |
+| 上一个结果 | **Shift***+***F4** | 工具![▶](http://www.sublimetext.cn/images/right.svg)构建结果![▶](http://www.sublimetext.cn/images/right.svg)上一个结果 |
 
-### CANCELLING A BUILD
+### 取消构建
 
-An in-process build can be cancelled via:
+可以通过以下方式取消进程内构建：
 
-| Keyboard | Menu | Command Palette |
+| 键盘 | 菜单 | 命令调色板 |
 | --- | --- | --- |
-| Windows/Linux | Mac | Tools![▶](images/right.svg)Cancel Build | Build: Cancel |
-| **Ctrl***+***Break** | **Ctrl***+***C** |
+| 在Windows / Linux的 | 苹果电脑 | 工具![▶](http://www.sublimetext.cn/images/right.svg)取消构建 | Build: Cancel |
+| **Ctrl***+***Break** | **Ctrl***+***C.** |
 
-## Options
+## 选项
 
-All build systems may use the following top-level keys in the.sublime-buildfile:
+所有构建系统都可以在.sublime-build文件中使用以下顶级键。
 
-"selector"string
+选择
 
-A[selector](selectors)to match the syntax that this build system should be enabled for.
+应为此构建系统启用的语法的基本作用域名称。  
+*示例：`"source.python"`。*
 
-Example:`"source.python"`
+FILE\_PATTERNS
 
-"file\_patterns"array of strings
+应为其启用构建系统的文件名模式列表。  
+*示例：`["*.py"]`。*
 
-[Patterns](file_patterns)of file names the build system should be enabled for.
+密钥文件
 
-Example:`["*.py"]`
+文件名列表（如果存在于其中一个打开的文件夹中）将导致构建系统启用。  
+*示例：`["Makefile"]`。*
 
-"keyfiles"array of strings
+变种
 
-File names, if present in one of the opened folders, that will cause the build system to be enabled.
-
-Example:`["Makefile"]`
-
-"variants"array of objects
-
-Subsidiary build systems that will inherit the options from the top-level build system. Each variant needs to specify a"name"key, and may override or add options to the top-level build system.
-
-Example:
+将从顶级构建系统继承选项的辅助构建系统列表。每个变体都需要指定一个`name`键，并可以覆盖或添加顶级构建系统的选项。  
+*例：  
 
 ~~~
 [
@@ -125,211 +117,221 @@ Example:
     }
 ]
 
-~~~
+~~~* 
 
-"cancel"string, array of strings
+取消
 
-A string command name, or an array of string options.
+字符串命令名称或字符串选项列表。如果指定了字符串，则指定的命令将用于取消构建。如果是字符串列表，`target`则会调用主要字符串，并添加这些选项。这只需要在使用自定义时指定`target`。  
+*示例：`"cancel_my_build"`或`{"kill": true}`。*
 
-If a string is specified, the command specified will be used to cancel the build.
+目标
 
-If an array of strings, the primary"target"will be called, with these options added on. This only needs to be specified when using a custom"target".
+调用构建系统时运行的命令。exec的默认值允许使用[exec Target Options中](build_systems#exec_options)指定的其他[选项](build_systems#exec_options)。如果`exec`指定的值不是指定的，则[exec Target Options中的](build_systems#exec_options)任何[选项](build_systems#exec_options)都不会执行任何操作。有关完整示例，请参阅[高级](build_systems#advanced_example)示例。  
+*例：`"my_build"`*
 
-Examples:`"cancel_my_build"`or`{"kill":true}`
+视窗
 
-"target"string
-
-The command to run when the build system is invoked. The default value ofexecallows use of the additional options specified in[exec Target Options](build_systems#exec_options).
-
-If a value other than`"exec"`is specified, none of the options in[exec Target Options](build_systems#exec_options)will do anything.
-
-See the[Advanced Example](build_systems#advanced_example)for a complete example.
-
-Example:`"my_build"`
-
-"windows"object
-
-Options to use when the build system is being executed on a Windows machine.
-
-Example:
+在Windows计算机上执行构建系统时使用的选项对象。  
+*例：  
 
 ~~~
 {
     "cmd": ["my_command.exe", "/D", "$file"]
 }
 
-~~~
+~~~* 
 
-"osx"object
+OSX
 
-Options to use when the build system is being executed on a Mac machine.
-
-Example:
+在Mac计算机上执行构建系统时使用的选项对象。  
+*例：  
 
 ~~~
 {
     "cmd": ["/Applications/MyProgram.app/Contents/MacOS/my_command", "-d", "$file"]
 }
 
-~~~
+~~~* 
 
-"linux"object
+Linux的
 
-Options to use when the build system is being executed on a Linux machine.
-
-Example:
+在Linux机器上执行构建系统时使用的选项对象。  
+*例：  
 
 ~~~
 {
     "cmd": ["/usr/local/bin/my_command", "-d", "$file"]
 }
 
-~~~
+~~~* 
 
-## `exec`Target Options
+## `exec`目标选项
 
-The default`target`of`exec`is used by the majority of build systems. It provides the following options to control what program to execute, and how to display the results.
+默认`target`的`exec`使用受到了广大构建系统。它提供以下选项来控制要执行的程序以及如何显示结果。
 
-"cmd"array of strings
+CMD
 
-The executable to run, plus any arguments to pass to it. Shell constructs such as piping and redirection are not supported – see[shell\_cmd](build_systems#exec_option-shell_cmd).
+指定要运行的可执行文件的字符串列表，以及传递给它的任何参数。不支持Shell构造，例如管道和重定向 - 请参阅[shell\_cmd](build_systems#exec_option-shell_cmd)。可以使用[变量](build_systems#variables)。  
+*例：`["my_command", "-d", "$file"]`*
 
-May use[variables](build_systems#variables).
+shell\_cmd
 
-Example:`["my_command","-d","$file"]`
+一个字符串，指定要执行的shell命令。与[cmd](build_systems#exec_option-cmd)选项不同 ，它允许管道和重定向。将`bash`在Mac和Linux机器以及`cmd.exe`Windows上使用。可以使用[变量](build_systems#variables)。  
+*例：`"my_command \"$file\" | other_command"`*
 
-"shell\_cmd"string
+working\_dir
 
-A shell command to execute. Unlike the[cmd](build_systems#exec_option-cmd)option, this does allow piping and redirection. Will use`bash`on Mac and Linux machine, and`cmd.exe`on Windows.
+一个字符串，指定要在其中执行[cmd](build_systems#exec_option-cmd)或[shell\_cmd](build_systems#exec_option-shell_cmd)的目录 。可以使用[变量](build_systems#variables)。  
+*例：`"$file_path"`*
 
-May use[variables](build_systems#variables).
+file\_regex
 
-Example:`"my_command\"$file\"| other_command"`
+包含要在构建输出上运行以匹配文件信息的正则表达式的字符串。匹配的文件信息用于启用结果导航。正则表达式应该捕获2,3或4组。  
+  
+捕获组应该是：
 
-"working\_dir"string
+1.  文件名
+2.  电话号码
+3.  列号
+4.  信息
 
-The directory to execute the[cmd](build_systems#exec_option-cmd)or[shell\_cmd](build_systems#exec_option-shell_cmd)within.
+*例：`"^\s*(\\S[^:]*)\\((\\d+):(\\d+)\\): ([^\\n]+)"`*
 
-May use[variables](build_systems#variables).
+line\_regex
 
-Example:`"$file_path"`
+包含要在构建输出上运行以匹配行信息的正则表达式的字符串。匹配的文件信息用于启用结果导航。正则表达式应该捕获1,2或3组。  
+  
+小组应该抓住：
 
-"file\_regex"string
+1.  电话号码
+2.  列号
+3.  错误信息
 
-A regular expression to run on the build output to match file information. The matched file information is used to enable result navigation. The regex should capture 2, 3 or 4 groups.
+只有当某些结果严格包含行号，行号和列号或带有消息的行号和列号时，才需要使用此正则表达式。进行这样的匹配时， 将使用[file\_regex](build_systems#exec_option-file_regex)选项向后搜索以查找适当的文件名。  
+  
+*例：`"^\s*line (\\d+) col (\\d+): ([^\\n]+)"`*
 
-The capture groups should be:
+编码
 
-1.  filename
-2.  line number
-3.  column number
-4.  message
+一个字符串，指定构建系统输出的编码。使用[Python编解码器名称](https://docs.python.org/3.3/library/codecs#id3)。默认为`"utf-8"`。  
+*例：`"iso-8859-1"`*
 
-Example:`"^\s*(\\S[^:]*)\\((\\d+):(\\d+)\\): ([^\\n]+)"`
+ENV
 
-"line\_regex"string
-
-A regular expression to run on the build output to match line information. The matched file information is used to enable result navigation. The regex should capture 1, 2 or 3 groups.
-
-The groups should capture:
-
-1.  line number
-2.  column number
-3.  error message
-
-This regular expression is only necessary when some results contain strictly a line number, line and column numbers, or line and column numbers with a message. When such a match is made, the[file\_regex](build_systems#exec_option-file_regex)option will be used to search backwards to find the appropriate file name.
-
-Example:`"^\s*line (\\d+) col (\\d+): ([^\\n]+)"`
-
-"encoding"string
-
-The encoding of the build system output. Uses[Python codec names](https://docs.python.org/3.3/library/codecs#id3). Defaults to`"utf-8"`.
-
-Example:`"iso-8859-1"`
-
-"env"object
-
-Environment variable values to use when running the[cmd](build_systems#exec_option-cmd)or[shell\_cmd](build_systems#exec_option-shell_cmd).
-
-Example:
+包含运行[cmd](build_systems#exec_option-cmd)或[shell\_cmd](build_systems#exec_option-shell_cmd)时要使用的环境变量值的对象。  
+*例：
 
 ~~~
 {
-    "PYTHONIOENCODING": "utf-8"
+    “PYTHONIOENCODING”：“utf-8”
 }
-~~~
 
-"quiet"boolean
+~~~* 
 
-Reduces the amount of output about the build system invocation.
+安静
 
-Example:`true`
+一个布尔值，可减少有关构建系统调用的输出量。  
+*例：`true`*
 
-"word\_wrap"boolean
+word\_wrap
 
-Turns on word wrapping in the build system output panel.
+一个布尔值，用于打开构建系统输出面板中的自动换行。  
+*例：`true`*
 
-Example:`true`
+句法
 
-"syntax"string
+一个字符串，指定用于突出显示构建系统输出面板的语法文件。  
+*例：`"Packages/JavaScript/JSON.sublime-syntax"`*
 
-The syntax file to use to highlight the build system output panel.
+## 自定义选项
 
-Example:`"Packages/JavaScript/JSON.sublime-syntax"`
+当实现命令以充当构建系统目标时，命令的关键字参数可通过.sublime-build文件中的选项获得。但是，某些参数名称不起作用，因为它们与内置的构建系统功能冲突。
 
-## Custom Options
+以下名称不会作为参数传递给命令。这也适用于其他情况，如在指定的选项`cancel`，`linux`，`osx`和`windows`选项。
 
-When implementing a command to act as a build system target, the command's keyword arguments are available via options in the.sublime-buildfile. However, certain parameter names will not work since they conflict with built-in build system functionality.
+*   `cancel`
+*   `file_patterns`
+*   `keyfile`
+*   `keyfiles`
+*   `linux`
+*   `osx`
+*   `save_untitled_files`
+*   `selector`
+*   `target`
+*   `variants`
+*   `windows`
 
-The following names will not be passed as arguments to commands. This also applies to other situations, such as options specified in the"cancel","linux","osx"and"windows"options.
+## 变量
 
-*   "cancel"
-*   "file\_patterns"
-*   "keyfile"
-*   "keyfiles"
-*   "linux"
-*   "osx"
-*   "save\_untitled\_files"
-*   "selector"
-*   "target"
-*   "variants"
-*   "windows"
+以下变量将在指定的任何字符串内膨胀`"cmd"`，`"shell_cmd"`或`"working_dir"`选项。
 
-## Variables
+如果`$`需要在其中一个选项中指定文字，则必须使用a进行转义`\`。由于JSON也使用反斜杠进行转义，`$`因此需要将其写为`\\$`。
 
-The following variables will be expanded within any string specified in the"cmd","shell\_cmd"or"working\_dir"options.
+请注意，任何替换都将发生`target`。如果使用自定义目标，则可以通过使用`sublime.expand_variables()`结果来 实现其他选项的变量扩展`self.window.extract_variables()`。
 
-If a literal`$`needs to be specified in one of these options, it must be escaped with a`\`. Since JSON uses backslashes for escaping also,`$`will need to be written as`\\$`.
+$包
 
-Please note that this substitution will occur for any"target". If a custom target is used, it may implement variable expansion for additional options by using`sublime.expand_variables()`with the result from`self.window.extract_variables()`.
+Packages /文件夹 的路径
 
-| Variable | Description |
-| --- | --- |
-| $packages | The path to thePackages/folder. |
-| $platform | The platform Sublime Text is running on:`"windows"`,`"osx"`or`"linux"`. |
-| $file | The full path, including folder, to the file in the active view. |
-| $file\_path | The path to the folder that contains the file in the active view. |
-| $file\_name | The file name (sans folder path) of the file in the active view. |
-| $file\_base\_name | The file name, exluding the extension, of the file in the active view. |
-| $file\_extension | The extension of the file name of the file in the active view. |
-| $folder | The full path to the first folder open in the side bar. |
-| $project | The full path to the current project file. |
-| $project\_path | The path to the folder containing the current project file. |
-| $project\_name | The file name (sans folder path) of the current project file. |
-| $project\_base\_name | The file name, excluding the extension, of the current project file. |
-| $project\_extension | The extension of the current project file. |
+$平台
 
-## Advanced Example
+包含平台Sublime Text的字符串正在：`windows`，`osx`或运行`linux`。
 
-The following example shows a custom`target`command, with the ability to cancel a build and navigate results.
+$文件
 
-A`target`for a build system should be a[`sublime.WindowCommand`](api_reference#sublime_plugin.WindowCommand). This will provide the instance variable of`self.window`to allow interaction with the current project, window and active view.
+活动视图中文件的完整路径，包括文件夹。
 
-*Please note that the following example is somewhat simplistic in its implementation, and it won't handle many common edge cases.*
+$ FILE\_PATH
 
-The following Python can be saved to a file namedPackage/User/my\_example\_build.py:
+包含活动视图中文件的文件夹的路径。
 
-~~~
+$ FILE\_NAME
+
+活动视图中文件的文件名（无文件夹路径）。
+
+$ file\_base\_name
+
+活动视图中文件的文件名（不包括扩展名）。
+
+$ FILE\_EXTENSION
+
+活动视图中文件的文件名扩展名。
+
+$文件夹
+
+第一个文件夹的完整路径在侧栏中打开。
+
+$项目
+
+当前项目文件的完整路径。
+
+$ project\_path
+
+包含当前项目文件的文件夹的路径。
+
+$ PROJECT\_NAME
+
+当前项目文件的文件名（sans文件夹路径）。
+
+$ project\_base\_name
+
+当前项目文件的文件名，不包括扩展名。
+
+$ project\_extension
+
+当前项目文件的扩展名。
+
+## 高级示例
+
+以下示例显示了一个自定义`target`命令，可以取消构建并导航结果。
+
+一个`target`用于构建系统应该是一个[`sublime.WindowCommand`](api_reference#sublime_plugin.WindowCommand)。这将提供实例变量，`self.window`以允许与当前项目，窗口和活动视图进行交互。
+
+*请注意，以下示例在其实现中有些简单，并且它不会处理许多常见的边缘情况。*
+
+以下Python可以保存到名为Package / User / my\_example\_build.py的文件中 ：
+
+~~~python
 import sublime
 import sublime_plugin
 
@@ -453,9 +455,9 @@ class MyExampleBuildCommand(sublime_plugin.WindowCommand):
 
 ~~~
 
-The custom`MyExampleBuildCommand`can be configured as a build system using the following JSON saved to a file namedPackages/User/My Example Build.sublime-build:
+`MyExampleBuildCommand`可以将 自定义配置为构建系统，使用以下JSON保存到名为Packages / User / My Example Build.sublime-build的文件中：
 
-~~~
+~~~js
 {
     "target": "my_example_build",
     "selector": "source.mylang",
