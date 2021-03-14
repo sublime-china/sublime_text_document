@@ -39,12 +39,12 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 ## Package Development
 
 *   [配色方案](color_schemes)Updated
-*   [Themes](themes)Updated
+*   [模板](themes)Updated
 *   [Menus](menus)
 *   [API 环境变量](api_environments)New!
 *   [API Reference](api_reference)Updated
 *   [Syntax Definitions](syntax)Updated
-*   [Scope Naming](scope_naming)
-*   [minihtml Reference](minihtml)Updated
-*   [Porting Guide](porting_guide)
+*   [范围命名](scope_naming)
+*   [minihtml参考](minihtml)Updated
+*   [插件移植指南](porting_guide)
 *   [How to Create a Sublime Text Plugin](http://net.tutsplus.com/tutorials/python-tutorials/how-to-create-a-sublime-text-2-plugin/)

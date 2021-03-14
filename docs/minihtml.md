@@ -1,103 +1,50 @@
-# 
+# [SUBLIME TEXT中文文档之](index)minihtml参考
 
-[DOCUMENTATION](index.html)[TOC](minihtml.html#toc)[TOP](minihtml.html#)
+Sublime Text包含一个名为minihtml的自定义HTML和CSS引擎 ，用于在编辑器窗格中显示样式化内容。HTML内容可以在弹出窗口和幻像中显示。
 
-minihtml Reference
+minihtml提供了大多数Web浏览器中的HTML和CSS功能的有限子集。虽然只能实现某些CSS和HTML功能，但它们的设计符合标准。实现的任何功能都应该在minihtml中以与在浏览器中相同的方式运行。
 
-Version:  
-[Dev](minihtml.html#ver-dev)[3.2](minihtml.html#ver-3.2)[3.1](minihtml.html#ver-3.1)[3.0](minihtml.html#ver-3.0)
-
-Sublime Text contains a custom HTML and CSS engine, namedminihtml, for displaying stylized content in editor panes. HTML content can be displayed in both popup windows and phantoms.
-
-minihtmlprovides a limited subset of HTML and CSS features found in most web browsers. While only certain CSS and HTML features may be implemented, they are designed to be standards compliant. Any feature implemented should function the same way inminihtmlas in a browser.
-
-*   [HTML](minihtml.html#html)
-    *   [Tags](minihtml.html#tags)
-    *   [Attributes](minihtml.html#attributes)
-    *   [Protocols](minihtml.html#protocols)4073
-    *   [Inline Formatting](minihtml.html#inline_formatting)4073
-    *   [Best Practices](minihtml.html#best_practices)
-    *   [Predefined Classes](minihtml.html#predefined_classes)
-*   [CSS](minihtml.html#css)
-    *   [Units](minihtml.html#units)
-    *   [Colors](minihtml.html#colors)
-    *   [Variables](minihtml.html#variables)
+*   [HTML](minihtml#html)
+    *   [最佳实践](minihtml#best_practices)
+    *   [预定义类](minihtml#predefined_classes)
+*   [CSS](minihtml#css)
+    *   [单位](minihtml#units)
+    *   [颜色](minihtml#colors)
+    *   [变量](minihtml#variables)
 
 ## HTML
 
-### TAGS
-
-The following tags are styled by the default style sheet:
+以下标记由默认样式表设置样式：
 
 *   `<html>`
-*   `<head>`,`<style>`
+*   `<head>`，`<style>`
 *   `<body>`
-*   `<h1>`,`<h2>`,`<h3>`,`<h4>`,`<h5>`,`<h6>`
+*   `<h1>`，`<h2>`，`<h3>`，`<h4>`，`<h5>`，`<h6>`
 *   `<div>`
 *   `<p>`
-*   `<ul>`,`<ol>`,`<li>`
-*   `<b>`,`<strong>`
-*   `<i>`,`<em>`
+*   `<ul>`，`<ol>`，`<li>`
+*   `<b>`，`<strong>`
+*   `<i>`，`<em>`
 *   `<u>`
-*   `<big>`,`<small>`
+*   `<big>`，`<small>`
 *   `<a>`
-*   `<code>`,`<var>`,`<tt>`
+*   `<code>`，`<var>`，`<tt>`
 
-Special behavior is implemented for a few tags:
+为几个标签实现了特殊行为：
 
-*   `<a>`– a callback can be specified via the API to handle clicks on anchor tags
-*   `<img>`– supports PNG, JPG and GIF images from`file://`,`res://`and`data:`URLs
-*   `<ul>`– bullets are displayed for`<li>`tags
+*   `<a>`\- 可以通过API指定回调来处理锚标记的点击
+*   `<img>`\-支持PNG，JPG和GIF的图片`file://`，`res://`和`data:`网址
+*   `<ul>`\- 显示`<li>`标签的项目 符号
 
-Other HTML tags with special behavior are not implemented. This includes tags such as`<input>`,`<button>`,`<table>`, etc.
+其他具有特殊行为的HTML标记未实现。这包括标记，如`<input>`，`<button>`，`<table>`等。
 
-### ATTRIBUTES
+### 最佳实践
 
-The following attributes are supported:
+为了让配色方案作者能够调整弹出窗口和幻像的外观，最好在插件的HTML标签中添加一个唯一`id=""`属性`<body>`。
 
-*   `class`\- for CSS selectors
-*   `id`\- for CSS selectors
-*   `style`\- inline CSS
-*   `href`\- callback-based navigation,[protocols](minihtml.html#protocols)support4073
-*   `title`\- tooltips4085
+在`<body>`标记内，添加`<style>`包含不使用选择器的 标记`id`。保留颜色方案中的选择器，以便能够覆盖插件。
 
-### PROTOCOLS4073
-
-In HTML sheets, popups, annotations and completion item details, the`href=""`attribute of`<a>`tags automatically supports three protocols:
-
-*   `http:`\- standard URL, will use system default browser to open
-*   `https:`\- standard URL, will use system default browser to open
-*   `subl:`\- a command name and args to invoke a command
-
-Valid`subl:`URL formats include:
-
-*   `subl:*command_name*`
-*   `subl:*command_name*{"*arg_name*":*arg_value*,*…*}`
-
-*For popups and annotations it is possible to define an`on_navigate`callback via the API that will be called for any URL except for the`subl:`protocol. This API-based approach was the only way to handle URLs before build4073.*
-
-### INLINE FORMATTING4073
-
-In the details field of completion items, quick panel items and list input items, there is support for a limited, inline formatting subset of minihtml. This allows for some basic text formatting, that respects the theme and color scheme the user has selected.
-
-The supported tags are:
-
-*   `<ahref="">`–[protocols](minihtml.html#protocols)
-*   `<b>`
-*   `<strong>`
-*   `<i>`
-*   `<em>`
-*   `<u>`
-*   `<tt>`
-*   `<code>`
-
-### BEST PRACTICES
-
-To allow color scheme authors to tweak the look of popups and phantoms, it is best to add a unique`id=""`attribute to the`<body>`tag of your plugin's HTML.
-
-Within the`<body>`tag, add a`<style>`tag containing selectors that do not use the`id`. Leave that for selectors in color schemes to be able to override the plugin.
-
-~~~
+~~~html
 <body id="my-plugin-feature">
     <style>
         div.error {
@@ -109,137 +56,139 @@ Within the`<body>`tag, add a`<style>`tag containing selectors that do not use th
 </body>
 ~~~
 
-### PREDEFINED CLASSES
+### 预定义类
 
-When minihtml processes the HTML markup, it will automatically add a single class name to the`<html>`tag. The class name will be`dark`or`light`, and is designed to allow for advanced use of CSS in styling phantoms and popups.
+当minihtml处理HTML标记时，它会自动向标记添加单个类名`<html>`。类名将是`dark`或`light`，旨在允许在样式幻像和弹出窗口中高级使用CSS。
 
-Which class is added is based on the lightness, in the HSL color space, of the background color of the current color scheme. If the lightness is less than 0.5,`dark`will be added. If the lightness is greater than or equal to 0.5,`light`will be added.
+添加哪个类是基于HSL颜色空间中当前颜色方案的背景颜色的亮度。如果亮度小于0.5，`dark`则添加。如果亮度大于或等于0.5，`light`则将添加。
 
 ## CSS
 
-The following list provides an overview of supported properties and values:
+以下列表提供了受支持的属性和值的概述：
 
-*   `display`:*`inline`,`inline-block`4085,`block`,`list-item`,`none`*
-*   `margin`:*positive[units](minihtml.html#units)*  
-    `margin-top`:*positive[units](minihtml.html#units)*  
-    `margin-right`:*positive[units](minihtml.html#units)*  
-    `margin-bottom`:*positive[units](minihtml.html#units)*  
-    `margin-left`:*positive[units](minihtml.html#units)*
+*   `display`:*`inline`,`block`,`list-item`,`none`*
+*   `margin`:*positive[units](minihtml#units)*  
+    `margin-top`:*positive[units](minihtml#units)*  
+    `margin-right`:*positive[units](minihtml#units)*  
+    `margin-bottom`:*positive[units](minihtml#units)*  
+    `margin-left`:*positive[units](minihtml#units)*
 *   `position`:*`static`,`relative`*
-*   `top`:*positive and negative[units](minihtml.html#units)*  
-    `right`:*positive and negative[units](minihtml.html#units)*  
-    `bottom`:*positive and negative[units](minihtml.html#units)*  
-    `left`:*positive and negative[units](minihtml.html#units)*
-*   `background-color`:[colors](minihtml.html#colors)
+*   `top`:*positive and negative[units](minihtml#units)*  
+    `right`:*positive and negative[units](minihtml#units)*  
+    `bottom`:*positive and negative[units](minihtml#units)*  
+    `left`:*positive and negative[units](minihtml#units)*
+*   `background-color`:[colors](minihtml#colors)
 *   `font-family`:*comma-separated list of font families*  
-    `font-size`:*positive[units](minihtml.html#units)*  
+    `font-size`:*positive[units](minihtml#units)*  
     `font-style`:*`normal`,`italic`*  
     `font-weight`:*`normal`,`bold`*  
-    `line-height`:*positive[units](minihtml.html#units)*  
-    `text-decoration`:*`none`,`underline`*  
-    `text-align`:*`left`,`right`,`center`*4085
-*   `color`:[colors](minihtml.html#colors)
-*   `padding`:*positive[units](minihtml.html#units)*  
-    `padding-top`:*positive[units](minihtml.html#units)*  
-    `padding-right`:*positive[units](minihtml.html#units)*  
-    `padding-bottom`:*positive[units](minihtml.html#units)*  
-    `padding-left`:*positive[units](minihtml.html#units)*
-*   `border`:*positive[units](minihtml.html#units)*||*[border-style](minihtml.html#border-style)*||*[colors](minihtml.html#colors)*  
-    `border-top`:*positive[units](minihtml.html#units)*||*[border-style](minihtml.html#border-style)*||*[colors](minihtml.html#colors)*  
-    `border-right`:*positive[units](minihtml.html#units)*||*[border-style](minihtml.html#border-style)*||*[colors](minihtml.html#colors)*  
-    `border-bottom`:*positive[units](minihtml.html#units)*||*[border-style](minihtml.html#border-style)*||*[colors](minihtml.html#colors)*  
-    `border-left`:*positive[units](minihtml.html#units)*||*[border-style](minihtml.html#border-style)*||*[colors](minihtml.html#colors)*
+    `line-height`:*positive[units](minihtml#units)*  
+    `text-decoration`:*`none`,`underline`*
+*   `color`:[colors](minihtml#colors)
+*   `padding`:*positive[units](minihtml#units)*  
+    `padding-top`:*positive[units](minihtml#units)*  
+    `padding-right`:*positive[units](minihtml#units)*  
+    `padding-bottom`:*positive[units](minihtml#units)*  
+    `padding-left`:*positive[units](minihtml#units)*
+*   `border`:*positive[units](minihtml#units)*||*[border-style](minihtml#border-style)*||*[colors](minihtml#colors)*  
+    `border-top`:*positive[units](minihtml#units)*||*[border-style](minihtml#border-style)*||*[colors](minihtml#colors)*  
+    `border-right`:*positive[units](minihtml#units)*||*[border-style](minihtml#border-style)*||*[colors](minihtml#colors)*  
+    `border-bottom`:*positive[units](minihtml#units)*||*[border-style](minihtml#border-style)*||*[colors](minihtml#colors)*  
+    `border-left`:*positive[units](minihtml#units)*||*[border-style](minihtml#border-style)*||*[colors](minihtml#colors)*
 *   `border-style`:*`none`,`solid`*  
-    `border-top-style`:*[border-style](minihtml.html#border-style)*  
-    `border-right-style`:*[border-style](minihtml.html#border-style)*  
-    `border-bottom-style`:*[border-style](minihtml.html#border-style)*  
-    `border-left-style`:*[border-style](minihtml.html#border-style)*
-*   `border-width`:*positive[units](minihtml.html#units)*  
-    `border-top-width`:*positive[units](minihtml.html#units)*  
-    `border-right-width`:*positive[units](minihtml.html#units)*  
-    `border-bottom-width`:*positive[units](minihtml.html#units)*  
-    `border-left-width`:*positive[units](minihtml.html#units)*
-*   `border-color`:[colors](minihtml.html#colors)  
-    `border-top-color`:[colors](minihtml.html#colors)  
-    `border-right-color`:[colors](minihtml.html#colors)  
-    `border-bottom-color`:[colors](minihtml.html#colors)  
-    `border-left-color`:[colors](minihtml.html#colors)
-*   `border-radius`:*positive[units](minihtml.html#units)*  
-    `border-top-left-radius`:*positive[units](minihtml.html#units)*  
-    `border-top-right-radius`:*positive[units](minihtml.html#units)*  
-    `border-bottom-right-radius`:*positive[units](minihtml.html#units)*  
-    `border-bottom-left-radius`:*positive[units](minihtml.html#units)*
-*   `list-style-type`:*`circle`*,*`square`*and*`disc`*4050
+    `border-top-style`:*[border-style](minihtml#border-style)*  
+    `border-right-style`:*[border-style](minihtml#border-style)*  
+    `border-bottom-style`:*[border-style](minihtml#border-style)*  
+    `border-left-style`:*[border-style](minihtml#border-style)*
+*   `border-width`:*positive[units](minihtml#units)*  
+    `border-top-width`:*positive[units](minihtml#units)*  
+    `border-right-width`:*positive[units](minihtml#units)*  
+    `border-bottom-width`:*positive[units](minihtml#units)*  
+    `border-left-width`:*positive[units](minihtml#units)*
+*   `border-color`:[colors](minihtml#colors)  
+    `border-top-color`:[colors](minihtml#colors)  
+    `border-right-color`:[colors](minihtml#colors)  
+    `border-bottom-color`:[colors](minihtml#colors)  
+    `border-left-color`:[colors](minihtml#colors)
+*   `border-radius`:*positive[units](minihtml#units)*  
+    `border-top-left-radius`:*positive[units](minihtml#units)*  
+    `border-top-right-radius`:*positive[units](minihtml#units)*  
+    `border-bottom-right-radius`:*positive[units](minihtml#units)*  
+    `border-bottom-left-radius`:*positive[units](minihtml#units)*
 
-### UNITS
+### 单位
 
-Supported units of measurement include:
+支持的计量单位包括：
 
 *   `rem`
 *   `em`
 *   `px`
 *   `pt`
 
-`rem`units are recommended because they are based on the user's`font_size`setting, and they will not cascade.
+`rem`建议使用单位，因为它们基于用户的`font_size`设置，并且不会级联。
 
-### COLORS
+### 颜色
 
-Colors may be specified via:
+可通过以下方式指定颜色：
 
-*   Named colors:`white`,`tan`, etc
-*   Shorthand hex:`#fff`
-*   Shorthand hex with alpha:`#fff8`
-*   Full hex:`#ffffff`
-*   Full hex with alpha:`#ffffff80`
-*   RGB functional notation:`rgb(255, 255, 255)`
-*   RGBA functional notation:`rgba(255, 255, 255, 0.5)`
-*   HSL functional notation:`hsl(0, 100%, 100%)`
-*   HSLA functional notation:`hsla(0, 100%, 100%, 0.5)`
-*   HWB functional notation:`hwb(0, 20%, 20%)`,`hwb(0, 20%, 20%, 0.5)`3181
+*   命名的颜色：`white`，`tan`，等
+*   速记十六进制：`#fff`
+*   带alpha的速记十六进制：`#fff8`
+*   全十六进制：`#ffffff`
+*   完整的十六进制与alpha：`#ffffff80`
+*   RGB功能表示法：`rgb(255, 255, 255)`
+*   RGBA功能表示法：`rgba(255, 255, 255, 0.5)`
+*   HSL功能表示法：`hsl(0, 100%, 100%)`
+*   HSLA功能表示法：`hsla(0, 100%, 100%, 0.5)`
 *   `transparent`
 
-#### `color()`MOD FUNCTIONPROPRIETARY
-
-Additionally, color values may be modified using the CSS Color Module Level 4 (*05 July 2016*)[color-mod function](https://www.w3.org/TR/2016/WD-css-color-4-20160705/#modifying-colors)with the following adjusters.*Unfortunately in a later draft of CSS Color Module Level 4, the color-mod function was removed.*
-
+另外，彩色值可使用CSS颜色模块级别4被修改[颜色-MOD函数](https://drafts.csswg.org/css-color-4/#modifying-colors)与以下调节器：
 *   `alpha()`/`a()`
-*   `saturation()`/`s()`3179
-*   `lightness()`/`l()`3179
+*   `saturation()`/`s()`
+*   `lightness()`/`l()`
 *   `blend()`
 *   `blenda()`
-*   `min-contrast()`3181PROPRIETARY
 
-~~~
+~~~css
 .error {
     background-color: color(var(--background) alpha(0.25));
 }
 ~~~
 
-~~~
+~~~css
 .error {
     background-color: color(var(--background) blend(red 50%));
 }
 ~~~
 
-The color-mod function will be most useful in combination with[variables](minihtml.html#variables).
+color-mod函数与[变量](minihtml#variables)结合使用最为有用。
 
-##### `min-contrast()`Adjuster
+### 变量
 
-***The`min-contrast()`adjuster for the`color()`mod function is a non-standard addition that is custom to minihtml.***At the time of implementation, the CSS Color Module Level 4 spec had a`contrast()`adjuster, but it only allowed taking a color and modifying it to provide contrast with itself, as opposed to taking a second color (typically a background) and making sure the foreground has sufficient contrast with the background.
+使用自定义属性和`var()`功能表示法也支持CSS变量。*自定义属性是以那些开头的`--`。*
 
-`min-contrast()`accepts two parameters: a background color to measure the contrast against, and a minimum contrast ratio between the "base" color and the background color. The ratio will be a decimal number, typically between`2.0`and`4.5`.
+一个限制是表示`var()`法不能用于多数值的一部分，例如`padding`或`margin`。使用这些聚合属性时，`var()`必须使用符号表示完整值。
 
-~~~
-.error {
-    background-color: color(var(--redish) min-contrast(var(--background) 2.5));
-}
-~~~
+#### 预定义变量
 
-Please see the documentation for the[`contrast()`adjuster](https://www.w3.org/TR/2016/WD-css-color-4-20160705/#contrast-adjuster)for details about how the contrast ratio is calculated and how the color is modified to meet it.
+加载颜色方案时，背景和前景颜色设置为CSS变量，以及与少数基本颜色相近的最接近颜色。这些都是`html { }`在默认CSS样式表中的规则集中设置的。
 
-### VARIABLES
+*   `var(--background)`
+*   `var(--foreground)`
+*   `var(--redish)`
+*   `var(--orangish)`
+*   `var(--yellowish)`
+*   `var(--greenish)`
+*    `var(--cyanish)`
+*   `var(--bluish)`
+*   `var(--purplish)`
+*   `var(--pinkish)`
 
-CSS variables are also supported using custom properties and the`var()`functional notation.*Custom properties are those starting with`--`.*
+选择颜色的算法使用HSL颜色空间，并使用几种启发法来尝试选择适合前景使用的颜色。在不希望自动颜色选择的情况下，颜色方案作者可以使用`html { }`包含在`popupCss`或`phantomCss`设置中的它们自己的规则集 来覆盖适当的值。
+
+
+如果在选定名称 .sublime-color-scheme 中设置了具有预定义名称之一的变量 ，该值将被使用，而不是试图从配色方案中使用的颜色中找到匹配项。
+
 
 ~~~
 html {
@@ -249,25 +198,3 @@ html {
     background-color: var(--fg);
 }
 ~~~
-
-The one limitation is that the`var()`notation can not be used for part of a multi-number value, such as`padding`or`margin`. With those aggregate properties, the`var()`notation must be used for the complete value.
-
-#### PREDEFINED VARIABLES
-
-When a color scheme is loaded, the background and foreground colors are set to CSS variables, along with the closest color found to a handful of basic colors. These are all set in an`html{ }`rule set in the default CSS style sheet.
-
-*   `var(--background)`
-*   `var(--foreground)`
-*   `var(--accent)`3179
-*   `var(--redish)`
-*   `var(--orangish)`
-*   `var(--yellowish)`
-*   `var(--greenish)`
-*   `var(--cyanish)`3179
-*   `var(--bluish)`
-*   `var(--purplish)`
-*   `var(--pinkish)`
-
-The algorithm to pick the colors uses the HSL color space and uses several heuristics to try and pick colors that are suitable for foreground use. In the case that the automatic color selection is undesirable, color scheme authors may override the appropriate values with their own`html{ }`rule set contained in the`popupCss`or`phantomCss`settings.
-
-If a variable with one of the predefined names is set in the selected.sublime-color-scheme, that value will be used instead of trying to find a match from the colors used in the color scheme.

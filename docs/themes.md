@@ -1,2208 +1,1446 @@
-# 
+# [SUBLIME TEXT中文文档之](index)模板详解
 
-[DOCUMENTATION](index)[TOC](themes#toc)[TOP](themes#)
+Sublime Text界面的外观由模板控制。术语*模板*严格指UI的外观 - 按钮，选择列表，侧边栏，标签等。源代码，标记和散文的突出显示由[颜色方案](color_schemes)控制 。
 
-主题
+Sublime Text的模板引擎基于光栅图形。PNG用于防止纹理退化并提供完整的alpha控制。UI中的每个元素最多可以应用四层纹理或填充，并具有控制不透明度和填充的属性。可以根据用户交互和设置有条件地更改在每个元素上设置的属性。
 
-Version:  
-[Dev](themes#ver-dev)[3.2](themes#ver-3.2)[3.1](themes#ver-3.1)[3.0](themes#ver-3.0)
+Sublime Text模板通过.sublime-theme格式实现。它是一种JSON格式，用于指定匹配元素和修改其外观的规则。
 
-The look of the Sublime Text interface is controlled by themes. The term*theme*refers strictly to the look of the UI – buttons, select lists, the sidebar, tabs and so forth. The highlighting of source code, markup and prose is controlled by a[color scheme](color_schemes).
+*   [示例](themes#example)
+*   [术语](themes#terminology)
+*   [一般信息](themes#general_information)
+*   [特性](themes#attributes)
+*   [设置](themes#settings)
+*   [属性](themes#properties)
+*   [分子](themes#elements)
+*   [弃用](themes#deprecated)
+*   [过时的](themes#obsolete)
+*   [定制](themes#customization)
 
-The theme engine for Sublime Text is based on raster graphics. PNGs are used to prevent texture degradation and provide full alpha control. Each element in the UI can have up to four layers of textures or fills applied, with properties to control opacity and padding. The properties set on each element can be conditionally changed based on user interaction and settings.
+## 示例
 
-Sublime Text themes are implemented via the.sublime-themeformat. It is a JSON format that specifies rules for matching elements and modifying their appearance.
+*以下是.sublime-theme文件格式的示例 。完整的模板将包含更多规则，以涵盖UI中使用的所有元素。*
 
-*   [Format](themes#format)
-*   [Terminology](themes#terminology)
-*   [General Information](themes#general_information)
-*   [Inheritance](themes#inheritance)
-*   [Variables](themes#variables)
-*   [Colors](themes#color_values)
-*   [Font Sizes](themes#font_sizes)
-*   [Attributes](themes#attributes)
-*   [Settings](themes#settings)
-*   [Properties](themes#properties)
-*   [Elements](themes#elements)
-*   [Deprecated](themes#deprecated)
-*   [Obsolete](themes#obsolete)
-*   [Customization](themes#customization)
-
-## Format
-
-A.sublime-themefile contains a single JSON document. The document should bean object containing a key"rules"with the value of3179an array of rules.An optional key"variables"with an object containing variable/value pairs may be added.3179
-
-*The following is an example of a.sublime-themefile, showing the format. A complete theme will have many more rules to cover all elements used in the UI.*
-
-~~~
+~~~js
 {
-    "variables":
+    // Set up the textures for a button
     {
-        "light_gray": "rgb(240, 240, 240)"
+        "class": "button_control",
+        "layer0.tint": [0, 0, 0],
+        "layer0.opacity": 1.0,
+        "layer1.texture": "Theme - Example/textures/button_background.png",
+        "layer1.inner_margin": 4,
+        "layer1.opacity": 1.0,
+        "layer2.texture": "Theme - Example/textures/button_highlight.png",
+        "layer2.inner_margin": 4,
+        "layer2.opacity": 0.0,
+        "content_margin": [4, 8, 4, 8]
     },
-    "rules":
-    [
-        // Set up the textures for a button
-        {
-            "class": "button_control",
-            "layer0.tint": "#000",
-            "layer0.opacity": 1.0,
-            "layer1.texture": "Theme - Example/textures/button_background.png",
-            "layer1.inner_margin": 4,
-            "layer1.opacity": 1.0,
-            "layer2.texture": "Theme - Example/textures/button_highlight.png",
-            "layer2.inner_margin": 4,
-            "layer2.opacity": 0.0,
-            "content_margin": [4, 8, 4, 8]
-        },
-        // Show the highlight texture when the button is hovered
-        {
-            "class": "button_control",
-            "attributes": ["hover"],
-            "layer2.opacity": 1.0
-        },
-        // Basic text label style
-        {
-            "class": "label_control",
-            "fg": "var(light_gray)",
-            "font.bold": true
-        },
-        // Brighten labels contained in a button on hover
-        {
-            "class": "label_control",
-            "parents": [{"class": "button_control", "attributes": ["hover"]}],
-            "fg": "white"
-        }
-    ]
-}
-~~~
-
-## Terminology
-
-The primary contents of a theme is an array of*rules*. Each*rule*object contains a"class"key used to match to an element. In addition to the"class", matching can be further restricted by specifying"attributes","settings","parents"and"platforms"keys.*Properties*affect the look or behavior of the element.
-
-*Variables*allow reusing values throughout different*rules*. Variables may contain any type of syntax, but may only be referenced by top-level keys in a*rule*.3179
-
-Most elements have a single class name, although a few have more than one to allow for both generic, and specific styling. For example, thepopup\_controlclass can be used to set styles for the auto complete and HTML popups, howeverpopup\_control auto\_complete\_popupmay be used to target just the auto complete popup. Multiple"class"values are separated by a space. When a rule specified multiple class names, all must be present on the element for the rule to be applied.
-
-"attributes"are set by Sublime Text, and indicate the state of user interaction, or other information about the nature of an element. The value is an array of strings. Examples include`"hover"`,`"pressed"`and`"dirty"`.
-
-"settings"uses values from.sublime-settingsfiles to filter rules. This allowing theme authors to give users the ability to tweak a theme. Themes may define their own settings, but there are a handful of "default" settings that should be supported if possible. See[Settings](themes#settings)for more details.
-
-The value for the"settings"key may be one of:
-
-*   **array of strings**  
-    Each string is the name of boolean settings. To check for a`false`value, prefix the setting name with a`!`.  
-    Example:`["bold_folder_labels","!always_show_minimap_viewport"]`.
-*   **object**  
-    Each key is the name of a setting. A value may be a boolean, string, or array of strings. If an array of strings is used, the setting will be matched if any of the strings in the array matches the user’s value. When comparing to a string, the user’s setting will be coerced to an empty string when not set.  
-    Example:`{"bold_folder_labels":true,"file_tab_style":"rounded"}`.
-
-The"parents"key is an array of objects specifying the"class"and"attributes"that must be matched in a parent element.
-
-The"platforms"key is an array of strings specifying the what operating systems to apply the rule to. Valid options include`"osx"`,`"windows"`, and`"linux"`.
-
-*Properties*refer to all other keys in the JSON objects. Some properties are available on all elements, while others are specific to an individual element.
-
-## General Information
-
-The follow sections discuss information about images and how to specify styles.
-
-### SPECIFICITY
-
-Unlike CSS, a Sublime Text theme does not do specificity matching when applying rules to elements. All rules are tested, in order, against each element. Subsequent rules that match will override properties from previous rules.
-
-### TEXTURE IMAGES
-
-All textures in a theme are specified using PNG images. Each texture should be saved at "normal" DPI, where each pixel in the file will be mapped to one device pixel. All file paths in the theme definition should reference the normal DPI version.
-
-A second version of each texture should also be included at double the DPI, with`@2x`added to the filename right before the extension. Sublime Text will automatically use the`@2x`version when being displayed on a high-DPI screen.It is also possible to specify`@3x`variants of textures for screens running at 300% scale or higher3167.
-
-*SVG images are not currently supported.*
-
-### DIMENSIONS
-
-Integer units in a theme referring to dimensions are always specified in device-independent pixels (DIP). Sublime Text automatically handles scaling UI elements based on the screen density.
-
-### PADDING & MARGINS
-
-Padding and margin may be specified in one of three ways:
-
-*   A single integer value – the same value is applied to the left, top, right and bottom
-*   An array of two integers – the first value is applied to the left and right, while the second value is applied to the top and bottom
-*   An array of four integers – the values are applied, in order, to the left, top, right and bottom
-
-## Inheritance3179
-
-A theme may extend another theme, appending rules and overriding variables. To extend a theme, add a top-level key"extends"to the JSON object, with a string value of the base theme.
-
-~~~
-{
-    "extends": "Default.sublime-theme",
-    "rules":
-    [
-        {
-            "class": "label_control",
-            "parents": [{"class": "button_control", "attributes": ["hover"]}],
-            "fg": "red"
-        }
-    ]
-}
-~~~
-
-The resulting list of rules will start with the base theme rules followed by the extending theme rules. Any variables from the extending theme will override variables with the same name in the base theme. Variable overrides will affect rules both in the base theme and the extending theme.
-
-## Variables3179
-
-Reusable variables may be defined by a JSON object under the top-level key"variables". Variable names are strings, however the value may be a string, number, boolean, array or object. Using a variable requires specifying a string in the format`var(example_variable_name)`.
-
-~~~
-{
-    "variables":
+    // Show the highlight texture when the button is hovered
     {
-        "light_gray": "rgb(240, 240, 240)"
+        "class": "button_control",
+        "attributes": ["hover"],
+        "layer2.opacity": 1.0
     },
-    "rules":
-    [
-        {
-            "class": "label_control",
-            "fg": "var(light_gray)"
-        }
-    ]
+    // Basic text label style
+    {
+        "class": "label_control",
+        "fg": [240, 240, 240],
+        "font.bold": true
+    },
+    // Brighten labels contained in a button on hover
+    {
+        "class": "label_control",
+        "parents": [{"class": "button_control", "attributes": ["hover"]}],
+        "fg": [255, 255, 255]
+    }
 }
 ~~~
 
-Variables may be used as the value for any[property](themes#properties), but the variable must be the entire value, it may not be embedded within another variable. The only exception to this rule is that variables may be used as the base color for the CSS`color()`mod function.
+## 术语
 
-## Colors
+模板是JSON对象数组，称为*规则*。每个规则对象都包含`class`用于匹配元素的键。除`class`，匹配可以进一步通过指定的限制`attributes`，`settings`，`parents`和`platforms`密钥。*属性*会影响元素的外观或行为。
 
-Colors may be specified by CSS or legacy color syntax:
+大多数元素都有一个类名，尽管少数元素有多个元素允许通用和特定样式。例如，`popup_control`该类可用于为自动完成和HTML弹出窗口设置样式，但`popup_control auto_complete_popup`可用于仅定位自动完成弹出窗口。多个`class`值由空格分隔。当规则指定多个类名时，所有元素必须存在于要应用的规则的元素上。
 
-### CSS COLOR SYNTAX3179
+`attributes`由Sublime Text设置，并指示用户交互的状态或有关元素性质的其他信息。该值是一个字符串数组。实例包括`"hover"`，`"pressed"`和`"dirty"`。
 
-Since Sublime Text build 3177, colors in themes may now be specified using CSS syntax, as supported by[minihtml](minihtml). This includes support for hex,`rgb()`,`hsl()`, variables and the color mod function. Additionally, all[predefined variables](minihtml#predefined_variables)that are derived from the color scheme are available for use.
+`settings`是用户控制的值，可以在运行时更改。该值是一个字符串数组，它是从`.sublime-settings`文件中提取的布尔设置的名称 。要检查`false`值，请在设置名称前加上`!`模板，也可以创建自己的设置以允许用户更改样式。例子包括`"bold_folder_labels"`和`"!always_show_minimap_viewport"`。
 
-*The color white, as hex*
+该`parents`键是指定对象数组`class`和`attributes`必须在一个父元素相匹配。
 
-~~~
-#fff
-~~~
+该`platforms`键是一个字符串指定什么操作系统，应用规则的数组。有效的选项包括`"osx"`，`"windows"`，和`"linux"`。
 
-*The color white, using`rgb()`functional notation*
+*属性*引用JSON对象中的所有其他键。某些属性可用于所有元素，而其他属性特定于单个元素。
 
-~~~
-rgb(255, 255, 255)
-~~~
+## 一般信息
 
-*50% opacity white, using`hsla()`functional notation*
+以下部分讨论有关图像的信息以及如何指定样式。
 
-~~~
-hsla(0, 100%, 100%, 0.5)
-~~~
+### 特性
 
-*The closest color to red, as defined in the color scheme*
+与CSS不同，Sublime Text模板在将规则应用于元素时不进行特性匹配。所有规则都按顺序针对每个元素进行测试。匹配的后续规则将覆盖先前规则的属性。
 
-~~~
-var(--redish)
-~~~
+### 纹理图像
 
-*50% opacity of the closest color to red, as defined in the color scheme*
+使用PNG图像指定模板中的所有纹理。每个纹理应保存在“正常”DPI，其中文件中的每个像素将映射到一个设备像素。模板定义中的所有文件路径都应引用正常的DPI版本。
 
-~~~
-color(var(--redish) a(0.5))
-~~~
+每个纹理的第二个版本也应该包含在DPI的两倍，并`@2x`在扩展名之前添加到文件名。Sublime Text将`@2x`在高DPI屏幕上显示时自动使用该 版本。
 
-### LEGACY COLOR SYNTAX
+虽然目前尚未实施，但显示器的分辨率越来越高，可能会`@3x`在未来的某些时候支持变体。
 
-Prior to supporting CSS syntax for colors, themes were only able to specify colors using the following formats, which are now deprecated.
+*目前不支持SVG图像。*
+
+### 外形尺寸
+
+引用维度的模板中的整数单元始终在与设备无关的像素（DIP）中指定。Sublime Text根据屏幕密度自动处理缩放UI元素。
+
+### 填充和边距
+
+填充和边距可以通过以下三种方式之一指定：
+
+*   单个整数值 - 相同的值应用于左侧，顶部，右侧和底部
+*   一个包含两个整数的数组 - 第一个值应用于左侧和顶部，而第二个值应用于右侧和底部
+*   一个包含四个整数的数组 - 这些值按顺序应用于左侧，顶部，右侧和底部
+
+### 颜色值
+
+颜色可以以多种不同的格式指定：
 
 #### RGB
 
-Colors in the RGB color space are specified via an array of 3 or 4 numbers, with the first three being integers ranging from`0`to`255`representing the components red, green and blue. The optional fourth number is a float ranging from`0.0`to`1.0`that controls the opacity of the color.
+在RGB颜色空间中的颜色通过的3个或4个数字的阵列指定，前三个是整数范围从`0`到`255`表示红色，绿色和蓝色的组件。可选的第四数目是范围从浮子`0.0`至`1.0`控制该颜色的不透明度。
 
-*The color white, with full opacity*
+*颜色为白色，完全不透明*
 
-~~~
+~~~js
 [255, 255, 255]
 ~~~
 
-*The color blue, with 50% opacity*
+*颜色为蓝色，不透明度为50％*
 
-~~~
+~~~js
 [0, 0, 255, 0.5]
 ~~~
 
 #### HSL
 
-Colors may also be specified using the HSL color space by creating an array of 4 elements, with the first being the string`"hsl"`. The second element is an integer from`0`to`360`specifying the hue. The third is an integer from`0`to`100`specifying the saturation, and the fourth is an integer from`0`to`100`specifying the lightness.
+也可以使用HSL颜色空间通过创建4个元素的数组来指定颜色，第一个是字符串`"hsl"`。第二个元素是从整数`0`到`360`指定色调。第三是从整数`0`到`100`指定饱和度，和第四个是由一个整数`0`，以`100`指定的亮度。
 
-*A dark magenta, with full opacity*
+*深洋红色，完全不透明*
 
-~~~
+~~~js
 ["hsl", 325, 100, 30]
 ~~~
 
-A float from`0.0`to`1.0`may be added as a fifth element to control the opacity.
+可以添加 来自`0.0`to 的float`1.0`作为第五个元素来控制不透明度。
 
-*A bright teal, with 50% opacity*
+*明亮的蓝绿色，50％不透明度*
 
-~~~
+~~~js
 ["hsl", 180, 100, 75, 0.5]
 ~~~
 
-#### DERIVED COLORS
+#### 派生的颜色
 
-It is also possible to derive colors from the current global color scheme. Colors in this format are specified using arrays with specific formats. In all cases, the first element is the base color, which may be`"foreground"`,`"background"`or`"accent"`.
+也可以从当前的全局颜色方案中导出颜色。使用具有特定格式的数组指定此格式的颜色。在所有情况下，第一个元素是基色，可以是`"foreground"`，`"background"`或`"accent"`。
 
-##### Change Opacity of Base Color
+##### 改变基色的不透明度
 
-To change the opacity of a base color, specify an array of 2 elements, the first being the base color name and the second being a float from`0.0`to`1.0`. The opacity will be set to the float value.
+要改变一个基色的不透明度，指定2个元素的阵列，第一个基体颜色名，第二个是从浮`0.0`到`1.0`。不透明度将设置为浮点值。
 
-*The color scheme foreground, at 90% opacity*
+*配色方案前景，不透明度为90％*
 
-~~~
+~~~js
 ["foreground", 0.9]
 ~~~
 
-##### De-saturate Base Color
+##### 去饱和基色
 
-To de-saturate a base color, specify an array with 3 elements. The first is the name of the base color, the second is the string`"grayscale"`, and the third is an integer from`0`to`100`which specifies what percentage of the saturation (in HSL color space) of the existing color should be retained. A value of`100`means no change, whereas a value of`0`would cause the color to be completely desaturated.
+要使基色去饱和，请指定包含3个元素的数组。第一个是基色的名称，第二个是字符串`"grayscale"`，第三个是来自的整数`0`，`100`它指定应保留现有颜色的饱和度（在HSL颜色空间中）的百分比。值`100`意味着没有变化，而值`0`会导致颜色完全去饱和。
 
-*The color scheme foreground, with the saturation adjusted to 1/4 of the original value.*
+*颜色方案前景，饱和度调整为原始值的1/4。*
 
-~~~
+~~~js
 ["foreground", "grayscale", 25]
 ~~~
 
-##### Tint Base Color
+##### 色调基色
 
-5 and 6-element derived colors allow blending a color into the base color. A 5-element colors uses an RGBA color, whereas a 6-element uses an HSLA. In both cases, the last element, which normally represents the opacity, controls how much of the secondary color is blended into the base.
+5和6元素导出的颜色允许将颜色混合到基色中。5种颜色使用RGBA颜色，而6种颜色使用HSLA颜色。在这两种情况下，最后一个元素（通常表示不透明度）控制将多少二次色混合到基底中。
 
-*The color scheme background, lightened with white*
+*配色方案背景，用白色照亮*
 
-~~~
+~~~js
 ["background", 255, 255, 255, 0.1]
 ~~~
 
-*The color scheme accent, tinted with dark red*
+*配色方案，深红色*
 
-~~~
+~~~js
 ["accent", "hsl", 0, 100, 30, 0.2]
 ~~~
 
-Colors derived from the color scheme will always be based on the global color scheme, and will not reflect view-specific color schemes. Certain view-specific controls in the UI have tinting properties that allow using the view-specific color scheme colors.
+从颜色方案派生的颜色将始终基于全局颜色方案，并且不会反映特定于视图的颜色方案。UI中的某些特定于视图的控件具有着色属性，允许使用特定于视图的颜色方案颜色。
 
-## Font Sizes
+## 特性
 
-Font sizes may be specified in the formats:
+特性指定为字符串数组。每个字符串都是一个特性名称。要检查是否缺少特性，请`!`在名称前加上a 。
 
-### NUMERIC
+以下特性对所有元素都是通用的：
 
-An integer or float to specify the size of the font in pixels.  
-*Examples:`12`,`13.5`.*
+徘徊
 
-### CSS FORMAT4050
+每当用户的鼠标悬停在元素上时设置
 
-A string of a`px`or`rem`CSS font size.  
-*Examples:`12px`,`1.2rem`*
+### 亮度
 
-*The`rem`size is based on the global settingfont\_sizefor most elements. Elements that use a different root font size will specify in the description.*
+尽管并非所有元素都可用，但许多元素都具有基于当前颜色方案的近似亮度设置的特性。大多数元素都具有基于全局颜色方案设置的特性。但是，选项卡和选项卡背景具有基于特定于所选视图的颜色方案的特性。
 
-## Attributes
-
-Attributes are specified as an array of strings. Each string is an attribute name. To check for the absence of an attribute, prepend a`!`to the name.
-
-The following attributes are common to all elements:
-
-hover
-
-set whenever the user's mouse is hovered over an element
-
-### LUMINOSITY
-
-Although not available on all elements, many have attributes set based on the approximate luminosity of the current color scheme. Most elements have the attributes set based on the global color scheme. Tabs and the tab background, however, have the attributes based on the color scheme specific to the selected view.
-
-The attributes are assigned based on the`V`value of the background color, when represented as[HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)colors.
+`V`当表示为[HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)颜色时，基于背景颜色 的值 分配特性。
 
 file\_light
 
-`V`from`0.60`\-`1.00`
+`V`从`0.60-1.00`
 
 file\_medium
 
-`V`from`0.30`\-`0.59`
+`V`从`0.30-0.59`
 
 file\_medium\_dark
 
-`V`from`0.10`\-`0.29`
+`V`从`0.10-0.29`
 
 file\_dark
 
-`V`from`0.00`\-`0.09`
+`V`从`0.00-0.09`
 
-## Settings
+## 设置
 
-Certain Sublime Text settings are design to influence the UI. Themes should respect these settings and change elements based on them.
+某些Sublime Text设置旨在影响UI。模板应尊重这些设置并根据它们更改元素。
 
 overlay\_scroll\_bars
 
-this should affect the style of the scroll bars – generally they should be semi-transparent and theoverlayproperty of thescroll\_area\_controlshould be set to`true`
+这应该会影响滚动条的样式 - 通常它们应该是半透明的`overlay`，并且`scroll_area_control`应该将其属性设置为`true`
 
 always\_show\_minimap\_viewport
 
-if the current viewport area should be highlighted on the minimap even when the user is not hovering over the minimap.
+如果当前视口区域应在小地图上突出显示，即使用户没有悬停在小地图上。
 
 bold\_folder\_labels
 
-if folder names in the side bar should have thefont.boldproperty set to`true`.
+如果侧栏中的文件夹名称应将`font.bold`属性设置为`true`。
 
 mouse\_wheel\_switches\_tabs
 
-this is used to control mouse wheel behavior of tabs on Linux. It should be combined with checking for`!enable_tab_scrolling`to change themouse\_wheel\_switchproperty of thetabset\_controlto`false`.
+这用于控制Linux上标签的鼠标滚轮行为。它应与检查相结合`!enable_tab_scrolling`来改变`mouse_wheel_switch`的关键`tabset_control`来`false`。
 
 highlight\_modified\_tabs
 
-if the tabs of modified files should be highlighted. This setting should be checked in addition to thedirtyattribute.
+如果应突出显示已修改文件的选项卡。除`dirty`属性外，还应检查此设置 。
 
 show\_tab\_close\_buttons
 
-if tabs should have close buttons
+如果标签应该有关闭按钮
 
-inactive\_sheet\_dimming4095
+## 属性
 
-if sheets other than the one with the attributehighlightedshould be visually de-emphasized usingbackground\_modifier
+`.sublime-theme`文件是描述UI元素应当如何称呼对象的JSON阵列。UI中的每个元素都支持以下键：
 
-## Properties
+层0。*\**
 
-The"rules"key of a.sublime-themefile is a JSON array of of objects describing how UI elements should be styled. Every element in the UI supports the following keys:
+元素 的最底部纹理[图层](themes#layer_properties)
 
-layer0.*\**
+layer1的。*\**
 
-the bottom-most texture[layer](themes#layer_properties)for the element
+元素 的第二个纹理[图层](themes#layer_properties)
 
-layer1.*\**
+二层。*\**
 
-the second texture[layer](themes#layer_properties)for the element
+元素 的第三个纹理[图层](themes#layer_properties)
 
-layer2.*\**
+三层。*\**
 
-the third texture[layer](themes#layer_properties)for the element
-
-layer3.*\**
-
-the fourth texture[layer](themes#layer_properties)for the element
+元素 的第四个纹理[图层](themes#layer_properties)
 
 hit\_test\_level
 
-a float value setting the required opacity of a pixel for a click to be considering a "hit"
+一个浮点值，设置一个像素所需的不透明度，以便点击一下“点击”
 
-### LAYER PROPERTIES
+### 图层属性
 
-Every element in the UI supports up to four texture layers for displaying fill colors and raster graphics. Each layer has dotted sub-keys in the formatlayer*#*.*sub-key*. Valid sub-keys include:
+UI中的每个元素都支持最多四个纹理图层，用于显示填充颜色和光栅图形。每个层都有格式的虚线子键 。有效的子键包括：`layer*#*.*sub-key*`
 
-*layer#.*opacity
+*层＃。*不透明度
 
-a float value from`0.0`to`1.0`that controls the master opacity of the layer.
+从一个浮点值`0.0`，以`1.0`控制该层的主不透明度。
 
-Example:`0.9`
+例：`0.9`
 
-*layer#.*tint
+*层＃。*着色
 
-a[color value](themes#color_values)of a fill color to apply to the layer.
+要应用于图层的填充颜色 的[颜色值](themes#color_values)。
 
-Example:`[255,0,0,127]`
+例：`[255, 0, 0, 127]`
 
-*layer#.*texture
+*层＃。*质地
 
-a string of the file path to a PNG image, relative to thePackages/folder.
+相对于`Packages/`文件夹的PNG图像文件路径的字符串。
 
-Example:`"Theme - Default/arrow_right.png"`
+例：`"Theme - Default/arrow_right.png"`
 
-*layer#.*inner\_margin
+*层＃。*inner\_margin
 
-texture images are stretched to fit the element by slicing into a grid of 9 using four lines. See[padding & margins](themes#padding_margin)for valid formats with which to specify the margin used to make the slices.
+通过使用四条线切割成9的网格来拉伸纹理图像以适合元素。请参阅[填充和边距](themes#padding_margin)以获取有效格式，以指定用于制作切片的边距。
 
-Example:`[5,2,5,2]`
+例：`[5, 2, 5, 2]`
 
-*layer#.*draw\_center
+*层＃。*draw\_center
 
-a boolean that controls if the center rectangle of the 9-grid created via*layer#.*inner\_marginshould be drawn. This is an optimization that allows skipping an unused section of texture.
+一个布尔值，控制是否`*layer#.*inner_margin`应绘制创建的9网格的中心矩形。这是一个允许跳过未使用的纹理部分的优化。
 
-Example:`false`
+例：`false`
 
-*layer#.*repeat
+*层＃。*重复
 
-a boolean that controls if the texture should be repeated instead of stretched.
+一个布尔值，控制是否应重复纹理而不是拉伸。
 
-Example:`false`
+例：`false`
 
-#### VALUE ANIMATION
+#### 价值动画
 
-Properties specified by floats may be animated over time. Instead of providing a single numeric value, the animation is specified with an object including details of the animation.*Value animation is primarily useful for changing opacity over time.*The object keys are:
+浮动指定的属性可能会随着时间的推移而动画化。不是提供单个数值，而是使用包含动画细节的对象指定动画。*值动画主要用于随时间改变不透明度。*对象键是：
 
-target
+目标
 
-a float value from`0.0`to`1.0`that controls the destination value
+从一个浮点值`0.0`，以`1.0`控制该目标值
 
-Example:`1.0`
+例：`1.0`
 
-speed
+速度
 
-a float value of`1.0`or greater that controls the relative length of time the animation takes
+浮点值`1.0`或更大值，用于控制动画所需的相对时间长度
 
-Example:`1.5`
+例：`1.5`
 
-interpolation
+插值
 
-an optional string that allow specifying the use of*smoothstep*function instead of the default*linear*function.
+一个可选字符串，允许指定`smoothstep`函数的使用 而不是默认的线性函数。
 
-Default:`"linear"`  
-Example:`"smoothstep"`
+默认值：`"linear"`  
+示例：`"smoothstep"`
 
-#### TEXTURE ANIMATION
+*由于规则是按顺序应用的，因此可以尝试设置基本不透明度，然后使用后续规则指定属性或父尝试应用动画。这通常会导致值重置为基本量，然后动画似乎无法正常工作。*
 
-The*layer#.*texturesub-key may be an object to specify an animation based on two or more PNG images. The object keys are:
+#### 纹理动画
 
-keyframes
+所述`*layer#.*texture`子密钥可以是一个对象来指定基于两个或两个以上的PNG图像的动画。对象键是：
 
-an array of strings of the paths to PNG images, in order
+关键帧
 
-Example:`["Theme - Default/spinner.png","Theme - Default/spinner1.png"]`
+按顺序排列PNG图像路径的字符串数组
 
-loop
+例：`["Theme - Default/spinner.png", "Theme - Default/spinner1.png"]`
 
-an optional boolean that controls if the animation should repeat
+循环
 
-Default:`false`  
-Example:`true`
+一个可选的布尔值，控制动画是否应该重复
+
+默认值：`false`  
+示例：`true`
 
 frame\_time
 
-an optional float specifying how long each frame should be displayed.`1.0`represents 1 second.
+一个可选的浮点数，指定每帧应显示多长时间。`1.0`代表1秒。
 
-Default:`0.0333`(30 fps)  
-Example:`0.0166`(60 fps)
+默认值：`0.0333`（30 fps）  
+示例：`0.0166`（60 fps）
 
-### TEXTURE TINTING PROPERTIES
+### 纹理着色属性
 
-Certain elements have an available tint value set by the background of current color scheme. The tint can be modified and applied to alayer*#*.textureimage.
+某些元素具有由当前颜色方案的背景设置的可用色调值。可以修改色调并将其应用于 图像。`layer*#*.texture`
 
 tint\_index
 
-Controls which layer the tint is applied to. Must be an integer from`0`to`3`.
+控制应用色调的图层。必须从一个整数`0`到`3`。
 
 tint\_modifier
 
-An array of four integers in the range`0`to`255`. The first three are blended into the RGB values from the tint color with the fourth value specifying how much of these RGB modifier values to apply.
+在该范围的四个整数的数组`0`来`255`。前三个从色调颜色混合到RGB值中，第四个值指定要应用多少RGB修改器值。
 
-### FONT PROPERTIES
+### 字体属性
 
-Certain textual elements allow setting the following font properties:
+某些文本元素允许设置以下字体属性：
 
 font.face
 
-the name of the font face
+字体的名称
 
-font.size
+字体大小
 
-the[font size](themes#font_sizes)
+整数点大小
 
 font.bold
 
-a boolean, if the font should be bold
+如果字体应为粗体，则为布尔值
 
 font.italic
 
-a boolean, if the font should be italic
+如果字体应为斜体，则为布尔值
 
-color
+### 阴影属性
 
-a[color value](themes#color_values)to use for the text - thefgproperty is an alias for this for backwards compatibility
+某些文本元素允许设置以下属性：
 
 shadow\_color
 
-a[color value](themes#color_values)to use for the text shadow
+用于文本阴影 的[颜色值](themes#color_values)
 
 shadow\_offset
 
-a 2-element array containing the X and Y offsets of the shadow
+包含阴影的X和Y偏移的2元素数组
 
-opacity4073
+### 过滤标签属性
 
-a float from`0.0`to`1.0`that is multiplied against the opacity of thecolorandshadow\_colorproperties
+快速面板中使用的标签具有基于选择和匹配的颜色控制
 
-### FILTER LABEL PROPERTIES
+FG
 
-Labels used in the quick panel have color control based on selection and matching
-
-fg
-
-a[color value](themes#color_values)for unselected, unmatched text
+未选择的，不匹配的文本 的[颜色值](themes#color_values)
 
 match\_fg
 
-a[color value](themes#color_values)for unselected, matched text
+未选择的匹配文本 的[颜色值](themes#color_values)
 
-bg
+BG
 
-a[color value](themes#color_values)for the background of an unselected row
+一个[颜色值](themes#color_values)对未被选择的行的背景
 
 selected\_fg
 
-a[color value](themes#color_values)for selected, unmatched text
+选定的不匹配文本 的[颜色值](themes#color_values)
 
 selected\_match\_fg
 
-a[color value](themes#color_values)for selected, matched text
+选定匹配文本 的[颜色值](themes#color_values)
 
-bg
+BG
 
-a[color value](themes#color_values)for the background of a selected row
+一个[颜色值](themes#color_values)针对所选择的行的背景
 
 font.face
 
-the name of the font face
+字体的名称
 
-font.size
+字体大小
 
-the[font size](themes#font_sizes)
+整数点大小
 
-### DATA TABLE PROPERTIES
+### 数据表属性
 
-Row-based tables of data provide the following properties:
+基于行的数据表提供以下属性：
 
 dark\_content
 
-if the background is dark – used to set thedarkattribute for scrollbars
+如果背景很暗 - 用于设置`dark`滚动条的属性
 
 row\_padding
 
-padding added to each row, in one of the formats described in[padding & margins](themes#padding_margin)
+padding以[padding和margin中](themes#padding_margin)描述的格式之一添加到每一行[](themes#padding_margin)
 
-### STYLED LABEL PROPERTIES
+## 分子
 
-Certain labels allow for additional control over their appearance. They support the properties:
+以下是构成Sublime Text UI的元素的详尽列表，以及支持的属性和属性。
 
-border\_color
+*   [视窗](themes#elements-windows)
+*   [边栏](themes#elements-side_bar)
+*   [标签](themes#elements-tabs)
+*   [快速面板](themes#elements-quick_panel)
+*   [查看](themes#elements-views)
+*   [面板](themes#elements-panels)
+*   [状态栏](themes#elements-status_bar)
+*   [对话框](themes#elements-dialogs)
+*   [滚动条](themes#elements-scroll_bars)
+*   [输入](themes#elements-inputs)
+*   [按钮](themes#elements-buttons)
+*   [标签](themes#elements-labels)
+*   [工具提示](themes#elements-tool_tips)
 
-a[color value](themes#color_values)for the border of the label
+### 视窗
 
-background\_color
+标题栏
 
-a[color value](themes#color_values)for the background of the label
+*仅在OS X 10.10+上受支持。*
 
-## Elements
+#### 属性
 
-The following is an exhaustive list of the elements that comprise the Sublime Text UI, along with supported attributes and properties.
+[光度属性](themes#luminosity_attributes)
 
-*   [Windows](themes#elements-windows)
-*   [Side Bar](themes#elements-side_bar)
-*   [Tabs](themes#elements-tabs)
-*   [Quick Panel](themes#elements-quick_panel)
-*   [Views](themes#elements-views)
-*   [Auto Complete](themes#elements-auto_complete)
-*   [Panels](themes#elements-panels)
-*   [Status Bar](themes#elements-status_bar)
-*   [Dialogs](themes#elements-dialogs)
-*   [Scroll Bars](themes#elements-scroll_bars)
-*   [Inputs](themes#elements-inputs)
-*   [Buttons](themes#elements-buttons)
-*   [Labels](themes#elements-labels)
-*   [Tool Tips](themes#elements-tool_tips)
+#### 属性
 
-### WINDOWS
+FG
 
-title\_bar
+用于窗口标题文本 的[颜色值](themes#color_values)
 
-#### Attributes
+BG
 
-[luminosity attributes](themes#luminosity_attributes)
+用于标题栏背景 的[颜色值](themes#color_values)
 
-#### Properties
+窗口
 
-fg
+此元素不能直接设置样式，但可以在`parents`说明符中使用。发光度属性基于全局颜色方案设置。
 
-a[color value](themes#color_values)to use for the window title text –*Mac 10.10 or newer only*
+#### 属性
 
-bg
+[光度属性](themes#luminosity_attributes)
 
-a[color value](themes#color_values)to use for the title bar background –*Mac 10.10 or newer only*
+#### 属性
 
-style4050
-
-the OS style to use for the title bar -`"system"`,`"dark"`*(Mac/Linux only)*or`"light"`*(Mac only)*.
-
-Default:`"system"`
-
-window
-
-This element can not be styled directly, however it can be used in a"parents"key. The luminosity attributes are set based on the global color scheme.
-
-#### Attributes
-
-[luminosity attributes](themes#luminosity_attributes)
-
-#### Properties
-
-*none*
+*没有*
 
 edit\_window
 
-This element contains the main editor window, and is intended for use in a"parents"key.
+此元素包含主编辑器窗口，旨在用于`parents`说明符。
 
-#### Properties
+#### 属性
 
-*none*
+*没有*
 
 switch\_project\_window
 
-This element contains the Switch Project window, and is intended for use in a"parents"key.
+此元素包含“切换项目”窗口，旨在用于`parents`说明符。
 
-#### Properties
+#### 属性
 
-*none*
+*没有*
 
-### SIDE BAR
+### 边栏
 
 sidebar\_container
 
-The primary sidebar container that handles scrolling
+处理滚动的主要侧边栏容器
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around thesidebar\_tree
+该[保证金](themes#padding_margin)周围的`sidebar_tree`
 
 sidebar\_tree
 
-A tree control containing multipletree\_rows
+包含多个`tree_row`s的 树控件
 
-#### Properties
+#### 属性
 
-[data table properties](themes#data_table_properties)
+[数据表属性](themes#data_table_properties)
 
-indent
+缩进
 
-an integer amount to indent each level of the tree structure
+一个整数量，用于缩进树结构的每个级别
 
 indent\_offset
 
-an additional indent applied to every row, for the sake of positioningdisclosure\_button\_controlandclose\_button
+为了定位`disclosure_button_control`和定义 ，应用于每一行的附加缩进`close_button`
 
 indent\_top\_level
 
-a boolean if top-level rows in the tree should be indented
+如果树中的顶级行应缩进，则为布尔值
 
 spacer\_rows
 
-a boolean controlling if a blank row should be added between the*Open Files*and*Folders*sections of the sidebar, when both are visible.
+一个布尔值控制是否应该在侧边栏的“*打开文件*和*文件夹”*部分之间添加一个空行，当两者都可见时。
 
 tree\_row
 
-A row may contain a header, open file, folder or file
+行可以包含标题，打开文件，文件夹或文件
 
-#### Attributes
+#### 属性
 
-selectable
+可选
 
-when a row is selectable
+当一行可选时
 
-selected
+选
 
-when an selectable row is selected
+选择可选行时
 
-expandable
+扩张
 
-when a row is expandable
+当一行可扩展时
 
-expanded
+扩大
 
-when an expandable row is expanded
+扩展可扩展行时
 
 sidebar\_heading
 
-One of the "Open Files", "Group #" or "Folders" headings in the sidebar
+侧栏中的“打开文件”，“组＃”或“文件夹”标题之一
 
-#### Properties
+#### 属性
 
-[font properties](themes#font_properties)
+[字体属性](themes#font_properties)[阴影属性](themes#shadow_properties)
 
-case3179
+FG
 
-the case modification to use for the heading -`"upper"`,`"lower"`or`"title"`.
-
-Default:`"upper"`
-
-file\_system\_entry3181
-
-The container holding information about a file or folder in the sidebar. Contains different controls based on which section of the sidebar it is within.
-
-Within the*Open Files*section, this control will contain asidebar\_labelwith the file name, plus possibly avcs\_status\_badge.
-
-Within the*Folders*section, this control will contain a folder or file icon (eithericon\_folder,icon\_folder\_loading,icon\_folder\_duporicon\_file\_type), asidebar\_labelwith the file or folder name, plus possibly avcs\_status\_badge.
-
-#### Attributes
-
-ignored
-
-**Files:**when a file is ignored  
-**Folders:**when the entire folder is ignored
-
-untracked
-
-**Files:**when a file is new or not recognized  
-**Folders:**when a folder contains one or more untracked files
-
-modified
-
-**Files:**when a file has been changed on disk  
-**Folders:**when a folder contains one or more modified files
-
-missing
-
-**Folders:**when one or more of a folder‘s files is no longer on disk
-
-added
-
-**Files:**when a new file has been newly added to the index  
-**Folders:**when a folder contains one or more added files
-
-staged
-
-**Files:**when a modified file has been added to the index  
-**Folders:**when a folder contains one or more staged files
-
-deleted
-
-**Folders:**when one or more of a folder‘s files has been added to the index for removal
-
-unmerged
-
-**Files:**when a file is in a conflict state and needs to be resolved  
-**Folders:**when a folder contains one or more unmerged files
-
-#### Properties
-
-content\_margin
-
-the[margin](themes#padding_margin)around the contained controls
-
-spacing
-
-an integer number of pixels between each contained control
+用于文本 的[颜色值](themes#color_values)
 
 sidebar\_label
 
-Names of open files, folder names and filenames
+打开文件，文件夹名称和文件名的名称
 
-#### Properties
+#### 属性
 
-[font properties](themes#font_properties)
+[字体属性](themes#font_properties)[阴影属性](themes#shadow_properties)
+
+FG
+
+用于文本 的[颜色值](themes#color_values)
 
 close\_button
 
-A button to the left of each file in the*Open Files*section
+“*打开文件”*部分 中每个文件左侧的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 disclosure\_button\_control
 
-An expand/collapse icon present in alltree\_rows that can be expanded
+可以展开的所有`tree_row`s中 的展开/折叠图标
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 icon\_folder
 
-Used for a folder once the contents have been fully enumerated
+内容完全枚举后用于文件夹
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_folder\_loading
 
-Used for a folder while the contents are being enumerated
+在枚举内容时用于文件夹
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_folder\_dup
 
-Used for a folder that has been scanned previously in the sidebar.*This is necessary to prevent a possibly infinite list of files due to recursive symlinks.*
+用于先前在侧栏中扫描过的文件夹。*由于递归符号链接，这对于防止可能无限的文件列表是必要的。*
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_file\_type
 
-The icon for a file. Thelayer0.textureshould not be set since it is determined dynamically based on theiconsetting provided by.tmPreferencesfiles.
+文件的图标。在`layer0.texture`因为它是基于动态确定不应该设置`icon`提供设置*.tmPreferences*文件。
 
-#### Properties
-
-content\_margin
-
-for icons, the[margin](themes#padding_margin)specifies the dimensions
-
-vcs\_status\_badge3181
-
-An icon contained withinfile\_system\_entrythat is used to display the status of a file or folder with regards to a Git repository it is contained in. This icon will only be shown if the settingshow\_git\_statusis`true`, the file is contained within a Git repository, and the file has some sort of special state within the repository.*A file that is not shown via`git status`and is not ignored via a.gitignorerule will have no icon.*
-
-#### Attributes
-
-ignored
-
-**Files:**when a file is ignored  
-**Folders:**when the entire folder is ignored
-
-untracked
-
-**Files:**when a file is new or not recognized  
-**Folders:**when a folder contains one or more untracked files
-
-modified
-
-**Files:**when a file has been changed on disk  
-**Folders:**when a folder contains one or more modified files
-
-missing
-
-**Folders:**when one or more of a folder‘s files is no longer on disk
-
-added
-
-**Files:**when a new file has been newly added to the index  
-**Folders:**when a folder contains one or more added files
-
-staged
-
-**Files:**when a modified file has been added to the index  
-**Folders:**when a folder contains one or more staged files
-
-deleted
-
-**Folders:**when one or more of a folder‘s files has been added to the index for removal
-
-unmerged
-
-**Files:**when a file is in a conflict state and needs to be resolved  
-**Folders:**when a folder contains one or more unmerged files
-
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
-### TABS
+### 标签
 
 tabset\_control
 
-#### Attributes
+#### 属性
 
-[luminosity attributes](themes#luminosity_attributes)
+[光度属性](themes#luminosity_attributes)
 
-#### Properties
-
-[texture tinting properties](themes#texture_tinting_properties)
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around thetab\_controls
+该[保证金](themes#padding_margin)周围的`tab_control`小号
 
 tab\_overlap
 
-how many DIPs the tabs should overlap
+选项卡应重叠多少DIP
 
 tab\_width
 
-default tab width when space is available
+空间可用时的默认选项卡宽度
 
 tab\_min\_width
 
-the minimum tab width before tab scrolling occurs
+标签滚动前的最小标签宽度
 
 tab\_height
 
-the height of the tabs in DIPs
+DIP中标签的高度
 
 mouse\_wheel\_switch
 
-if the mouse wheel should switch tabs – this should only be set to`true`if the settingenable\_tab\_scrollingis false
+如果鼠标滚轮应切换标签 - 只应`true`设置`enable_tab_scrolling`为假 设置
 
 tab\_control
 
-#### Attributes
+#### 属性
 
-[luminosity attributes](themes#luminosity_attributes)
+[光度属性](themes#luminosity_attributes)
 
-dirty
+脏
 
-when the associated view has unsaved changed
+当关联的视图未保存更改时
 
-selected
+选
 
-when the associated view is the active view in its group
+当关联视图是其组中的活动视图时
 
-transient
+短暂的
 
-when the associate view is a preview and not fully opened
+当关联视图是预览而未完全打开时
 
-highlighted4050
-
-when the tab is for the sheet with input focus
-
-left4095
-
-when the tab is the left-most tab in the tabset
-
-right4095
-
-when the tab is the right-most tab in the tabset
-
-multiple4095
-
-when the tab is part of a sheet multi-selection
-
-left\_of\_selected4095
-
-when the tab is to the left of a selected tab
-
-left\_of\_hover4095
-
-when the tab is to the left of a hovered tab
-
-right\_of\_selected4095
-
-when the tab is to the right of a selected tab
-
-right\_of\_hover4095
-
-when the tab is to the right of a hovered tab
-
-left\_overhang4095
-
-when the tab is overhanging to the left of its sheet, which can occur during sheet multi-selection
-
-right\_overhang4095
-
-when the tab is overhanging to the right of its sheet, which can occur during sheet multi-selection
-
-#### Properties
-
-[texture tinting properties](themes#texture_tinting_properties)
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around thetab\_label
+该[保证金](themes#padding_margin)周围的`tab_label`
 
 max\_margin\_trim
 
-how much of the left and rightcontent\_marginmay be removed when tab space is extremely limited
+`content_margin`当标签空间非常有限时，可以删除 多少左右
 
 accent\_tint\_index
 
-Controls which layer the accent tint is applied to. Must be an integer from`0`to`3`. The accent color is specified by the color scheme.
+控制应用重音色调的图层。必须从一个整数`0`到`3`。强调颜色由颜色方案指定。
 
 accent\_tint\_modifier
 
-An array of four integers in the range`0`to`255`. The first three are blended into the RGB values from the accent tint color with the fourth value specifying how much of these RGB modifier values to apply.
+在该范围的四个整数的数组`0`来`255`。前三个从重音色调颜色混合到RGB值，第四个值指定要应用的RGB修改器值的多少。
 
 tab\_label
 
-#### Attributes
+#### 属性
 
-transient
+短暂的
 
-when the associate view is a preview and not fully opened
+当关联视图是预览而未完全打开时
 
-#### Properties
+#### 属性
 
-[font properties](themes#font_properties)
+[字体属性](themes#font_properties)[阴影属性](themes#shadow_properties)
+
+FG
+
+用于文本 的[颜色值](themes#color_values)
 
 tab\_close\_button
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 accent\_tint\_index
 
-Controls which layer the accent tint is applied to. Must be an integer from`0`to`3`. The accent color is specified by the color scheme.
+控制应用重音色调的图层。必须从一个整数`0`到`3`。强调颜色由颜色方案指定。
 
 accent\_tint\_modifier
 
-An array of four integers in the range`0`to`255`. The first three are blended into the RGB values from the accent tint color with the fourth value specifying how much of these RGB modifier values to apply.
+在该范围的四个整数的数组`0`来`255`。前三个从重音色调颜色混合到RGB值，第四个值指定要应用的RGB修改器值的多少。
 
 scroll\_tabs\_left\_button
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 scroll\_tabs\_right\_button
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 show\_tabs\_dropdown\_button
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
-tab\_connector4095
+### 快速面板
 
-#### Attributes
-
-left\_overhang4095
-
-when the tab is overhanging to the left of its sheet, which can occur during sheet multi-selection
-
-right\_overhang4095
-
-when the tab is overhanging to the right of its sheet, which can occur during sheet multi-selection
-
-#### Properties
-
-[texture tinting properties](themes#texture_tinting_properties)
-
-### QUICK PANEL
-
-The quick panel is used for the various Goto functionality, the command palette and is available for use by plugins.
+快速面板用于各种Goto功能，命令调色板，可供插件使用。
 
 overlay\_control
 
-The container for the quick panel, including the input and data table
+快速面板的容器，包括输入和数据表
 
-#### Specializations4050
-
-To allow for targeting theoverlay\_controlwhen the quick panel is being used for specific functionality, the following multi-class selectors are available:
-
-overlay\_control goto\_file
-
-The Goto File quick panel
-
-overlay\_control goto\_symbol
-
-The Goto Symbol quick panel
-
-overlay\_control goto\_symbol\_in\_project
-
-The Goto Symbol in Project quick panel
-
-overlay\_control goto\_line
-
-The Goto Line quick panel
-
-overlay\_control goto\_word
-
-The Goto Anything quick panel, filtering by word
-
-overlay\_control command\_palette
-
-The Command Palette
-
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around thequick\_panel
+该[保证金](themes#padding_margin)周围的`quick_panel`
 
 quick\_panel
 
-The data table displayed below the input. Normally the height is dynamic so the layers will not be visible, however the Switch Project window will use layers for the blank space below the filtered options.
+数据表显示在输入下方。通常，高度是动态的，因此图层将不可见，但“切换项目”窗口将使用图层作为已过滤选项下方的空白区域。
 
-#### Properties
+#### 属性
 
-[data table properties](themes#data_table_properties)
+[数据表属性](themes#data_table_properties)
 
 mini\_quick\_panel\_row
 
-A non-file row inquick\_panel. Contains onequick\_panel\_labelfor each line of text in the row.
+非文件行`quick_panel`。包含`quick_panel_label`行中每行文本的一行。
 
-#### Attributes
+#### 属性
 
-selected
+选
 
-when the row is selected
+选择行时
 
 quick\_panel\_row
 
-A Goto Anything file row inquick\_panel. Also used in the Switch Project window.
+一个Goto Anything文件行`quick_panel`。也用于Switch Project窗口。
 
-Containsquick\_panel\_labelwith the filename, andquick\_panel\_path\_labelfor the file path.
+包含`quick_panel_label`文件名和`quick_panel_path_label`文件路径。
 
-#### Attributes
+#### 属性
 
-selected
+选
 
-when the row is selected
-
-kind\_container4050
-
-A container shown to the left of the symbols in the Goto Symbol and Goto Symbol in Project quick panels. It contains thekind\_labeland is used to indicate the kind of the symbol.
-
-*This element is also used inauto\_completeto show the kind of the item being inserted. A"parents"key should be used to distinguish the two uses.*
-
-#### Specializations
-
-The elementkind\_containeris always paired with a second class name indicating the general category the kind belongs to. The categories for usage in the quick panel are as follows:
-
-kind\_container kind\_ambiguous
-
-When the kind of the item is unknown*– no color*
-
-kind\_container kind\_keyword
-
-When the item is a keyword*– typically pink*
-
-kind\_container kind\_type
-
-When the item is a data type, class, struct, interface, enum, trait, etc*– typically purple*
-
-kind\_container kind\_function
-
-When the item is a function, method, constructor or subroutine*– typically red*
-
-kind\_container kind\_namespace
-
-When the item is a namespace or module*– typically blue*
-
-kind\_container kind\_navigation
-
-When the item is a definition, label or section*– typically yellow*
-
-kind\_container kind\_markup
-
-When the item is a markup component, including HTML tags and CSS selectors*– typically orange*
-
-kind\_container kind\_variable
-
-When the item is a variable, member, attribute, constant or parameter*– typically cyan*
-
-kind\_container kind\_snippet
-
-When the item is a snippet*– typically green*
-
-kind\_container kind\_color\_redish
-
-When the plugin author wants to display red
-
-kind\_container kind\_color\_orangish
-
-When the plugin author wants to display orange
-
-kind\_container kind\_color\_yellowish
-
-When the plugin author wants to display yellow
-
-kind\_container kind\_color\_greenish
-
-When the plugin author wants to display green
-
-kind\_container kind\_color\_cyanish
-
-When the plugin author wants to display cyan
-
-kind\_container kind\_color\_bluish
-
-When the plugin author wants to display blue
-
-kind\_container kind\_color\_purplish
-
-When the plugin author wants to display puple
-
-kind\_container kind\_color\_pinkish
-
-When the plugin author wants to display pink
-
-kind\_container kind\_color\_dark
-
-When the plugin author wants to display a dark background
-
-kind\_container kind\_color\_light
-
-When the plugin author wants to display a light background
-
-#### Properties
-
-content\_margin
-
-a[margin](themes#padding_margin)that is added around thekind\_label
-
-kind\_label4050
-
-A label showing a single unicode character, contained within thekind\_container
-
-*This element is also used inauto\_completeto show the kind of the item being inserted. A"parents"key should be used to distinguish the two uses.*
-
-#### Properties
-
-[font properties](themes#font_properties)
-
-symbol\_container4050
-
-A container around thequick\_panel\_labelwhen showing the Goto Symbol or Goto Symbol in Project symbol lists
-
-#### Properties
-
-content\_margin
-
-a[margin](themes#padding_margin)that is added around thequick\_panel\_label
+选择行时
 
 quick\_panel\_label
 
-Filenames inquick\_panel\_rowand all text inmini\_quick\_panel\_row
+文件名`quick_panel_row`和中的所有文本`mini_quick_panel_row`
 
-#### Properties
+#### 属性
 
-[filter label properties](themes#filter_label_properties)
+[过滤标签属性](themes#filter_label_properties)
 
 quick\_panel\_path\_label
 
-File paths inquick\_panel\_row
+文件路径`quick_panel_row`
 
-#### Properties
+#### 属性
 
-[filter label properties](themes#filter_label_properties)
+[过滤标签属性](themes#filter_label_properties)
 
-quick\_panel\_label hint4083
-
-Annotations show to the right-hand side ofquick\_panel\_row
-
-#### Properties
-
-[filter label properties](themes#filter_label_properties)
-
-quick\_panel\_detail\_label4083
-
-Detail rows inquick\_panel\_row
-
-#### Properties
-
-color
-
-a[color value](themes#color_values)to use for the text
-
-link\_color
-
-a[color value](themes#color_values)to use for links
-
-monospace\_color
-
-a[color value](themes#color_values)to use for monospace text
-
-monospace\_background\_color
-
-a[color value](themes#color_values)to use for the background of monospace text
-
-### SHEETS
-
-sheet\_contents4095
-
-A sheet can have text, image or HTML contents
-
-#### Attributes
-
-[luminosity attributes](themes#luminosity_attributes)
-
-highlighted4095
-
-when the sheet has input focus
-
-#### Properties
-
-background\_modifier
-
-A string with a space-separated list of adjusters that are supported by the[minihtml`color()`mod function](minihtml#color-mod_function). Used for implementing inactive sheet dimming.
-
-### VIEWS
+### 查看
 
 text\_area\_control
 
-This element can not be styled directly since that is controlled by the color scheme, however it can be used in a"parents"key.
+此元素无法直接设置样式，因为它由颜色方案控制，但它可以在`parents`说明符中使用。
 
-#### Attributes
+#### 属性
 
-[luminosity attributes](themes#luminosity_attributes)
+[光度属性](themes#luminosity_attributes)
 
-#### Properties
+#### 属性
 
-*none*
+*没有*
 
 grid\_layout\_control
 
-The borders displayed between views when multiple groups are visible
+当多个组可见时，在视图之间显示边框
 
-#### Properties
+#### 属性
 
-*no layer support*
+*没有层支持*
 
-border\_color
+边框颜色
 
-a[color value](themes#color_values)to use for the border
+用于边框 的[颜色值](themes#color_values)
 
 border\_size
 
-an integer of the border size in DIPs
+DIP中边框大小的整数
 
 minimap\_control
 
-Control over the display of the viewport projection on the minimap
+控制小地图上视口投影的显示
 
-#### Properties
+#### 属性
 
-*no layer support*
+*没有层支持*
 
 viewport\_color
 
-a[color value](themes#color_values)to fill the viewport projection with
+用于填充视口投影 的[颜色值](themes#color_values)
 
 viewport\_opacity
 
-a float from`0.0`to`1.0`specifying the opacity of the viewport projection
+浮点数`0.0`到`1.0`指定视口投影的不透明度
 
 fold\_button\_control
 
-Code folding buttons in the gutter
+天沟中的代码折叠按钮
 
-#### Attributes
+#### 属性
 
-expanded
+扩大
 
-when a section of code is unfolded
+当一段代码展开时
 
-#### Properties
-
-content\_margin
-
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
-
-popup\_control html\_popup
-
-The primary container for the HTML popups used by*Show Definitions*and third-party packages. The tint of the scroll bar will be set to the background color of the HTML document.
-
-popup\_control annotation\_popup4050
-
-The primary container for the annotations added to the right-hand side of the editor pane by build systems and third-party packages.
-
-annotation\_close\_button4050
-
-The close button shown at the left edge ofannotation\_popup.
-
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
-
-### AUTO COMPLETE
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 popup\_control auto\_complete\_popup
 
-The primary container for the auto complete popup
+自动完成弹出窗口的主要容器
+
+popup\_control html\_popup
+
+*显示定义*和第三方包 使用的HTML弹出窗口的主要容器 。滚动条的色调将设置为HTML文档的背景颜色。
 
 auto\_complete
 
-The data table for completion data. The tint is set based on the background color of the color scheme applied to the view the popup is displayed in.
+完成数据的数据表。基于应用于显示弹出窗口的视图的颜色方案的背景颜色来设置色调。
 
-#### Properties
+#### 属性
 
-[data table properties](themes#data_table_properties)[texture tinting properties](themes#texture_tinting_properties)
+[数据表属性](themes#data_table_properties)[纹理着色属性](themes#texture_tinting_properties)
 
 table\_row
 
-A row inauto\_complete
+一排`auto_complete`
 
-#### Attributes
+#### 属性
 
-selected
+选
 
-when the user has highlighted a completion
-
-kind\_container4050
-
-A container shown to the left of an auto complete item, which contains thekind\_labeland is used to indicate the kind of the item
-
-*This element is also used in thequick\_panelfor Goto Symbol and Goto Symbol in Project. A"parents"key should be used to distinguish the two uses.*
-
-#### Specializations
-
-The elementkind\_containeris always paired with a second class name indicating the general category the kind belongs to. The categories for usage in the auto complete window are as follows:
-
-kind\_container kind\_ambiguous
-
-When the kind of the item is unknown*– no color*
-
-kind\_container kind\_keyword
-
-When the item is a keyword*– typically pink*
-
-kind\_container kind\_type
-
-When the item is a data type, class, struct, interface, enum, trait, etc*– typically purple*
-
-kind\_container kind\_function
-
-When the item is a function, method, constructor or subroutine*– typically red*
-
-kind\_container kind\_namespace
-
-When the item is a namespace or module*– typically blue*
-
-kind\_container kind\_navigation
-
-When the item is a definition, label or section*– typically yellow*
-
-kind\_container kind\_markup
-
-When the item is a markup component, including HTML tags and CSS selectors*– typically orange*
-
-kind\_container kind\_variable
-
-When the item is a variable, member, attribute, constant or parameter*– typically cyan*
-
-kind\_container kind\_snippet
-
-When the item is a snippet*– typically green*
-
-#### Properties
-
-content\_margin
-
-a[margin](themes#padding_margin)that is added around thekind\_label
-
-kind\_label4050
-
-A label showing a single unicode character, contained within thekind\_container
-
-*This element is also used in thequick\_panelfor Goto Symbol and Goto Symbol in Project. Aparentskey should be used to distinguish the two uses.*
-
-#### Properties
-
-[font properties](themes#font_properties)
-
-*The`rem`root font size is based on the font size of the editor control the auto complete window is being shown for.*
-
-trigger\_container4050
-
-A container around theauto\_complete\_label
-
-#### Properties
-
-content\_margin
-
-a[margin](themes#padding_margin)that is added around theauto\_complete\_label
+当用户突出显示完成时
 
 auto\_complete\_label
 
-Text in atable\_row
+文字在`table_row`
 
-#### Properties
+#### 属性
 
-[filter label properties](themes#filter_label_properties)
-
-fg\_blend
-
-a boolean controlling if thefg,match\_fg,selected\_fg, andselected\_match\_fgvalues should be blended onto the foreground color from the color scheme of the current view
-
-auto\_complete\_label auto\_complete\_hint4073
-
-The "annotation" hint displayed at the right-hand-side of atable\_row
-
-#### Properties
-
-[font properties](themes#font_properties)
-
-*The`rem`root font size is based on the font size of the editor control the auto complete window is being shown for.*
+[过滤标签属性](themes#filter_label_properties)
 
 fg\_blend
 
-a boolean controlling if thecolorvalue should be blended onto the foreground color from the color scheme of the current view
+一个布尔控制，如果`fg`，`match_fg`，`selected_fg`，和`selected_match_fg`的值应该从当前视图的颜色方案共混到前景颜色
 
-auto\_complete\_detail\_pane4050
-
-A detail pane displayed below the list of auto complete items, containing theauto\_complete\_infospacer, withauto\_complete\_kind\_name\_labelandauto\_complete\_detailsinside
-
-#### Properties
-
-content\_margin
-
-a[margin](themes#padding_margin)that is added around the child controls
-
-auto\_complete\_info4050
-
-Provides spacing betweenauto\_complete\_kind\_name\_labelandauto\_complete\_details
-
-#### Properties
-
-spacing
-
-an integer number of pixels between each contained control
-
-auto\_complete\_kind\_name\_label4050
-
-A label used to display the name of the auto complete kind
-
-#### Properties
-
-[font properties](themes#font_properties)
-
-*The`rem`root font size is based on the font size of the editor control the auto complete window is being shown for.*
-
-[styled label properties](themes#styled_label_properties)
-
-auto\_complete\_details4050
-
-A single-line HTML control used to display the details of the auto complete item
-
-#### Properties
-
-font.face
-
-the name of the font face
-
-font.size
-
-the[font size](themes#font_sizes)\-*the`rem`root font size is based on the font size of the editor control the auto complete window is being shown for*
-
-color
-
-a[color value](themes#color_values)to use for the text
-
-link\_color
-
-a[color value](themes#color_values)to use for links
-
-monospace\_color
-
-a[color value](themes#color_values)to use for monospace text
-
-monospace\_background\_color
-
-a[color value](themes#color_values)to use for the background of monospace text
-
-### PANELS
+### 面板
 
 panel\_control find\_panel
 
-The container for the Find and Incremental Find panels.
+查找和增量查找面板的容器。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_control replace\_panel
 
-The container for the Replace panel.
+“替换”面板的容器。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_control find\_in\_files\_panel
 
-The container for the Find in Files panel.
+“在文件中查找”面板的容器。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_control input\_panel
 
-The container for the input panel, which is available via the API and used for things like file renaming.
+输入面板的容器，可通过API获得，用于文件重命名等操作。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_control console\_panel
 
-The container for the Console.
+控制台的容器。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_control output\_panel
 
-The container for the output panel, which is available via the API and used for build results.
+输出面板的容器，可通过API获得并用于构建结果。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_control switch\_project\_panel
 
-The container for the input in the Switch Project window.
+Switch Project窗口中输入的容器。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the panel contents
+该[保证金](themes#padding_margin)周围的面板内容
 
 panel\_grid\_control
 
-The layout grid used to position inputs on the various panels.
+布局网格用于在各种面板上定位输入。
 
-#### Properties
+#### 属性
 
-*no layer support*
+*没有层支持*
 
 inside\_spacing
 
-an integer padding to place between each cell of the grid
+整数填充，放置在网格的每个单元格之间
 
 outside\_vspacing
 
-an integer padding to place above and below the grid
+在网格上方和下方放置的整数填充
 
 outside\_hspacing
 
-an integer padding to place to the left and right of the grid
+一个整数填充，放置在网格的左侧和右侧
 
 panel\_close\_button
 
-The button to close the open panel
+用于关闭打开面板的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
-### STATUS BAR
+### 状态栏
 
-status\_bar
+状态栏
 
-#### Attributes
+#### 属性
 
 panel\_visible
 
-when a panel is displayed above the status bar
+当面板显示在状态栏上方时
 
-#### Properties
-
-content\_margin
-
-the[margin](themes#padding_margin)around thesidebar\_button\_control,status\_containerandstatus\_buttonss
-
-panel\_button\_control<4050
-
-The panel switcher button on the left side of the status bar
-
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+该[保证金](themes#padding_margin)周围`panel_button_control`，`status_container`和`status_buttons`小号
 
-sidebar\_button\_control4050
+panel\_button\_control
 
-The sidebar/panel switcher button on the left side of the status bar
+状态栏左侧的面板切换器按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
 status\_container
 
-The area that contains the current status message
+包含当前状态消息的区域
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the status message
+该[保证金](themes#padding_margin)周围的状态消息
 
 status\_button
 
-The status buttons that display, and allow changing, the indentation, syntax, encoding and line endings
+显示并允许更改缩进，语法，编码和行结尾的状态按钮
 
-#### Properties
-
-content\_margin
-
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
-
-min\_size
-
-an array of two integers specifying the minimum width and height of a button, in DIPs
-
-vcs\_status3181
-
-The container holding thevcs\_branch\_icon,label\_controlwith the current branch name, andvcs\_changes\_annotationcontrol
-
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the contained controls
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
-spacing
+MIN\_SIZE
 
-an integer number of pixels between each contained control
+在DIP中指定按钮最小宽度和高度的两个整数数组
 
-vcs\_branch\_icon3181
+### 对话框
 
-An icon shown to the left of the current branch name
+对话
 
-#### Properties
-
-content\_margin
-
-for icons, the[margin](themes#padding_margin)specifies the dimensions
-
-vcs\_changes\_annotation3181
-
-Displays the number of files that have been added, modified or deleted
-
-#### Properties
-
-[font properties](themes#font_properties)[styled label properties](themes#styled_label_properties)
-
-### DIALOGS
-
-dialog
-
-The Indexer Status and Update windows both use this class for the window background
+“索引器状态”和“更新”窗口都将此类用于窗口背景
 
 progress\_bar\_control
 
-The progress bar container. The progress bar is displayed in the Update window used for updates on Mac and Windows.
+进度条容器。进度条显示在用于OS X和Windows更新的“更新”窗口中。
 
 progress\_gauge\_control
 
-The bar representing the progress completed so far
+表示迄今为止完成的进度的栏
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)specifies the height of the bar
+的[余量](themes#padding_margin)指定栏的高度
 
-### SCROLL BARS
+### 滚动条
 
 scroll\_area\_control
 
-The scroll area contains the element being scrolled, along with the bar, track and puck.
+滚动区域包含滚动的元素，以及条形，轨道和圆盘。
 
-#### Attributes
-
-scrollable3186
-
-when the control can be scrolled vertically
-
-hscrollable3186
-
-when the control can be scrolled horizontally
-
-#### Properties
+#### 属性
 
 content\_margin
 
-a[margin](themes#padding_margin)that is added around the content being scrolled
+在滚动的内容周围添加 的[边距](themes#padding_margin)
 
-overlay
+覆盖
 
-sets the scroll bars to be rendered on top of the content
-
-left\_shadow
-
-a[color value](themes#color_values)to use when drawing a shadow to indicate the area can be scrolled to the left
-
-left\_shadow\_size
-
-an integer of the width of the shadow to draw when the area can be scrolled to the left
-
-top\_shadow
-
-a[color value](themes#color_values)to use when drawing a shadow to indicate the area can be scrolled to the top
-
-top\_shadow\_size
-
-an integer of the height of the shadow to draw when the area can be scrolled to the top
-
-right\_shadow
-
-a[color value](themes#color_values)to use when drawing a shadow to indicate the area can be scrolled to the right
-
-right\_shadow\_size
-
-an integer of the width of the shadow to draw when the area can be scrolled to the right
-
-bottom\_shadow
-
-a[color value](themes#color_values)to use when drawing a shadow to indicate the area can be scrolled to the bottom
-
-bottom\_shadow\_size
-
-an integer of the height of the shadow to draw when the area can be scrolled to the bottom
+设置要在内容顶部呈现的滚动条
 
 scroll\_bar\_control
 
-The scroll bar contains the scroll track. The tint is set based on the background color of the element being scrolled.
+滚动条包含滚动轨道。基于正在滚动的元素的背景颜色设置色调。
 
-#### Attributes
+#### 属性
 
-dark
+黑暗
 
-when the scroll area content is dark, necessitating a light scroll bar
+当滚动区域内容较暗时，需要一个轻滚动条
 
-horizontal
+横
 
-when the scroll bar should be horizontal instead of vertical
+当滚动条应该是水平而不是垂直
 
-#### Properties
+#### 属性
 
-[texture tinting properties](themes#texture_tinting_properties)
+[纹理着色属性](themes#texture_tinting_properties)
 
 content\_margin
 
-a[margin](themes#padding_margin)that is added around the scroll track
+在滚动轨道周围添加 的[边距](themes#padding_margin)
 
 scroll\_track\_control
 
-The track that the puck runs along. The tint is set based on the background color of the element being scrolled.
+冰球运行的轨道。基于正在滚动的元素的背景颜色设置色调。
 
-#### Attributes
+#### 属性
 
-dark
+黑暗
 
-when the scroll area content is dark, necessitating a light scroll bar
+当滚动区域内容较暗时，需要一个轻滚动条
 
-horizontal
+横
 
-when the scroll bar should be horizontal instead of vertical
+当滚动条应该是水平而不是垂直
 
-#### Properties
+#### 属性
 
-[texture tinting properties](themes#texture_tinting_properties)
+[纹理着色属性](themes#texture_tinting_properties)
 
 scroll\_corner\_control
 
-The dead space in the bottom right of ascroll\_area\_controlwhen both the vertical and horizontal scroll bars are being shown.
-
-#### Attributes
-
-dark
-
-when the scroll area content is dark, necessitating a light scroll bar
-
-#### Properties
-
-[texture tinting properties](themes#texture_tinting_properties)
-
 puck\_control
 
-The scroll puck, or handle. The tint is set based on the background color of the element being scrolled.
+滚动冰球或手柄。基于正在滚动的元素的背景颜色设置色调。
 
-#### Attributes
+#### 属性
 
-dark
+黑暗
 
-when the scroll area content is dark, necessitating a light scroll bar
+当滚动区域内容较暗时，需要一个轻滚动条
 
-horizontal
+横
 
-when the scroll bar should be horizontal instead of vertical
+当滚动条应该是水平而不是垂直
 
-#### Properties
+#### 属性
 
-[texture tinting properties](themes#texture_tinting_properties)
+[纹理着色属性](themes#texture_tinting_properties)
 
-### INPUTS
+### 输入
 
 text\_line\_control
 
-The text input used by the Quick Panel, Find, Replace, Find in Files and Input panels.
+快速面板，查找，替换，在文件和输入面板中查找使用的文本输入。
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the text
+该[保证金](themes#padding_margin)周围的文本
 
 color\_scheme\_tint
 
-a[color value](themes#color_values)to use to tint the background of the color scheme
+一个[颜色值](themes#color_values)用来着色的颜色方案的背景
 
 color\_scheme\_tint\_2
 
-a[color value](themes#color_values)to use to add a secondary tint to the background of the color scheme
+一个[颜色值](themes#color_values)以使用到二次色调添加到颜色方案的背景
 
 dropdown\_button\_control
 
-The button to close the open panel
+用于关闭打开面板的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for buttons, the[margin](themes#padding_margin)specifies the dimensions
+对于按钮，[边距](themes#padding_margin)指定尺寸
 
-### BUTTONS
+### 按钮
 
 button\_control
 
-Text buttons
+文字按钮
 
-#### Attributes
+#### 属性
 
-pressed
+压制
 
-set when a button is pressed down
+按下按钮时设置
 
-#### Properties
+#### 属性
 
-min\_size
+MIN\_SIZE
 
-an array of two integers specifying the minimum width and height of a button, in DIPs
+在DIP中指定按钮最小宽度和高度的两个整数数组
 
 icon\_button\_group
 
-A grid controlling the spacing of related icon buttons
+控制相关图标按钮间距的网格
 
-#### Properties
+#### 属性
 
-*no layer support*
+*没有层支持*
 
-spacing
+间距
 
-an integer number of pixels between each button in the group
+组中每个按钮之间的整数个像素
 
 icon\_button\_control
 
-Small icon-based buttons in the Find, Find in Files, and Replace panels
+“查找”，“在文件中查找”和“替换”面板中的基于图标的小按钮
 
-#### Attributes
+#### 属性
 
-selected
+选
 
-when an icon button is toggled on
+切换图标按钮时
 
-left
+剩下
 
-when the button is the left-most button in a group
+当按钮是组中最左侧的按钮时
 
-right
+对
 
-when the button is the right-most button in a group
+当按钮是组中最右侧的按钮时
 
 icon\_regex
 
-The button to enable regex mode in the Find, Find in Files and Replace panels
+用于在“查找”，“在文件中查找”和“替换”面板中启用正则表达式模式的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_case
 
-The button to enable case-sensitive mode in the Find, Find in Files and Replace panels
+用于在“查找”，“在文件中查找”和“替换”面板中启用区分大小写模式的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_whole\_word
 
-The button to enable whole-word mode in the Find, Find in Files and Replace panels
+用于在“查找”，“在文件中查找”和“替换”面板中启用全字模式的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_wrap
 
-The button to enable search wrapping when using the Find and Replace panels
+使用“查找和替换”面板时启用搜索换行的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_in\_selection
 
-The button to only search in the selection when using the Find and Replace panels
+使用“查找和替换”面板时，仅在选择中搜索的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_highlight
 
-The button to enable highlighting all matches in the Find and Replace panels
+用于在“查找和替换”面板中突出显示所有匹配项的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_preserve\_case
 
-The button to enable preserve-case mode when using the Replace panel
+使用“替换”面板时启用保留大小写模式的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_context
 
-The button to show context around matches when using the Find in Files panel
+使用“在文件中查找”面板时显示匹配上下文的按钮
 
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
 icon\_use\_buffer
 
-The button to display results in a buffer, instead of an output panel, when using the Find in Files panel
+使用“在文件中查找”面板时，显示的按钮会导致缓冲区而不是输出面板
 
-#### Properties
-
-content\_margin
-
-for icons, the[margin](themes#padding_margin)specifies the dimensions
-
-icon\_use\_gitignore4073
-
-The button to toggle using.gitignoreto filter files in the Find in Files panel
-
-#### Properties
+#### 属性
 
 content\_margin
 
-for icons, the[margin](themes#padding_margin)specifies the dimensions
+对于图标，[边距](themes#padding_margin)指定尺寸
 
-### LABELS
+### 标签
 
 label\_control
 
-Labels are shown in the Find, Replace, Find in File and Input panels. Additionally, labels are used in the Update window, on textual buttons and for the text in thestatus\_container.
+标签显示在查找，替换，在文件和输入面板中查找。此外，标签在“更新”窗口，文本按钮和文本中使用`status_container`。
 
-*Targeting specific labels can be accomplished by using the"parents"key.*
+*可以使用`parents`密钥来完成定位特定标签。*
 
-#### Properties
+#### 属性
 
-[font properties](themes#font_properties)
+[字体属性](themes#font_properties)[阴影属性](themes#shadow_properties)
+
+颜色
+
+用于文本 的[颜色值](themes#color_values)
 
 title\_label\_control
 
-The title label is used in the About window.
+标题标签用于“关于”窗口。
 
-#### Properties
+#### 属性
 
-[font properties](themes#font_properties)
+[字体属性](themes#font_properties)[阴影属性](themes#shadow_properties)
 
-### TOOL TIPS
+颜色
+
+用于文本 的[颜色值](themes#color_values)
+
+### 工具提示
 
 tool\_tip\_control
 
-Tool tips shown when hovering over tabs and buttons
+将鼠标悬停在标签和按钮上时显示的工具提示
 
-#### Properties
+#### 属性
 
 content\_margin
 
-the[margin](themes#padding_margin)around the tool tip text
+工具提示文本周围 的[边距](themes#padding_margin)
 
 tool\_tip\_label\_control
 
-Text shown in a tool tip
+工具提示中显示的文本
 
-#### Properties
+#### 属性
 
-[font properties](themes#font_properties)
+[字体属性](themes#font_properties)[阴影属性](themes#shadow_properties)
 
-## Deprecated
+颜色
 
-### COLOR VALUES
+用于文本 的[颜色值](themes#color_values)
 
-Before build 3127, the only way to specify opacity in colors was by using a 4-element array containing all integers from`0`to`255`. The fourth element controlled the opacity, such that`0`was fully transparent and`255`was fully opaque. The preferred format is now to use a float from`0.0`to`1.0`.
+## 弃用
 
-## Obsolete
+### 颜色值
 
-As the UI of Sublime Text has adapted over time, certain elements and properties are no longer applicable or supported.
+在构建3127之前，指定颜色不透明度的唯一方法是使用包含来自`0`to的所有整数的4元素数组`255`。第四个元素控制不透明度，使其`0`完全透明并且`255`完全不透明。的优选格式是现在使用的浮子从`0.0`到`1.0`。
 
-### ELEMENTS
+## 过时的
 
-Thepanel\_button\_controlelement was removed from the status bar and replaced bysidebar\_button\_control.4050
+随着Sublime Text的UI随着时间的推移而适应，某些元素和属性不再适用或支持。
 
-Thesheet\_container\_controlelement is never visible to users in recent versions of Sublime Text.
+### 分子
 
-An element namedicon\_reverseused to exist in the find panel to control if searching would move forward or backwards in the view. This is now controlled by the*Find*and*Find Prev*buttons.
+`sheet_container_control`在Sublime Text 3的最新版本中， 该元素永远不会被用户看到。
 
-The element namedquick\_panel\_score\_labelis no longer present in the Goto Anything quick panel.
+命名`icon_reverse`用于存在于查找面板中的元素，用于控制搜索是在视图中向前还是向后移动。现在由*Find*和*Find Prev*按钮控制。
 
-### PROPERTIES
+名为的元素`quick_panel_score_label`不再出现在Goto Anything快速面板中。
 
-Theblurproperty used to be supported to blur the pixel data behind an element, however it is not currently supported for implementation reasons.
+### 属性
 
-## Customization
+`blur`过去支持 该属性来模糊元素后面的像素数据，但由于实现原因，目前不支持该属性。
 
-Users can customize a theme by creating a file with new rules that will be appended to the original theme definition.
+## 定制
 
-To create a user-specific customization of a theme, create a new file with the same filename as the theme, but save it in thePackages/User/directory.
+用户可以通过创建具有将附加到原始模板定义的新规则的文件来自定义模板。
 
-For example, to customize the Default theme, create a file namedPackages/User/Default.sublime-theme. Adding the following rules to that file will increase the size of the text in the sidebar.
+要创建模板的用户特定自定义，请创建与模板具有相同文件名的新文件，但将其保存在Packages/User/目录中。
 
-~~~
+例如，要自定义默认模板，请创建名为Packages/User/Default.sublime-theme的文件。将以下规则添加到该文件将增加侧栏中文本的大小。
+
+~~~js
 [
     {
         "class": "sidebar_heading",

@@ -1,40 +1,28 @@
-# 
+# [SUBLIME TEXT中文文档之](index)范围命名
 
-[DOCUMENTATION](index)[TOC](scope_naming#toc)[TOP](scope_naming#)
+Sublime Text中的语法定义和颜色方案通过使用范围名称进行交互。范围是虚线字符串，从最少到最具体指定。例如，`if`PHP中的关键字可以通过范围名称指定`keyword.control.php`。
 
-Scope Naming
+Sublime Text支持TextMate语言语法，并从各种开源包继承其默认语法。该[TextMate的语言的语法文件](https://manual.macromates.com/en/language_grammars#naming_conventions)提供了一组基本已经由社区在慢慢扩大和改变的范围名称。
 
-Syntax definitions and color schemes in Sublime Text interact through the use of scope names. Scopes are dotted strings, specified from least-to-most specific. For example, the`if`keyword in PHP could be specified via the scope name`keyword.control.php`.
+这是一个活文档，试图记录在语法定义和颜色方案中使用范围名称的最佳实践。所有Sublime Text默认包都努力遵循这些建议。
 
-Sublime Text supports TextMate language grammars, and inherited its default syntaxes from various open-source bundles. The[TextMate language grammar documentation](https://manual.macromates.com/en/language_grammars#naming_conventions)provided a base set of scope names that have been slowly expanded and changed by the community.
+## 语法定义中的用法
 
-This is a living document that attempts to document best practices for using scope names in syntax definitions and color schemes. All of the Sublime Text default packages strive to adhere to these recommendations.
+下面记录的范围是在创建语法定义时要使用的建议的范围名称基础集。
 
-*   [Usage in Syntax Definitions](scope_naming#syntax_definitions)
-    *   [Example Syntaxes](scope_naming#example_syntaxes)
-    *   [Alphabetical Reference](scope_naming#alphabetical_reference)
-*   [Usage in Color Schemes](scope_naming#color_schemes)
+在本文档中，从虚线范围名称的末尾省略了语法名称。编写语法时，除非另有说明，否则语法名称应为虚线名称的最后一段。例如，Ruby中的控制关键字是`keyword.control.ruby`，而在Python中则是`keyword.control.python`。
 
-## Usage in Syntax Definitions
-
-The scopes documented below are a recommended base set of scope names to use when creating a syntax definition.
-
-In this documentation, the syntax name is omitted from the end of the dotted scope name. When writing a syntax, unless otherwise noted, the syntax name should be the final segment of a dotted name. For example, a control keyword in Ruby would be`keyword.control.ruby`, whereas in Python it would be`keyword.control.python`.
-
-### EXAMPLE SYNTAXES
-
-It is an on-going process to improve and expand upon the default syntaxes that are shipped with Sublime Text. As of early-2019, the following syntaxes have been recently re-worked, and may be used as a reference:
+这是一个持续的过程，用于改进和扩展Sublime Text附带的默认语法。截至2016年中期，最近重新编写了以下语法，可以作为参考：
 
 *   [CSS](https://github.com/sublimehq/Packages/blob/master/CSS/CSS.sublime-syntax)
-*   [Python](https://github.com/sublimehq/Packages/blob/master/Python/Python.sublime-syntax)
 *   [Go](https://github.com/sublimehq/Packages/blob/master/Go/Go.sublime-syntax)
 *   [HTML](https://github.com/sublimehq/Packages/blob/master/HTML/HTML.sublime-syntax)
 *   [PHP](https://github.com/sublimehq/Packages/blob/master/PHP/PHP.sublime-syntax)
-*   [C#](https://github.com/sublimehq/Packages/blob/master/C#/C#.sublime-syntax)
+*   [Rust](https://github.com/sublimehq/Packages/blob/master/Rust/Rust.sublime-syntax)
 
-### ALPHABETICAL REFERENCE
+### 顶级范围索引
 
-The following, top-level, list of scopes is sorted alphabetically. It is recommended to read through the entire list at least once before writing or modifying a syntax.
+以下顶级范围列表按字母顺序排序。建议在编写或修改语法之前至少读取整个列表一次。
 
 *   [`comment.`](scope_naming#comment)
 *   [`constant.`](scope_naming#constant)
@@ -52,69 +40,58 @@ The following, top-level, list of scopes is sorted alphabetically. It is recomme
 *   [`text.`](scope_naming#text)
 *   [`variable.`](scope_naming#variable)
 
-#### `comment.`
+### `COMMENT.`
 
-Single and multi-line comments should use, respectively:
+单行和多行注释应分别使用：
 
 *   `comment.line`
 *   `comment.block`
 
-Multi-line comments used as documentation, such as Javadoc or PhpDoc, should use:
+用作文档的多行注释（例如Javadoc或PhpDoc）应使用：
 
 *   `comment.block.documentation`
 
-Symbols that delineate a comment, e.g.`//`or`/*`, should additionally use:
+描述评论的符号，例如`//`或`/*`应另外使用：
 
 *   `punctuation.definition.comment`
 
-Comments with special syntax that denote a section of code, should use the following scope on the text only. This will cause it to be shown in the symbol list.
+具有表示代码部分的特殊语法的注释应仅在文本上使用以下范围。这将使其显示在符号列表中。
 
 *   `meta.toc-list`
 
-#### `constant.`
+### `CONSTANT.`
 
-Numeric literals, including integers, floats, etc. should use one of:
+数字文字，包括整数，浮点数等，应使用以下之一：
 
 *   `constant.numeric`
 *   `constant.numeric.integer`
-*   `constant.numeric.integer.binary`
-*   `constant.numeric.integer.octal`
-*   `constant.numeric.integer.decimal`
-*   `constant.numeric.integer.hexadecimal`
-*   `constant.numeric.integer.other`
 *   `constant.numeric.float`
-*   `constant.numeric.float.binary`
-*   `constant.numeric.float.octal`
-*   `constant.numeric.float.decimal`
-*   `constant.numeric.float.hexadecimal`
-*   `constant.numeric.float.other`
-*   `constant.numeric.complex`
-*   `constant.numeric.complex.real`
-*   `constant.numeric.complex.imaginary`
+*   `constant.numeric.hex`
+*   `constant.numeric.octal`
 
-Constants that are built into the language, such as booleans and null values, should use:
+语言中内置的常量（如布尔值和空值）应使用：
 
 *   `constant.language`
 
-Character escapes in strings, e.g.`\n`and`\x20`, should use:
+字符串中的字符转义，例如`\n`和`\x20`，应该使用：
 
 *   `constant.character.escape`
 
-Formatting placeholders, such as those used for`sprintf()`, e.g.`%s`, should use:
+格式化占位符，例如用于`sprintf()`，例如`%s`，应使用：
 
 *   `constant.other.placeholder`
 
-Other language-specific constant values, such as symbols in Ruby, should use:
+其他特定于语言的常量值（例如Ruby中的符号）应使用：
 
 *   `constant.other`
 
-#### `entity.`
+### `ENTITY.`
 
-The entity scopes are generally assigned to the names of data structures, types and other uniquely-identifiable constructs in code and markup. The notable exceptions are`entity.name.tag`and`entity.other.attribute-name`, which are used in HTML and XML tags.
+实体范围通常分配给代码和标记中的数据结构，类型和其他唯一可识别构造的名称。值得注意的例外是`entity.name.tag`和`entity.other.attribute-name`，它们在HTML和XML标记中使用。
 
-The names of data structures will use one of the following scopes, or a new sub-scope of`entity.name`– this list is not exhaustive. To provide rich semantic information, use the specific terminology for a given language construct.
+数据结构的名称将使用以下范围之一或新的子范围`entity.name`\- 此列表并非详尽无遗。要提供丰富的语义信息，请使用给定语言构造的特定术语。
 
-*Avoid`entity.name.type.class`and`entity.name.type.struct`which unnecessarily nest scope labels under`type`.*
+*避免`entity.name.type.class`和`entity.name.type.struct`不必要地嵌套范围标签`type`。*
 
 *   `entity.name.class`
 *   `entity.name.struct`
@@ -122,74 +99,73 @@ The names of data structures will use one of the following scopes, or a new sub-
 *   `entity.name.union`
 *   `entity.name.trait`
 *   `entity.name.interface`
-*   `entity.name.impl`
 *   `entity.name.type`
 
-`forward-decl`variants of the above are used in languages such as C and C++. Such scopes can be used to exclude identifiers from the symbol list and indexing.
+`forward-decl`上述变体用于诸如C和C ++之类的语言。此类范围可用于从符号列表和索引中排除标识符。
 
 *   `entity.name.class.forward-decl`
 
-Class, interface and trait names listed as an inherited class or implemented interface/trait should use:
+列为继承类或实现的接口/特征的类，接口和特征名称应使用：
 
 *   `entity.other.inherited-class`
 
-Function names receive one of the following scopes. These are included in the symbol list and index.
+函数名称接收以下范围之一。这些包含在符号列表和索引中。
 
 *   `entity.name.function`
 *   `entity.name.function.constructor`
 *   `entity.name.function.destructor`
 
-Namespaces, packages and modules use the following scope. There are usually not multiple types of such constructs in a language, so this scope should suffice.
+命名空间，包和模块使用以下范围。在一种语言中通常没有多种类型的此类构造，因此这个范围就足够了。
 
 *   `entity.name.namespace`
 
-Constants should use the following scope or`variable.other.constant`, depending on the language semantics. This scope is often included in the symbol list and index.
+常量应使用以下范围，或者`variable.other.constant`取决于语言语义。此范围通常包含在符号列表和索引中。
 
 *   `entity.name.constant`
 
-Labels for goto-like constructs should use:
+goto结构的标签应该使用：
 
 *   `entity.name.label`
 
-Heading names in markup languages, such as Markdown and Textile, should use:
+标记语言中的标题名称（例如Markdown和Textile）应使用：
 
 *   `entity.name.section`
 
-HTML and XML tags should use the following scope. This is the only`entity.name`scope that is applied to repeated constructs.
+HTML和XML标记应使用以下范围。这是`entity.name`应用于重复构造的唯一范围。
 
 *   `entity.name.tag`
 
-HTML, CSS and XML use the following for tag attribute names:
+HTML，CSS和XML使用以下标记属性名称：
 
 *   `entity.other.attribute-name`
 
-#### `invalid.`
+### `INVALID.`
 
-Elements that are illegal in a specific context should use the following scope. Overuse of this will likely lead to unpleasant highlighting for users as they edit code.
+在特定上下文中非法的元素应使用以下范围。过度使用这可能会导致用户在编辑代码时出现令人不快的突出显示。
 
 *   `invalid.illegal`
 
-Deprecated elements should be scoped using the following scope. This should be very rarely used, as users may be working with older versions of a language.
+不推荐使用的元素应使用以下范围确定范围。这应该很少使用，因为用户可能正在使用旧版本的语言。
 
 *   `invalid.deprecated`
 
-#### `keyword.`
+### `KEYWORD.`
 
-Control keywords examples include`if`,`try`,`end`and`while`. Some syntaxes prefer to mark`if`and`else`with the`conditional`variant. The`import`variant is often used in appropriate situations.
+控制关键字的例子包括`if`，`try`，`end`和`while`。一些语法更喜欢标记`if`和`else`使用`conditional`变体。该`import`变体通常用于适当的情况。
 
 *   `keyword.control`
 *   `keyword.control.conditional`
 *   `keyword.control.import`
 
-Keywords that contain punctuation, such as the`@`symbol in CSS, add the following scope to the symbols:
+包含标点符号的关键字（例如`@`CSS中的符号）会将以下范围添加到符号中：
 
 *   `punctuation.definition.keyword`
 
-All remaining non-operator keywords fall under the`other`variant:
+所有剩余的非运营商关键字属于`other`变体：
 
 *   `keyword.other`
 
-Operators are typically symbols, so the term`keyword`can seem somewhat contradictory. Specific variants are sometimes referenced based on the type of operator.
+运算符通常是符号，因此该术语`keyword`看起来有点矛盾。有时根据运算符的类型引用特定变体。
 
 *   `keyword.operator`
 *   `keyword.operator.assignment`
@@ -197,56 +173,56 @@ Operators are typically symbols, so the term`keyword`can seem somewhat contradic
 *   `keyword.operator.bitwise`
 *   `keyword.operator.logical`
 
-When the operator is a word, such as`and`,`or`or`not`, the following variant is used:
+当运算符是单词时，例如`and`，`or`或`not`，使用以下变体：
 
 *   `keyword.operator.word`
 
-#### `markup.`
+### `MARKUP.`
 
-Markup scopes are used for content, as opposed to code. This includes syntaxes such as Markdown and Textile.
+标记范围用于内容，而不是代码。这包括Markdown和Textile等语法。
 
-Section headings should use:
+章节标题应使用：
 
 *   `markup.heading`
 
-Lists should use one of:
+列表应使用以下之一：
 
 *   `markup.list.unnumbered`
 *   `markup.list.numbered`
 
-Basic text styling should use one of:
+基本文本样式应使用以下之一：
 
 *   `markup.bold`
 *   `markup.italic`
 *   `markup.underline`
 
-Inserted and deleted content, such as with`diff`output, should use:
+插入和删除的内容（例如`diff`输出）应使用：
 
 *   `markup.inserted`
 *   `markup.deleted`
 
-Links should use:
+链接应使用：
 
 *   `markup.underline.link`
 
-Blockquotes and other quote styles should use:
+Blockquotes和其他引用样式应该使用：
 
 *   `markup.quote`
 
-Inline and block literal quoting, often used for code, should use:
+通常用于代码的内联和块文字引用应该使用：
 
 *   `markup.raw.inline`
 *   `markup.raw.block`
 
-Other markup, including constructs such as footnotes and tables, should use:
+其他标记，包括脚注和表格等构造，应使用：
 
 *   `markup.other`
 
-#### `meta.`
+### `META.`
 
-Meta scopes are used to scope larger sections of code or markup, generally containing multiple, more specific scopes. These are not intended to be styled by a color scheme, but used by preferences and plugins.
+元范围用于范围较大的代码或标记部分，通常包含多个更具体的范围。这些不是由颜色方案设计，而是由首选项和插件使用。
 
-The complete contents of data structures should be scoped using one of the following scopes. Similar to`entity.name`, they should be customized per language to provide rich semantic information. They should include all elements, such as the name, inheritance details and body.
+应使用以下范围之一确定数据结构的完整内容。`entity.name`与之类似，它们应根据语言进行定制，以提供丰富的语义信息。它们应包括所有元素，例如名称，继承详细信息和正文。
 
 *   `meta.class`
 *   `meta.struct`
@@ -254,39 +230,31 @@ The complete contents of data structures should be scoped using one of the follo
 *   `meta.union`
 *   `meta.trait`
 *   `meta.interface`
-*   `meta.impl`
 *   `meta.type`
 
-The entire scope of a function should be covered by one of the following scopes. Each variant should be applied to a specific part, and not stacked. For example,`meta.function.php meta.function.parameters.php`should never occur, but instead the scopes should alternate between`meta.function.php`then`meta.function.parameters.php`and back to`meta.function.php`.
+函数的整个范围应由以下范围之一涵盖。每个变体应该应用于特定部分，而不是堆叠。例如，`meta.function.php meta.function.parameters.php`永远不应该发生，而是范围应该在`meta.function.php`当时`meta.function.parameters.php`和之间交替`meta.function.php`。
 
 *   `meta.function`
 *   `meta.function.parameters`
 *   `meta.function.return-type`
 
-The entirety of a namespace, module or package should use:
+命名空间，模块或包的整体应使用：
 
 *   `meta.namespace`
 
-Preprocessor statements in language such as C should use:
+C语言中的预处理程序语句应该使用：
 
 *   `meta.preprocessor`
 
-Annotations, attributes and decorator statements that are used to modify the behavior or implementation of a class, method or function should use one of the following`meta`scopes for each component of the annotation. That is to say, there should never be more than one`meta.annotation*`scope on the stack at any given time. See`variable.annotation`for scoping the identifier.
-
-*   `meta.annotation`
-*   `meta.annotation.identifier`
-*   `meta.annotation.parameters`
-*   `punctuation.definition.annotation`
-
-Complete identifiers, including namespace names, should use the following scope. Such identifiers are the fully-qualified forms of variable, function and class names. For example, in C++ a path may look like`myns::myclass`, whereas in PHP it would appears such as`\MyNS\MyClass`.
+完整标识符（包括命名空间名称）应使用以下范围。这些标识符是变量，函数和类名的完全限定形式。例如，在C ++中，路径可能看起来像`myns::myclass`，而在PHP中，它看起来像`\MyNS\MyClass`。
 
 *   `meta.path`
 
-Function names, including the full path, and all parameters should receive the following scope. The name of the function or method should be`variable.function`, unless the function is scoped with`support.function`.
+函数名称（包括完整路径）和所有参数应接收以下范围。`variable.function`除非函数作用域，否则函数或方法的名称应该是`support.function`。
 
 *   `meta.function-call`
 
-Sections of code delineated by curly braces should use one the following`meta`scopes, based on appropriate semantics. The`{`and`}`characters should additionally use the`punctuation`scopes.
+由大括号描述的代码段应`meta`基于适当的语义使用以下范围之一。在`{`和`}`字符应该另外使用`punctuation`范围。
 
 *   `meta.block`
 *   `punctuation.section.block.begin`
@@ -295,7 +263,7 @@ Sections of code delineated by curly braces should use one the following`meta`sc
 *   `punctuation.section.braces.begin`
 *   `punctuation.section.braces.end`
 
-Sections of code delineated by parentheses should use one the following`meta`scopes, based on appropriate semantics. The`(`and`)`characters should additionally use the`punctuation`scopes.
+由括号描述的代码段应`meta`基于适当的语义使用以下范围之一。在`(`和`)`字符应该另外使用`punctuation`范围。
 
 *   `meta.group`
 *   `punctuation.section.group.begin`
@@ -304,190 +272,150 @@ Sections of code delineated by parentheses should use one the following`meta`sco
 *   `punctuation.section.parens.begin`
 *   `punctuation.section.parens.end`
 
-Sections of code delineated by square brackets should use the following scope. The`[`and`]`characters should additionally use the`punctuation`scopes.
+由方括号描述的代码段应使用以下范围。在`[`和`]`字符应该另外使用`punctuation`范围。
 
 *   `meta.brackets`
 *   `punctuation.section.brackets.begin`
 *   `punctuation.section.brackets.end`
 
-Generic data type constructs should use the following scope. Any symbols that denote the beginning and end, such as`<`and`>`, should additionally use the`punctuation`scopes.
+通用数据类型构造应使用以下范围。任何表示开头和结尾的符号，例如`<`和`>`，都应该另外使用`punctuation`范围。
 
 *   `meta.generic`
 *   `punctuation.definition.generic.begin`
 *   `punctuation.definition.generic.end`
 
-HTML and XML tags, including punctuation, names and attributes should use the following:
+HTML和XML标记（包括标点符号，名称和属性）应使用以下内容：
 
 *   `meta.tag`
 
-Paragraphs in markup languages use:
+标记语言中的段落使用：
 
 *   `meta.paragraph`
 
-#### `punctuation.`
+### `PUNCTUATION.`
 
-The following scopes are punctuation scopes that are not embedded within other scopes. For instance, the[`string.`](scope_naming#string)section includes documentation about scopes for string punctuation.
+以下范围是未嵌入其他范围的标点范围。例如，该[`string.`](scope_naming#string)部分包含有关字符串标点符号范围的文档。
 
-Separators such as commas and colons should use:
+逗号和冒号等分隔符应使用：
 
 *   `punctuation.separator`
 
-Semicolons or other statement terminators should use:
+分号或其他语句终止符应使用：
 
 *   `punctuation.terminator`
 
-Line-continuation characters, such as in Python and R, should use:
+行连续字符（例如Python和R）应该使用：
 
 *   `punctuation.separator.continuation`
 
-Member access, scope resolution, or similar constructs should use the following scope. For Python or JavaScript this would be`.`. In PHP this would be applied to`->`and`::`. In C++, this would be applied to all three.
+成员访问权限，范围解析或类似构造应使用以下范围。对于Python或JavaScript，这将是`.`。在PHP中，这将适用于`->`和`::`。在C ++中，这将适用于所有三个。
 
 *   `punctuation.accessor`
 
-#### `source.`
+### `SOURCE.`
 
-A language-specific variant of the following scope is typically applied to the entirety of a source code file:
+以下范围的特定于语言的变体通常应用于整个源代码文件：
 
 *   `source`
 
-#### `storage.`
+### `STORAGE.`
 
-Types should use the following scope. Examples include`int`,`bool`and`char`.
+类型和定义/声明关键字应使用以下范围。例子包括`int`，`bool`，`char`，`func`，`function`，`class`和`def`。根据语言和语义，`const`可能是这个或`storage.modifier`。
 
 *   `storage.type`
 
-Keywords that affect the storage of a variable, function or data structure should use the following scope. Examples include`static`,`inline`,`const`,`public`and`private`.
+影响变量，函数或数据结构存储的关键字应使用以下范围。实例包括`static`，`inline`，`const`，`public`和`private`。
 
 *   `storage.modifier`
 
-Keywords for functions or methods should use the following scopes. Example keywords include`func`,`function`and`def`.*This includes`storage.type`for backwards compatibility with older color schemes.*
+### `STRING.`
 
-*   `storage.type.function keyword.declaration.function`
-
-Keywords for classes, structs, interfaces, etc should use the following scopes – this list is not exhaustive. Example keywords include`class`,`struct`,`impl`and`typedef`.*This includes`storage.type`for backwards compatibility with older color schemes.*
-
-*   `storage.type.class keyword.declaration.class`
-*   `storage.type.struct keyword.declaration.struct`
-*   `storage.type.enum keyword.declaration.enum`
-*   `storage.type.union keyword.declaration.union`
-*   `storage.type.trait keyword.declaration.trait`
-*   `storage.type.interface keyword.declaration.interface`
-*   `storage.type.impl keyword.declaration.impl`
-*   `storage.type keyword.declaration.type`
-
-#### `string.`
-
-Basic strings use the one of the following scopes, based on the type of quotes used:
+基本字符串使用以下范围之一，基于所使用的引号类型：
 
 *   `string.quoted.single`
 *   `string.quoted.double`
 *   `string.quoted.triple`
 
-Strings that used unconventional quotes, such as`<`and`>`with C imports, should use:
+使用非常规报价的字符串，例如`<`和`>`C导入，应使用：
 
 *   `string.quoted.other`
 
-The entirety of a string, along with all punctuation, prefixes, suffixes and interpolations should use:
-
-*   `meta.string`
-
-Punctuation at the beginning and end of strings should use:
+字符串开头和结尾的标点符号应使用：
 
 *   `punctuation.definition.string.begin`
 *   `punctuation.definition.string.end`
 
-Unquoted strings, such as in Shell and Batch File, should use:
+不带引号的字符串，例如Shell和Batch File，应该使用：
 
 *   `string.unquoted`
 
-Regular expression literals should use:
+正则表达式文字应该使用：
 
 *   `string.regexp`
 
-When a string contain interpolated code, such as a variable or expression, the`string.*`scope should be removed using`clear_scopes:`, and the following should be added to the entirety of the interpolation, including punctuation:
+### `SUPPORT.`
 
-*   `meta.interpolation`
-
-The punctuation for an interpolated expression should be:
-
-*   `punctuation.section.interpolation.begin`
-*   `punctuation.section.interpolation.end`
-
-Between the punctuation, the interpolated expression should get:
-
-*   `source.*language-suffix*.embedded`
-
-#### `support.`
-
-Elements provided by a base framework should use one of the following scopes. Examples include Cocoa within Objective-C, or the browser/Node within JavaScript.
+基本框架提供的元素应使用以下范围之一。示例包括Objective-C中的Cocoa或JavaScript中的浏览器/节点。
 
 *   `support.constant`
 *   `support.function`
 *   `support.module`
 
-While also used for base frameworks, many syntaxes apply these to scopes unrecognized classes and types, effectively scoping all user constructs.
+虽然也用于基础框架，但许多语法将这些应用于范围无法识别的类和类型，从而有效地确定了所有用户构造的范围。
 
 *   `support.type`
 *   `support.class`
 
-#### `text.`
+### `TEXT.`
 
-Programming languages use[`source.`](scope_naming#source)as their base scope, whereas content uses`text.`. One of the biggest differences is the fact that many plugins and other dynamic functionality is disabled within`text.`scopes.[`markup.`](scope_naming#markup)scopes are typically used within text.
+编程语言[`source.`](scope_naming#source)用作基本范围，而内容使用`text.`。最大的区别之一是在`text.`范围内禁用了许多插件和其他动态功能。[`markup.`](scope_naming#markup)范围通常在文本中使用。
 
-HTML should use the following scope. Variants for this scope are different than other scopes, in that the variant is always added after the``, such as`text.basic`or`text.markdown`.
+HTML应使用以下范围。此范围的变体与其他范围不同，因为变体总是在``诸如`text.basic`或之后添加`text.markdown`。
 
 *   `text`
 
-XML should use:
+XML应该使用：
 
 *   `text.xml`
 
-#### `variable.`
+### `VARIABLE.`
 
-A generic variable should use the following scope. Some languages use the`readwrite`variant for contrast with the`constant`variant discussed below.
+通用变量应使用以下范围。有些语言使用`readwrite`变体与`constant`下面讨论的变体进行对比。
 
 *   `variable.other`
 *   `variable.other.readwrite`
 
-Symbols that are part of the variable name, should additionally be applied the following scope. For example, the`$`in PHP and Shell.
+作为变量名称一部分的符号应另外应用于以下范围。例如，`$`在PHP和Shell中。
 
 *   `punctuation.definition.variable`
 
-Immutable variables, often via a`const`modifier, should receive the following scope. Depending on the language and semantics,`entity.name.constant`may be a better choice.
+通常通过`const`修饰符的不可变变量应该具有以下范围。根据语言和语义，`entity.name.constant`可能是更好的选择。
 
 *   `variable.other.constant`
 
-Reserved variable names that are specified by the language, such as`this`,`self`,`super`, etc. should use:
+由指定的语言保留的变量名，如`this`，`self`，`super`，等应使用：
 
 *   `variable.language`
 
-Parameters to a function or methods should use the following scope. This may also be used for other parameter-like variables, such as receivers or named return values in Go.
+一个或多个函数的参数应使用以下范围。这也可以用于其他类似参数的变量，例如Go中的接收器或命名返回值。
 
 *   `variable.parameter`
 
-Fields, properties, members and attributes of a class or other data structure should use:
+类或其他数据结构的字段，属性，成员和属性应使用：
 
 *   `variable.other.member`
 
-Function and method names should be scoped using the following, but only when they are being invoked. When defined, they should use`entity.name.function`.
+函数和方法名称应使用以下内容作用域，但仅限于调用它们时。定义时，他们应该使用`entity.name.function`。
 
 *   `variable.function`
 
-The final label in an identifier that is part of an annotation should use the following. For the entire identifier, the`meta.path`scope should be used. The entire annotation should get`meta.annotation`.
+## 在配色方案中的用法
 
-*   `variable.annotation`
+通常，在颜色方案中将颜色和样式应用于范围时，应首先设置选择器的最常规形式。利用上一节中概述的范围的高质量语法应该为最终用户带来良好的用户体验。
 
-The leading symbol used to delineate an annotation should use:
+### 最小范围覆盖范围
 
-*   `punctuation.definition.annotation`
-
-## Usage in Color Schemes
-
-In general, when applying colors and styles to scopes in a color scheme, the most general form of a selector should be styled first. High-quality syntaxes utilizing the scopes outlined in the previous section should result is good user experience for end users.
-
-### MINIMAL SCOPE COVERAGE
-
-The following is a recommended minimal set of scopes to highlight. Adding extra may result in a slightly improved experience, however being too specific will result in a color scheme that often only looks good for one or two syntaxes.
+以下是要强调的建议的最小范围集。添加额外可能会导致略微改善的体验，但是过于具体会导致颜色方案通常只对一个或两个语法看起来很好。
 
 *   `entity.name`
 *   `entity.other.inherited-class`
@@ -508,18 +436,17 @@ The following is a recommended minimal set of scopes to highlight. Adding extra 
 *   `keyword`
 *   `keyword.control`
 *   `keyword.operator`
-*   `keyword.declaration`
 *   `string`
 *   `comment`
 *   `invalid`
 *   `invalid.deprecated`
 
-### `meta.`COLORS
+### `META.`颜色
 
-When styling scopes, resist the urge to directly style`meta`scopes. They are primarily intended to provide contextual information for preferences and plugins.
+在样式范围内，抵制直接设置`meta`范围的冲动。它们主要用于为首选项和插件提供上下文信息。
 
-### `entity.name.`COLORS
+### `ENTITY.NAME.`颜色
 
-Historically, many color schemes have provided one color for`entity.name.function`and`entity.name.type`, and often a different color for`entity.name.tag`. This leaves new`entity.name.*`scopes un-highlighted.
+历史上，许多配色方案已经提供了一种颜色`entity.name.function`和`entity.name.type`，经常用不同的颜色`entity.name.tag`。这使得新`entity.name.*`范围不突出显示。
 
-Color schemes should instead specify a color for`entity.name`that will be applied to classes, types, structs, interfaces and many other data structures. This color can be overridden for the two scopes`entity.name.tag`and`entity.name.section`, that are used for different types of constructs.
+颜色方案应该指定一种颜色`entity.name`，它将应用于类，类型，结构，接口和许多其他数据结构。可以为两个范围覆盖此颜色，`entity.name.tag`并将`entity.name.section`其用于不同类型的构造。
