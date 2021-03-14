@@ -1,95 +1,85 @@
-# Incremental Diff
+# [SUBLIME TEXT中文文档之](index) 增量差异  
 
-Added in:3.2
+Sublime Text 包含一个内置的diff功能，该功能可跟踪对正在编辑的文件的更改。差异计算是递增的，在执行时跟踪每个缓冲区修改。它不需要将文件存储在版本控制系统（如Git）中。
 
-Sublime Text includes a built-in diff functionality that tracks changes to files being edited. The diff calculation is incremental, tracking each buffer modification as it is performed. It does not require the file be stored in a version control system, such as Git.
+跟踪每个添加，修改和删除的确切位置。这用于在装订线中显示标记，允许在每个更改之间导航，显示内联差异，并允许还原更改。
 
-The exact location of each addition, modification and deletion is tracked. This is used to display markers in the gutter, allow navigation between each change, display inline diffs and allow for reverting changes.
+差异是根据磁盘上文件的版本计算得出的，但是可以将[Git仓库](git_integration#diff_markers)配置为与HEAD进行差异比较，并且该API允许将文件与任何内容进行差异比较。
 
-Diffs are calculated against the version of the file on disk, but[Git repositories](git_integration.html#diff_markers)can be configured to diff against HEAD, and the API allows files to be diffed against any content.
+*   [差异标记](incremental_diff#diff_markers)
+*   [导航](incremental_diff#navigation)
+*   [内联差异](incremental_diff#inline_diffs)
+*   [正在还原](incremental_diff#reverting)
+*   [设定值](incremental_diff#settings)
 
-*   [Diff Markers](incremental_diff.html#diff_markers)
-*   [Navigation](incremental_diff.html#navigation)
-*   [Inline Diffs](incremental_diff.html#inline_diffs)
-*   [Reverting](incremental_diff.html#reverting)
-*   [Settings](incremental_diff.html#settings)
+## 差异标记
 
-## Diff Markers
+以下是使用Mariana配色方案时显示的差异标记的示例：
 
-The following is an example of diff markers displayed when using the Mariana color scheme:
+2728添加了一行2930修改后的行31其次是另一条修改的行3233删除之前的那一行34
 
-2728A line that was added2930A modified line31followed by another modified line3233The line before this was deleted34
+有关自定义差异标记的颜色和宽度的信息，请参见[配色方案文档](color_schemes#global_settings-diff)。
 
-See the[color schemes documentation](color_schemes.html#global_settings-diff)for information on customizing the colors and width of the diff markers.
+## 导航
 
-## Navigation
+用户可以使用以下方法跳转到下一个或上一个修改：
 
-Users can jump to the next or previous modification using the following methods:
+*   **Ctrl***+***。**
+*   **Ctrl***+***，**
+*   转到![▶](http://www.sublimetext.cn/images/right.svg)下一个修改
+*   转到![▶](http://www.sublimetext.cn/images/right.svg)上一个修改
 
-*   **Ctrl***+***.**
-*   **Ctrl***+***,**
-*   Goto![▶](images/right.svg)Next Modification
-*   Goto![▶](images/right.svg)Previous Modification
+*键盘快捷键往往是在编辑中的文件周围跳转的非常自然的方法。*
 
-*The keyboard shortcuts tend to be a very natural way to jump around a file being edited.*
+## 内联差异
 
-## Inline Diffs
+除了跟踪已修改的行之外，增量差异还跟踪确切的更改。这样可以显示文本的原始版本。
 
-In addition to tracking which lines have been modified, the incremental diff also tracks the exact changes. This allows displaying the original version of the text.
+### 切换
 
-### TOGGLING
+在文件的修改区域上单击鼠标右键时，将显示一个菜单项Show Diff Hunk。该菜单项将在当前内容下方内联显示先前的内容。再次右键单击将显示一个菜单项“隐藏差异”，以隐藏嵌入式差异。
 
-When right-clicking on a modified region of a file, a menu entryShow Diff Hunkwill be available. This menu item will display the previous content inline beneath the current content. Right-clicking again will show a menu itemHide Diff Hunkto hide the inline diff.
+可以通过“编辑![▶](http://www.sublimetext.cn/images/right.svg)文本![▶](http://www.sublimetext.cn/images/right.svg)切换大块差异” 菜单来执行内联差异。
 
-Toggling an inline diff may be performed via theEdit![▶](images/right.svg)Text![▶](images/right.svg)Toggle Hunk Diffmenu.
+除了基于菜单的激活外，差异还可通过键盘快捷键进行切换：
 
-In addition to menu-based activation, diffs may also be toggled via keyboard shortcut:
+*   Windows / Linux：**Ctrl***+***K**，**Ctrl***+***/**
+*   Mac：**⌘***+***K**，**⌘***+***/**
 
-*   Windows/Linux:**Ctrl***+***K**,**Ctrl***+***/**
-*   Mac:**⌘***+***K**,**⌘***+***/**
+要隐藏某个区域的差异，同时隐藏所有其他差异，请按：
 
-To toggle the diff for a region, while hiding all other diffs, press:
+*   Windows / Linux：**Ctrl***+***K**，**Ctrl***+***;**
+*   Mac：**⌘***+***K**，**⌘***+***；**
 
-*   Windows/Linux:**Ctrl***+***K**,**Ctrl***+***;**
-*   Mac:**⌘***+***K**,**⌘***+***;**
+### 造型
 
-### STYLING
-
-The styles used for displaying inline diffs are automatically generated for color schemes that have not created their own rules. For custom styles, add rules with the following selectors:
+对于未创建自己规则的配色方案，将自动生成用于显示内联差异的样式。对于自定义样式，请使用以下选择器添加规则：
 
 *   `diff.deleted`
 *   `diff.deleted.char`
 *   `diff.inserted`
 *   `diff.inserted.char`
 
-Generally each rule will set the`background`and`foreground_adjust`properties.
+通常，每个规则都会设置`background`和`foreground_adjust`属性。
 
-## Reverting
+## 正在还原
 
-A modification may be reverted to the original text by the keyboard shortcut:
+修改可以通过键盘快捷键恢复为原始文本：
 
-*   Windows/Linux:**Ctrl***+***K**,**Ctrl***+***Z**
-*   Mac:**⌘***+***K**,**⌘***+***Z**
+*   Windows / Linux：**Ctrl***+***K**，**Ctrl***+***Z**
+*   Mac：**⌘***+***K**，**⌘***+***Z**
 
-Alternatively, the menuEdit![▶](images/right.svg)Text![▶](images/right.svg)Revert Modificationmay be used.
+或者，可以使用菜单“编辑![▶](http://www.sublimetext.cn/images/right.svg)文本![▶](http://www.sublimetext.cn/images/right.svg)还原修改”。
 
-## Settings
+## 设定值
 
-mini\_diffboolean, string
+可以通过mini\_diff设置控制增量diff功能。有效值包括：
 
-If the incremental diff functionality should be enabled. Valid values include:
+*   `true`–始终启用增量差异（DEFAULT）
+*   `"auto"`–为Git储存库中的文件启用增量差异
+*   `false`–禁用增量差异
 
-*   `true`– always enable incremental diff
-*   `"auto"`– enable incremental diff for files in a Git repository
-*   `false`– disable incremental diff
+可以通过git\_diff\_target设置控制Git仓库中文件的增量diff行为。有效值包括：
 
-Default:`true`
-
-git\_diff\_targetstring
-
-Controls the behavior of incremental diff for files in a Git repository. Valid values include:
-
-*   `"index"`– diff against the Git index
-*   `"head"`– diff against the file at HEAD
-
-Default:`"index"`
+*   `"index"`–对比Git索引，默认
+*   `"head"`–与HEAD上的文件进行比较

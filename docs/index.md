@@ -4,8 +4,8 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 
 ## Usage
 
-*   [Git Integration](git_integration)
-*   [Incremental Diff](incremental_diff)
+*   [Git集成](git_integration)
+*   [增量差异](incremental_diff)
 *   [Indexing](indexing)Updated
 *   [Command Line Interface](command_line)Updated
 *   [列选择](column_selection)
@@ -21,7 +21,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [Key Bindings](key_bindings)
 *   [字体设置](font)
 *   [缩进](indentation)
-*   [Spell Checking](spell_checking)
+*   [拼写检查](spell_checking)
 *   [构建系统](build_systems)
 *   [包管理](packages)
 *   [Selectors](selectors)

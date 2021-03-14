@@ -1,103 +1,90 @@
-# 
-[DOCUMENTATION](index)[TOC](git_integration#toc)[TOP](git_integration#)
+Sublime Text的Git集成包括以下组件：
 
-Git Integration
+*   [侧栏](git_integration#side_bar)
+*   [状态栏](git_integration#status_bar)
+*   [差异标记](git_integration#diff_markers)
+*   [Sublime Merge 整合](git_integration#sublime_merge)
+*   [设定值](git_integration#settings)
 
-Added in:3.2
+*请注意：以下文档讨论了Git集成的实现，如Sublime Text随附的Default和Adaptive主题所示。通过主题引擎，第三方主题可以更改信息的视觉表示，在这种情况下，以下文档可能不准确。*
 
-Sublime Text's Git integration includes the following components:
+## 侧栏
 
-*   [Side Bar](git_integration#side_bar)
-*   [Status Bar](git_integration#status_bar)
-*   [Diff Markers](git_integration#diff_markers)
-*   [Sublime Merge Integration](git_integration#sublime_merge)
-*   [Settings](git_integration#settings)
+修改后，显示在侧栏中的文件和文件夹将在右侧边缘包含状态标记。这包括侧边栏“*文件夹”*部分中的文件和文件*夹*，以及“*打开文件”*部分中的*文件*。通过减少名称的不透明度，可在侧栏中消除对忽略的文件和文件夹的强调。
 
-*Please note: the following documentation discusses the implementation of the Git integration as seen with the Default and Adaptive themes that are included with Sublime Text. Via the theme engine, it is possible for third-party themes to change the visual presentation of information, in which case the following documentation may not be accurate.*
+当鼠标悬停在状态标记上时，将显示工具提示，指示文件的状态，如果是文件夹，则指示包含的文件和文件夹的状态。
 
-## Side Bar
+### 状态徽章键
 
-Files and folders displayed in the side bar will include a status badge along the right-hand edge, when modified. This includes files and folder in the*Folders*section of the side bar, along with files in the*Open Files*section. Ignored files and folders are de-emphasized in the side bar by reducing the opacity of the name.
+下表列出了每个徽章的含义。*请注意，徽章的颜色会略有不同，因为它们会适应活动配色方案中最接近的色调。*
 
-When the mouse pauses over a status badge, a tool tip will be displayed indicating the status of the file, or in the case of a folder, the status of the contained files and folders.
+*   未追踪
+*   改性
+*   失踪
+*   分阶段加法
+*   分阶段修改
+*   分阶段删除
+*   未合并
 
-### STATUS BADGE KEY
+当文件夹包含具有多种状态的文件时，最靠近上述列表结尾的标志将覆盖所有其他标志。
 
-The following table indicates the meaning of each badge.*Please note that the color of the badges will be slightly different as they adapt to the closest hue in the active color scheme.*
+## 状态栏
 
-*   Untracked
-*   Modified
-*   Missing
-*   Staged Addition
-*   Staged Modification
-*   Staged Deletion
-*   Unmerged
-
-When a folder contains files with multiple statuses, the badge most toward the end of the above list will override all others.
-
-## Status Bar
-
-When the focussed file us containing within the working directory of a Git repository, the status bar will contain the name of the current branch, along with the number of files that are untracked, modified, staged or unmerged. The status bar element will look like:
+当焦点文件包含在Git仓库的工作目录中时，状态栏将包含当前分支的名称以及未跟踪，修改，暂存或未合并的文件数。状态栏元素将如下所示：
 
 master3
 
-## Diff Markers
+## 差异标记
 
-Sublime Text's[incremental diff](incremental_diff)functionality ties in with the Git integration. By default, the incremental diff functionality tracks changes to the file since it was last saved, but it is also possible to diff against HEAD.
+Sublime Text的[增量差异](incremental_diff)功能与Git集成联系在一起。默认情况下，增量差异功能会跟踪自上次保存文件以来的更改，但也可以针对HEAD进行差异。
 
-Here is an example of what the diff markers look like in action, using the Mariana color scheme:
+这是使用Mariana配色方案的diff标记实际作用的示例：
 
-2728A line that was added2930A modified line31followed by another modified line3233The line before this was deleted34
+2728添加了一行2930修改后的行31然后是另一条修改的行3233删除之前的那一行34
 
-Changing the settinggit\_diff\_targetto`"head"`will modify the diff markers to display a diff versus the version of the file at the Git repository HEAD, as opposed to the version of the file in the working directory.
+将设置git\_diff\_target更改为`"head"`将会修改diff标记，以显示diff与Git仓库HEAD上文件的版本相比，而不是工作目录中文件的版本。
 
-See the[incremental diff documentation](incremental_diff)for more information and examples, including instructions for viewing inline diffs, navigating between hunks and reverting changes.
+有关更多信息和示例，请参阅[增量差异文档](incremental_diff)，包括有关查看内嵌差异，在块之间导航和还原更改的说明。
 
-## Sublime Merge Integration
+## Sublime Merge 整合
 
-The Git features available in Sublime Text were derived from work that went into our other product,[Sublime Merge](https://www.sublimemerge.com/). Sublime Merge is a full-featured, blazing-fast Git client built upon the technologies from Sublime Text.
+Sublime Text中可用的Git功能源自我们其他产品[Sublime Merge中的工作](https://www.sublimemerge.com/)。Sublime Merge是基于Sublime Text技术的功能齐全，功能强大的Git客户端。
 
-Since editing source code and prose requires different tools and workflows than managing a Git repository, we opted to integrate the most appropriate Git functionality into Sublime Text, but leave more advanced features in Sublime Merge. The following integration points make it easy to jump into the appropriate Git context:
+由于编辑源代码和散文与管理Git仓库相比需要不同的工具和工作流程，因此我们选择将最合适的Git功能集成到Sublime Text中，但在Sublime Merge中保留了更高级的功能。以下集成点使您可以轻松进入相应的Git上下文：
 
-#### EDITOR CONTEXT MENU
+#### 编辑器上下文菜单
 
-*   Open Git Repository…
-*   File History…
-*   Line History…
-*   Blame File…
+*   打开Git仓库...
+*   文件历史记录…
+*   线路历史记录…
+*   责备档案…
 
-#### SIDE BAR FOLDER CONTEXT MENU
+#### 侧栏文件夹上下文菜单
 
-*   Open Git Repository…
-*   Folder History…
+*   打开Git仓库...
+*   文件夹历史记录…
 
-#### SIDE BAR FILE CONTEXT MENU
+#### 侧栏文件上下文菜单
 
-*   Open Git Repository…
-*   File History…
-*   Folder History…
-*   Blame File…
+*   打开Git仓库...
+*   文件历史记录…
+*   文件夹历史记录…
+*   责备档案…
 
-#### COMMAND PALETTE
+#### 命令面板
 
-*   Sublime Merge: Open Repository
-*   Sublime Merge: Folder History
-*   Sublime Merge: File History
-*   Sublime Merge: Blame File
+*   Sublime合并：打开仓库
+*   Sublime Merge ：文件夹历史记录
+*   Sublime Merge ：文件历史记录
+*   Sublime Merge ：责备文件
 
-## Settings
+## 设定值
 
-show\_git\_statusboolean
+Git集成可以通过show\_git\_status设置来控制。默认值`true`启用Git集成，而`false`禁用它。
 
-Enables Git integration
+可以通过git\_diff\_target设置控制Git仓库中文件的增量diff行为。有效值包括：
 
-Default:`true`
+*   `"index"`–对比Git索引，默认
+*   `"head"`–与HEAD上的文件进行比较
 
-git\_diff\_targetstring
-
-Controls the behavior of incremental diff for files in a Git repository. Valid values include:
-
-*   `"index"`– diff against the Git index
-*   `"head"`– diff against the file at HEAD
-
-Default:`"index"`
+默认 `index`
