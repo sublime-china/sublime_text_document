@@ -1,76 +1,40 @@
-# 
+# [SUBLIME TEXT中文文档之](index)缩进设置（Indentation Settings）
 
-[DOCUMENTATION](index)[TOC](indentation#toc)[TOP](indentation#)
+缩进设置确定制表位（Tab)的大小，并控制制表（Tab)键是否应插入制表符或空格。除自动检测外，还可以全局，按文件类型或按文件进行自定义。
 
-Indentation Settings
+## 设置
 
-Indentation settings determine the size of the tab stops, and control whether the**Tab**key should insert tabs or spaces. In addition to the automatic detection, they can be customized globally, per-syntax type, or per-file.
+tab_size整数。一个Tab等于的空格的数量translate_tabs_to_spaces布尔值，如果为true，则在按下Tab键时，将会插入tab_size数量的空格detect_indentation布尔值，如果为true（默认值），则在加载文件时将自动计算 tab_size和translate_tabs_to_spacesuse_tab_stops布尔值，如果translate_tabs_to_spaces为true，则use_tab_stops将使tab和退格插入/删除到下一个制表位
 
-*   [Basic Settings](indentation#basic_settings)
-*   [Indentation Detection](indentation#indentation_detection)
-*   [Converting Between Tabs and Spaces](indentation#converting_tabs_spaces)
-*   [Automatic Indentation Settings](indentation#automatic_indentation_settings)
+### 设置文件
 
-## Basic Settings
+按以下顺序查询设置文件：
 
-tab\_sizeinteger
+1.  Packages/Default/Preferences.sublime-settings
+2.  Packages/Default/Preferences ().sublime-settings
+3.  **Packages/User/Preferences.sublime-settings**
+4.  Packages//.sublime-settings
+5.  **Packages/User/.sublime-settings**
 
-The number of spaces a tab is considered equal to
+通常，您应将设置放在Packages/User/Preferences.sublime-settings中。如果要指定某种文件类型的设置（例如，Python），则应将它们放在Packages/User/Python.sublime-settings中。
 
-translate\_tabs\_to\_spacesboolean
+### 单语法设置
 
-If`true`, spaces will be inserted up to the next tab stop when**Tab**is pressed, rather than inserting a tab character
+可以基于每个语法指定设置。您可以使用Preferences![▶](images/right.svg)Settings – Syntax Specific菜单编辑当前语法的设置。
 
-detect\_indentationboolean
+## 缩进检测
 
-If`true`, the default,tab\_sizeandtranslate\_tabs\_to\_spaceswill be calculated automatically when loading a file
+当一个文件被加载时，Sublime Text会根据tab\_size和translate\_tabs\_to\_spaces配置对文件进行格式化，在格式化会告知用户。可以使用detect\_indentation设置来禁用此功能。
 
-use\_tab\_stopsboolean
+缩进检测可以通过View![▶](images/right.svg)Indentation![▶](images/right.svg)Guess Settings From Buffer菜单手动运行，该菜单运行detect\_indentation命令。
 
-Iftranslate\_tabs\_to\_spacesis`true`,use\_tab\_stopswill make**Tab**insert, and**Backspace**delete, up to the next tab stop
+## Tabs和空格互转
 
-*See[Settings](settings)for information about how to set global and syntax-specific settings.*
+View![▶](images/right.svg)Indentation菜单包含用于在制表符和空格之间转换当前文件中的前导空格的命令。这些菜单项运行expand\_tabs和unexpand\_tabs命令。
 
-## Indentation Detection
+## 自动缩进
 
-When a file is loaded, its contents are examined, and thetab\_sizeandtranslate\_tabs\_to\_spacessettings are set for that file. The status area will report when this happens. While this generally works well, you may want to disable it. You can do that with thedetect\_indentationsetting.
+当您按Enter键时，自动缩进会猜出要在每行上插入的前导空格的数量。它由以下设置控制：
 
-Indentation detection can be run manually via theView![▶](images/right.svg)Indentation![▶](images/right.svg)Guess Settings From Buffermenu, which runs thedetect\_indentationcommand.
-
-## Converting Between Tabs and Spaces
-
-TheView![▶](images/right.svg)Indentationmenu has commands to convert leading whitespace in the current file between tabs and spaces. These menu items run theexpand\_tabsandunexpand\_tabscommands.
-
-## Automatic Indentation Settings
-
-Automatic indentation guesses the amount of leading whitespace to insert on each line when you press enter. It's controlled with these settings:
-
-auto\_indentboolean
-
-Enables auto indent
-
-Default:`true`
-
-smart\_indentboolean
-
-Makes auto indent a little smarter, e.g., by indenting the next line after an if statement in C.
-
-Default:`true`
-
-trim\_automatic\_white\_spaceboolean
-
-Trims white space added byauto\_indentwhen moving the caret off the line.
-
-Default:`true`
-
-indent\_to\_bracketboolean
-
-Adds whitespace up to the first open bracket when indenting. Use when indenting like this:
-
-~~~
-use_indent_to_bracket(to_indent,
+auto_indent布尔值，默认启用。启用自动缩进smart_indent布尔值，默认启用。使自动缩进更聪明一些，例如，通过在C语句中的if语句后缩进下一行。trim_automatic_white_space布尔值，默认启用。在将插入符号移离线条时，修剪auto_indent添加的空白区域。indent_to_bracket布尔值，默认情况下禁用。在缩进时将空格添加到第一个开括号。在缩进时使用如下：use_indent_to_bracket(to_indent,
                       like_this);
-
-~~~
-
-Default:`false`

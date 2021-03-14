@@ -19,8 +19,8 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 
 *   [设置](settings)
 *   [Key Bindings](key_bindings)
-*   [Changing the Font](font)
-*   [Indentation](indentation)
+*   [字体设置](font)
+*   [缩进](indentation)
 *   [Spell Checking](spell_checking)
 *   [Build Systems](build_systems)
 *   [Packages](packages)

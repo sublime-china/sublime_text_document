@@ -1,17 +1,13 @@
-# 
+# [SUBLIME TEXT中文文档之](index)字体设置（Font Settings）
 
-[DOCUMENTATION](index.html)
+可以通过将这些行添加到Preferences![▶](images/right.svg)Settings的右侧窗口来更改字体：
 
-Font Settings
-
-Changing the font can be done via adding these lines to the right-hand pane ofPreferences![▶](images/right.svg)Settings:
-
-~~~
+~~~js
 "font_face": "Courier New",
 "font_size": 10
 
 ~~~
 
-and then change as desired. The font will change when you save.
+然后根据需要改变。保存时字体会改变。
 
-You can see other settings to change by browsing through the left-hand pane ofPreferences![▶](images/right.svg)Settings. There are many things that can be customized in Sublime Text.
+在Sublime Text中可以自定义很多东西。您可以通过浏览Preferences![▶](images/right.svg)Settings的左侧窗口来查看要更改的其他设置。
