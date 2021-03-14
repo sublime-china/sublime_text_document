@@ -1,20 +1,18 @@
-[DOCUMENTATION](index.html)
+# [SUBLIME TEXT中文文档之](index)连字-双击文件选中的范围
 
-Ligatures
+Sublime Text支持自构建3146以来的符号连接。构建3158为font\_options设置添加了选项以提供对连字的控制。
 
-Sublime Text supports ligatures for symbols since version 3.1. Thefont\_optionssetting can be used to customize ligature behavior.
+## 用法
 
-## Usage
+在默认配置中，Sublime Text将使用ASCII范围内符号序列的连字。连字必须是字体的clig，liga或caltOpenType表的一部分，以供它们使用。此外，危害连接的字符序列必须都是同一令牌的一部分，如用于显示文件的语法所定义。
 
-In the default configuration, Sublime Text will use ligatures for sequences of symbols within the ASCII range. The ligatures must be part of the`clig`,`liga`or`calt`OpenType tables of the font for them to be used. Additionally, the sequence of characters that compromise the ligature must all be part of the same token, as defined by the syntax being used to display the file.
+要使用dligOpenType表中的连字，font\_options设置必须添加字符串“dlig”。所述font\_options设置还允许用于禁用从结扎clig，西甲或CALT通过将各表“no\_clig”，“no\_liga”或“no\_calt”字符串。
 
-To use ligatures from the`dlig`OpenType table, thefont\_optionssetting must have the string`"dlig"`added. Thefont\_optionssetting also allows for disabling ligatures from the`clig`,`liga`or`calt`tables by adding the respective`"no_clig"`,`"no_liga"`or`"no_calt"`strings.
+## 故障排除
 
-## Troubleshooting
+如果没有显示连字，请检查以下内容：
 
-If ligatures are not displaying, please check the following:
-
-*   Check to see what unicode characters make up the ligature. Sublime Text currently only supports ligatures comprised from the following characters:`!`,`"`,`#`,`$`,`%`,`&`,`'`,`(`,`)`,`*`,`+`,`,`,`-`,`.`,`/`,`:`,`;`,`<`,`=`,`>`,`?`,`@`,`[`,`\`,`]`,`^`,`_`,```,`{`,`|`,`}`,`~`.
-*   Make sure Sublime Text build 3146 or newer is installed. If trying to usefont\_optionsto control ligatures, ensure build 3158 or newer is installed.
-*   See if the ligatures appear when using the "Plain Text" syntax for the file. If so, the syntax is likely breaking the symbols into distinct tokens, preventing a ligature from being used.
-*   If using Sublime Text on Linux, check and see what version of Pango is installed. Pango 1.38, released in 2015, is required to specify thefont\_optionsto control liagures.
+*   检查单词字符组成的连字符。目前崇高文本仅支持从以下字符组成连字：！，“，＃，$，％，＆，'，（，），\*，+，，，\- ，。，/，：，;，，？，@，\[，\\，\]，^，\_，`，{，|，}，〜。
+*   确保安装了Sublime Text build 3146或更新版本。如果尝试使用font\_options来控制连字，请确保安装了build 3158或更新版本。
+*   查看使用文件的“纯文本”语法时是否显示连字。如果是这样，语法可能会将符号分解为不同的标记，从而阻止使用连字。
+*   如果在Linux上使用Sublime Text，请检查并查看安装了哪些版本的Pango。2015年发布的Pango 1.38需要指定font\_options来控制liagures。

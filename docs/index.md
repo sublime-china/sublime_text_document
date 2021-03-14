@@ -32,13 +32,13 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [GPU Rendering](gpu_rendering)New!
 *   [Operating System Compatibility](os_compatibility)
 *   [Linux Package Manager仓库](linux_repositories)
-*   [Safe Mode](safe_mode)New!
-*   [Reverting to a Freshly Installed State](revert)
-*   [Ligatures](ligatures)
+*   [安全模式](safe_mode)New!
+*   [恢复初始状态](revert)
+*   [连字-双击文件选中的范围](ligatures)
 
 ## Package Development
 
-*   [Color Schemes](color_schemes)Updated
+*   [配色方案](color_schemes)Updated
 *   [Themes](themes)Updated
 *   [Menus](menus)
 *   [API 环境变量](api_environments)New!

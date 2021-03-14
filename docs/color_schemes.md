@@ -1,45 +1,36 @@
-# 
+# [SUBLIME TEXT中文文档之](index)配色方案
 
-[DOCUMENTATION](https://www.sublimetext.com/docs/index.html)[TOC](https://www.sublimetext.com/docs/color_schemes.html#toc)[TOP](https://www.sublimetext.com/docs/color_schemes.html#)
+Sublime Text中源代码和文本的高亮显示由配色方案控制。*配色方案*按照语法来控制颜色和文本样式。用户界面的其他部分由[模板](themes)来控制。模板控制按钮、选择列表、侧边栏和选项卡等元素。
 
-Color Schemes
+Sublime Text配色方案使用.sublime-color-scheme文件实现，其语法为JSON。 Sublime Text还支持使用TextMate[.tmTheme格式](color_schemes_tmtheme)。
 
-Version:  
-[Dev](https://www.sublimetext.com/docs/color_schemes.html#ver-dev)[3.2](https://www.sublimetext.com/docs/color_schemes.html#ver-3.2)[3.1](https://www.sublimetext.com/docs/color_schemes.html#ver-3.1)[3.0](https://www.sublimetext.com/docs/color_schemes.html#ver-3.0)
+*   [示例](color_schemes#example)
+*   [颜色](color_schemes#colors)
+*   [变量](color_schemes#variables)
+*   [全局设置](color_schemes#global_settings)
+    *   [强调提示](color_schemes#global_settings-accents)
+    *   [CSS](color_schemes#global_settings-css)
+    *   [插槽](color_schemes#global_settings-gutter)
+    *   [选择](color_schemes#global_settings-selection)
+    *   [查找](color_schemes#global_settings-find)
+    *   [指南](color_schemes#global_settings-guides)
+    *   [括号](color_schemes#global_settings-brackets)
+    *   [标签](color_schemes#global_settings-tags)
+    *   [阴影](color_schemes#global_settings-shadows)
+*   [范围规则](color_schemes#scope_rules)
+    *   [匹配](color_schemes#matching)
+    *   [命名](color_schemes#naming)
+    *   [风格规则](color_schemes#style_rules)
+    *   [哈希语法高亮](color_schemes#hashed_syntax_highlighting)
+    *   [例子](color_schemes#examples)
+*   [定制](color_schemes#customization)
+*   [附录：CSS颜色](color_schemes#css_colors)
 
-The highlighting of source code and prose in Sublime Text is controlled by a color scheme. A*color scheme*assigns colors and font styles to*scopes*, which are assigned to the text by the syntax. The rest of the look of the user interface is controlled by the[theme](https://www.sublimetext.com/docs/themes.html). The theme controls such elements as buttons select lists, the sidebar and tabs.
+## 例
 
-Sublime Text color schemes are implemented using.sublime-color-schemefiles, containing JSON. Sublime Text also supports a subset of features using the TextMate[.tmTheme format](https://www.sublimetext.com/docs/color_schemes_tmtheme.html).*Before Sublime Text 3.1, only the .tmTheme format was supported.*
+*以下是.sublime-color-scheme文件格式的示例 。完整的配色方案将有更多规则来涵盖标准范围名称。*
 
-*   [Example](https://www.sublimetext.com/docs/color_schemes.html#example)
-*   [Colors](https://www.sublimetext.com/docs/color_schemes.html#colors)
-*   [Variables](https://www.sublimetext.com/docs/color_schemes.html#variables)
-*   [Global Settings](https://www.sublimetext.com/docs/color_schemes.html#global_settings)
-    *   [Accents](https://www.sublimetext.com/docs/color_schemes.html#global_settings-accents)
-    *   [CSS](https://www.sublimetext.com/docs/color_schemes.html#global_settings-css)
-    *   [Gutter](https://www.sublimetext.com/docs/color_schemes.html#global_settings-gutter)
-    *   [Diff](https://www.sublimetext.com/docs/color_schemes.html#global_settings-diff)
-    *   [Selection](https://www.sublimetext.com/docs/color_schemes.html#global_settings-selection)
-    *   [Find](https://www.sublimetext.com/docs/color_schemes.html#global_settings-find)
-    *   [Rulers](https://www.sublimetext.com/docs/color_schemes.html#global_settings-rulers)
-    *   [Guides](https://www.sublimetext.com/docs/color_schemes.html#global_settings-guides)
-    *   [Brackets](https://www.sublimetext.com/docs/color_schemes.html#global_settings-brackets)
-    *   [Tags](https://www.sublimetext.com/docs/color_schemes.html#global_settings-tags)
-    *   [Shadows](https://www.sublimetext.com/docs/color_schemes.html#global_settings-shadows)
-*   [Scope Rules](https://www.sublimetext.com/docs/color_schemes.html#scope_rules)
-    *   [Matching](https://www.sublimetext.com/docs/color_schemes.html#matching)
-    *   [Naming](https://www.sublimetext.com/docs/color_schemes.html#naming)
-    *   [Style Rules](https://www.sublimetext.com/docs/color_schemes.html#style_rules)
-    *   [Hashed Syntax Highlighting](https://www.sublimetext.com/docs/color_schemes.html#hashed_syntax_highlighting)
-    *   [Examples](https://www.sublimetext.com/docs/color_schemes.html#examples)
-*   [Customization](https://www.sublimetext.com/docs/color_schemes.html#customization)
-*   [Appendix: CSS Colors](https://www.sublimetext.com/docs/color_schemes.html#css_colors)
-
-## Example
-
-*The following is an example of the format of a.sublime-color-schemefile. A complete color scheme will have many more rules to cover the standard scope names.*
-
-~~~
+~~~js
 {
     "name": "Example Color Scheme",
     "globals":
@@ -70,35 +61,31 @@ Sublime Text color schemes are implemented using.sublime-color-schemefiles, cont
 }
 ~~~
 
-## Colors
+## 颜色
 
-Colors in color schemes may be specified using one of seven formats:
+可以使用以下七种格式之一指定配色方案中的颜色：
 
-*   **Hex RGB**: A`#`followed by six hex characters, with the first two specifying the red channel, second tow the green channel and the final two the blue channel. Red is written as`#FF0000`. An abbreviated form is available when each of the three pairs use the same value for both characters. Red is written as`#F00`.
-*   **Hex RGBA**: Same as Hex RGBA, but with an extra pair of hex characters at the end to specify the alpha channel. Red with 67% opacity is written as`#FF0000AA`. The abbreviated form would be`#F00A`.
-*   **RGB functional notation**: A function named`rgb`that accepts three integers in the range 0 to 255. The first integer specifies the red channel, the second the green channel and the third the blue channel. Red is written as`rgb(255, 0, 0)`.
-*   **RGBA functional notation**: Identical to the RGB function format, except the name of the function is`rgba`and a fourth parameter is added accepting a value from`0.0`to`1.0`specifying the alpha channel. Red with 50% opacity is written as`rgba(255, 0, 0, 0.5)`.
-*   **HSL functional notation**: A function named`hsl`that accepts three values. The first is an integer in the range`0`to`360`specifying the hue. The second is a percentage specifying the saturation. The third is a percentage specifying the lightness. Red is written as`hsl(0, 100%, 50%)`.
-*   **HSLA functional notation**: Identical to the HSL function format, except the name of the function is`hsla`and a fourth parameter is added accepting a value from`0.0`to`1.0`specifying the alpha channel. Red with 50% opacity is written as`hsla(0, 100%, 50%, 0.5)`.
-*   **HWB functional notation**3181: A function named`hwb`that accepts three or four values. The first is an integer in the range`0`to`360`specifying the hue. The second is a percentage specifying the percentage of white mixed in. The third is a percentage specifying the black mixed in. The optional fourth parameter is a value from`0.0`to`1.0`that controls the opacity. Examples include:`hwb(0, 20%, 20%)`and`hwb(0, 20%, 20%, 0.5)`.
-*   **Named**:[CSS color names](https://www.sublimetext.com/docs/color_schemes.html#css_colors).*Please note that while some share names with X11 named colors used in.tmThemefiles, the actual colors tend to differ.*
+*   **十六进制RGB**：`#`后跟六个十六进制字符，前两个指定红色通道，第二个指定绿色通道，最后两个指定蓝色通道。红色写成`#FF0000`。当三对中的每一对对两个字符使用相同的值时，可以使用缩写形式。红色写成`#F00`。
+*   **十六进制RGBA**：与十六**进制RGBA**相同，但在末尾添加一对额外的十六进制字符以指定alpha通道。红色与67％的不透明度写成`#FF0000AA`。缩写形式将是`#F00A`。
+*   **RGB功能表示法**：一个名为的函数`rgb`，它接受0到255范围内的三个整数。第一个整数指定红色通道，第二个整数指定绿色通道，第三个整数指定蓝色通道。红色写成`rgb(255, 0, 0)`。
+*   **RGBA函数表示法**：相同于RGB格式的功能，除了功能的名称是`rgba`与第四参数被添加从接受的值`0.0`，以`1.0`指定alpha通道。红色与50％不透明度写成`rgba(255, 0, 0, 0.5)`。
+*   **HSL功能表示法**：一个名为的函数`hsl`，它接受三个值。第一个是指定色调的0到360范围内的整数。第二个是指定饱和度的百分比。第三个是指定亮度的百分比。红色写成`hsl(0, 100%, 100%)`。
+*   **HSLA函数表示法**：相同于HSL功能格式，除了功能的名称是`hsla`与第四参数被添加从接受的值`0.0`，以`1.0`指定alpha通道。红色与50％不透明度写成`hsla(0, 100%, 100%, 0.5)`。
+*   **命名**：[CSS颜色名称](color_schemes#css_colors)。*请注意，虽然某些与.tmTheme文件中使用的X11命名颜色共享名称 ，但实际颜色往往不同。*
 
-Additionally, colors may be specified as a[variable](https://www.sublimetext.com/docs/color_schemes.html#variables), and then referenced via the syntax`var(example_var_name)`. Variable references are particularly useful when combined with the[minihtml`color()`mod function](https://www.sublimetext.com/docs/minihtml.html#color-mod_function)and the supported`blend()`,`blenda()`,`alpha()`,`saturation()`,`lightness()`and`min-contrast()`adjusters.
+另外，颜色可以指定为[变量](color_schemes#variables)，然后通过语法引用`var(example_var_name)`。当与CSS颜色模块级别4组合变量的引用是特别有用的[彩色-MOD函数](https://drafts.csswg.org/css-color-4/#modifying-colors)和所支持的`blend()`，`blenda()`和`alpha()`调节器。
 
-*   **blend() adjuster**: Blends a color into the base. To blend equal parts grey and a base color referenced via variable, in RGB space:`color(var(base_green) blend(#888 50%))`. If colors should be blended in HSL space, use the following form:`color(var(base_green) blend(#888 50% hsl))`. The resulting alpha value is always the alpha channel of the base color.
-*   **blenda() adjuster**: Functions the same way as the`blend()`adjuster, but blends the alpha channel of the two colors instead of just using the alpha channel from the base. An example of the blending a partially transparent grey into a green:`color(var(base_green) blenda(#8888 50% hsl))`
-*   **alpha() adjuster**: Changes the alpha channel of the base color to the value specified, from`0.0`to`1.0`. Setting the alpha channel to 90%:`color(var(base_green) alpha(0.9))`.*A shorthand name of`a()`is also available for this adjuster.*
-*   **saturation() adjuster**3179: Changes the saturation channel of the base color, in the HSL color space, to the value specified, from`0%`to`100%`. Setting the saturation to 90%:`color(var(base_green) saturation(0.9))`. Increasing the saturation by 10%:`color(var(base_green) s(+ 10%))`.*A shorthand name of`s()`is also available for this adjuster.*
-*   **lightness() adjuster**3179: Changes the lightness channel of the base color, in the HSL color space, to the value specified, from`0%`to`100%`. Setting the lightness to 90%:`color(var(base_green) lightness(0.9))`. Decreasing the lightness by 10%:`color(var(base_green) l(- 10%))`.*A shorthand name of`l()`is also available for this adjuster.*
-*   **min-contrast() adjuster**3181PROPRIETARY: Modifies a color to ensure a minimum contrast ratio against a "background" color. The first parameter is the color to calculate the contrast again, the "background", and the second is a decimal number specifying the minimum contrast ratio. Typical values for the contrast ratio range from`2.0`to`4.5`. Ensure a contrast ratio of 2.5 against the background:`color(var(base_green) min-contrast(var(bg_color) 2.5))`
+*   **blend（）调节器**：将颜色混合到底座中。在RGB空间中混合等于灰色的部分和通过变量引用的基色：`color(var(base_green) blend(#888 50%))`。如果颜色应在HSL空间中混合，请使用以下形式：`color(var(base_green) blend(#888 50% hsl))`。生成的alpha值始终是基色的alpha通道。
+*   **blenda（）调节器**：功能与**调节器的**功能相同`blend()`，但混合了两种颜色的alpha通道，而不是仅使用基座的alpha通道。将部分透明灰色混合为绿色的示例：`color(var(base_green) blenda(#8888 50% hsl))`
+*   **α（）调节**：改变基色指定，从值的alpha通道`0.0`到`1.0`。α通道设置为90％：`color(var(base_green) alpha(0.9))`。*此调整器也可以使用**简写名称`a()`。*
 
-## Variables
+## 变量
 
-Reusable color definitions may be created in the`variables`key. The names may be any string utilizing the characters`a-z`,`A-Z`,`0-9`,`_`and`-`. The values may be any valid color format.
+可以在`variables`密钥中创建可重用的颜色定义。名称可能是利用字符的任意字符串`a-z`，`A-Z`，`0-9`，`_`和`-`。值可以是任何有效的颜色格式。
 
-Variables may be referenced in the global settings and rules, via the syntax`var(example_var_name)`. The following example shows basic variable usage:
+可以通过语法在全局设置和规则中引用变量`var(example_var_name)`。以下示例显示了基本变量用法：
 
-~~~
+~~~js
 {
     "name": "Example Color Scheme",
     "variables":
@@ -135,211 +122,139 @@ Variables may be referenced in the global settings and rules, via the syntax`var
 }
 ~~~
 
-## Global Settings
+## 全局设置
 
-The following global settings go in the object with the"globals"key.
+以下全局设置使用`globals`键进入对象 。
 
-"background"
+背景
 
-The default background color
+默认背景颜色
 
-"foreground"
+前景
 
-The default color for text
+文本的默认颜色
 
-"invisibles"
+插入符号
 
-The color for whitespace, when rendered.*When not specified, defaults to`foreground`with an opacity of`0.35`.*
+插入符号的颜色
 
-"caret"
+line\_highlight
 
-The color of the caret
+包含插入符号的行的背景颜色。*仅在`highlight_line`启用设置时使用。*
 
-"block\_caret"3190
+### 强调提示
 
-The color of the caret when using a block caret
+拼写错误
 
-"block\_caret\_border"4086
+用于在拼写错误的单词下绘制的波浪下划线的颜色。
 
-The color of the border for a block caret
+fold\_marker
 
-"block\_caret\_underline"4086
+用于指示内容的标记的颜色已折叠。
 
-The color of the underline the block caret is drawn as when overlapping with a selection
+minimap\_border
 
-"block\_caret\_corner\_style"4086
+`draw_minimap_border`启用 此设置时，在小地图的视口区域周围绘制的边框颜色 。*请注意，视口通常仅在悬停时可见，除非`always_show_minimap_viewport`启用该设置。*
 
-The style of corners to use for block carets. Options include:`round`(the default),`cut`or`square`.
+强调提示
 
-"block\_caret\_corner\_radius"4086
-
-The radius to use when the`block_caret_corner_style`is`round`or`cut`.
-
-"line\_highlight"
-
-The background color of the line containing the caret.*Only used when the`highlight_line`setting is enabled.*
-
-### ACCENTS
-
-"misspelling"
-
-The color to use for the squiggly underline drawn under misspelled words.
-
-"fold\_marker"
-
-The color to use for the marker that indicates content has been folded.
-
-"minimap\_border"
-
-The color of the border drawn around the viewport area of the minimap when the setting`draw_minimap_border`is enabled.*Note that the viewport is normally only visible on hover, unless the`always_show_minimap_viewport`setting is enabled.*
-
-"accent"
-
-A color made available for use by the theme.*The Default theme uses this to highlight modified tabs when the`highlight_modified_tabs`setting is enabled.*
+可供模板使用的颜色。*默认模板使用此选项可在`highlight_modified_tabs`启用设置时高亮显示已修改的选项卡 。*
 
 ### CSS
 
-CSS is applied to[minihtml](https://www.sublimetext.com/docs/minihtml.html)content created via the popups and phantoms functionality that is exposed through the API. Supported CSS properties are discussed in the[minihtml CSS reference](https://www.sublimetext.com/docs/minihtml.html#css).
+CSS适用于通过API公开的弹出窗口和[幻像](minihtml)功能创建的[minihtml](minihtml)内容。[minihtml CSS参考](minihtml#css)中讨论了支持的CSS属性 。
 
-Plugins that use minihtml are encouraged to set a unique`id`attribute on the`<body>`tag of generated HTML to allow color schemes to override default plugin styles.
+建议使用minihtml的插件`id`在`<body>`生成的HTML标记上设置唯一属性，以允许配色方案覆盖默认插件样式。
 
-"popup\_css"
+popup\_css
 
-CSS passed to popups.
+CSS传递给弹出窗口。
 
-"phantom\_css"
+phantom\_css
 
-CSS passed to phantoms.*If not specified, uses`popup_css`.*
+CSS传递给幽灵。*如果未指定，则使用`popup_css`。*
 
-"sheet\_css"4065
+### 插槽
 
-CSS passed to HTML sheets.
+插槽
 
-### GUTTER
+插槽的背景颜色
 
-"gutter"
+gutter\_foreground
 
-The background color of the gutter
+插槽中的行号颜色
 
-"gutter\_foreground"
+### 选择
 
-The color of line numbers in the gutter
+选择
 
-"gutter\_foreground\_highlight"4050
+所选文本的背景颜色
 
-The color of line numbers in the gutter when a line is highlighted
+selection\_foreground
 
-### DIFF
+一种颜色，它将覆盖选区的基于范围的文本颜色
 
-The diff functionality is displayed in the gutter as colored lines for added and modified lines, and a triangle where lines were deleted.
+selection\_border
 
-"line\_diff\_width"3186
+选择边框的颜色
 
-The width of the diff lines, between 1 and 8
+selection\_border\_width
 
-"line\_diff\_added"3189
+选择边框的宽度，从`0`到`4`。
 
-The color of diff markers for added lines
+inactive\_selection
 
-"line\_diff\_modified"3186
+当前未聚焦的视图中选择的背景颜色
 
-The color of diff markers for modified lines
+inactive\_selection\_foreground
 
-"line\_diff\_deleted"3189
+一种颜色，它将覆盖当前未聚焦的视图中所选内容的基于范围的文本颜色
 
-The color of diff markers for deleted lines
+selection\_corner\_style
 
-### SELECTION
+选择时使用的角落样式。选项包括:(`round`默认），`cut`或`square`。
 
-"selection"
+selection\_corner\_radius
 
-The background color of selected text
+当使用半径`selection_corner_style`是`round`或`cut`。
 
-"selection\_foreground"
+### 查找
 
-A color that will override the scope-based text color of the selection
+高亮
 
-"selection\_border"
+在“查找”面板中选中 “*高亮显示匹配”*选项时“其他”匹配的边框颜色 。还用于高亮显示在文件中查找结果中的匹配项。
 
-The color for the border of the selection
+find\_highlight
 
-"selection\_border\_width"
+“查找”面板匹配的文本背景颜色
 
-The width of the selection border, from`0`to`4`.
+find\_highlight\_foreground
 
-"inactive\_selection"
+一种颜色，它将覆盖“查找”面板匹配的文本的基于范围的文本颜色
 
-The background color of a selection in a view that is not currently focused
+### 指南
 
-"inactive\_selection\_border"4074
+指南由`draw_indent_guides`设置全局控制。
 
-The color for the border of the selection in a view that is not currently focused
+指南
 
-"inactive\_selection\_foreground"
+用于绘制缩进指南的颜色。*仅`"draw_normal"`在设置中存在该选项时使用`indent_guide_options`。*
 
-A color that will override the scope-based text color of the selection in a view that is not currently focused
+active\_guide
 
-"selection\_corner\_style"
+用于绘制包含插入符号的缩进级别的缩进指南的颜色。*仅`"draw_active"`在设置中存在该选项时使用`indent_guide_options`。*
 
-The style of corners to use on selections. Options include:`round`(the default),`cut`or`square`.
+stack\_guide
 
-"selection\_corner\_radius"
+用于绘制包含插入符号的缩进级别的父缩进级别的缩进指南的颜色。*仅`"draw_active"`在设置中存在该选项时使用`indent_guide_options`。*
 
-The radius to use when the`selection_corner_style`is`round`or`cut`.
+### 括号
 
-### FIND
+括号匹配由`match_brackets`设置全局控制 。
 
-"highlight"
+brackets\_options
 
-The border color for "other" matches when the*Highlight matches*option is selected in the Find panel. Also used to highlight matches in Find in Files results.
-
-"find\_highlight"
-
-The background color of text matched by the Find panel
-
-"find\_highlight\_foreground"
-
-A color that will override the scope-based text color of text matched by the Find panel
-
-"scroll\_highlight"4050
-
-The color search result positions drawn on top of the scroll bar.
-
-"scroll\_selected\_highlight"4050
-
-The color of the selected search result position drawn on top of the scroll bar.
-
-### RULERS
-
-Ruler locations are set by the`rulers`setting.
-
-"rulers"
-
-The color used to draw rulers.
-
-### GUIDES
-
-Guides are controlled globally by the`draw_indent_guides`setting.
-
-"guide"
-
-The color used to draw indent guides.*Only used if the option`"draw_normal"`is present in the setting`indent_guide_options`.*
-
-"active\_guide"
-
-The color used to draw the indent guides for the indentation levels containing the caret.*Only used if the option`"draw_active"`is present in the setting`indent_guide_options`.*
-
-"stack\_guide"
-
-The color used to draw the indent guides for the parent indentation levels of the indentation level containing the caret.*Only used if the option`"draw_active"`is present in the setting`indent_guide_options`.*
-
-### BRACKETS
-
-Bracket matching is controlled globally by the`match_brackets`setting.
-
-"brackets\_options"
-
-How brackets are highlighted when the caret is next to one. Accepts a space-separated list from the following:
+当插入符号紧邻时，括号如何高亮显示。接受以下以空格分隔的列表：
 
 *   `underline`
 *   `stippled_underline`
@@ -348,121 +263,94 @@ How brackets are highlighted when the caret is next to one. Accepts a space-sepa
 *   `bold`
 *   `italic`
 
-"brackets\_foreground"
+brackets\_foreground
 
-The color to use when drawing the style specified by`brackets_options`.
+绘制指定样式时使用的颜色`brackets_options`。
 
-"bracket\_contents\_options"
+bracket\_contents\_options
 
-How brackets are highlighted when the caret is positioned in between a pair of brackets. Accepts a space-separated list from the following:
-
-*   `underline`
-*   `stippled_underline`
-*   `squiggly_underline`
-*   `foreground`
-
-"bracket\_contents\_foreground"
-
-The color to use when drawing the style specified by`brackets_contents_options`.
-
-### TAGS
-
-Tag matching is controlled globally by the`match_tags`setting.
-
-"tags\_options"
-
-How tags are highlighted when the caret is inside of one. Accepts a space-separated list from the following:
+当插入符号位于一对括号之间时，如何高亮显示括号。接受以下以空格分隔的列表：
 
 *   `underline`
 *   `stippled_underline`
 *   `squiggly_underline`
 *   `foreground`
 
-"tags\_foreground"
+bracket\_contents\_foreground
 
-The color to use when drawing the style specified by`tags_options`.
+绘制指定样式时使用的颜色`brackets_contents_options`。
 
-### SHADOWS
+### 标签
 
-"shadow"
+标签匹配由`match_tags`设置全局控制 。
 
-The color of the shadow used to show when a text area can be horizontally scrolled
+tags\_options
 
-"shadow\_width"
+当插入符号位于其中时，标记如何高亮显示。接受以下以空格分隔的列表：
 
-The width of the shadow in device-independent pixels
+*   `underline`
+*   `stippled_underline`
+*   `squiggly_underline`
+*   `foreground`
 
-## Scope Rules
+tags\_foreground
 
-Color schemes interact with the text in a file via scopes. Scopes are set to code or prose tokens via the*syntax*. Scopes are dotted strings, specified from least-to-most specific. For example, the`if`keyword in PHP could be specified via the scope name`keyword.control.php`.
+绘制指定样式时使用的颜色`tags_options`。
 
-### MATCHING
+### 阴影
 
-Color schemes apply colors and font styles to the scopes by matching the dotted labels, starting with the first. Prefix matching is the standard way to have a color scheme apply to multiple syntaxes. Instead of matching`keyword.control.php`, most color schemes will instead assign a color to`keyword`. Matching the first one or two labels in a scope is most common. Including the final label, the syntax name, is uncommon unless a syntax-specific override is desired.
+阴影
 
-### NAMING
+用于显示文本区域可以水平滚动的阴影的颜色
 
-Author of syntaxes can assign whatever scopes they want to a given token. This combined with the fact that there are hundreds of community-maintained syntaxes means that is can be hard to know what scopes to target. The[official Scope Naming guidelines](https://www.sublimetext.com/docs/scope_naming.html)were established to help syntax and color scheme authors use a common set, for better interoperability. The[Usage in Color Schemes](https://www.sublimetext.com/docs/scope_naming.html#color_schemes)section provides a baseline set of scopes that color scheme authors should strive to handle.
+shadow\_width
 
-### STYLE RULES
+与设备无关的像素中阴影的宽度
 
-Each scope style rule consists of an object containing a"scope"key, along with one or more of the following optional keys:
+## 范围规则
 
-"name"
+配色方案通过范围与文件中的文本进行交互。范围通过*语法*设置为代码或散文令牌。范围是虚线字符串，从最少到最具体指定。例如，`if`PHP中的关键字可以通过范围名称指定`keyword.control.php`。
 
-The (arbitrary) name for the scope rule
+### 匹配
 
-"foreground"
+配色方案通过匹配点缀标签（从第一个开始）将颜色和字体样式应用于范围。前缀匹配是将配色方案应用于多种语法的标准方法。而不是匹配`keyword.control.php`，大多数配色方案将改为分配颜色`keyword`。匹配范围中的前一个或两个标签是最常见的。除非需要特定于语法的覆盖，否则包括最终标签（语法名称）并不常见。
 
-The text color
+### 命名
 
-"background"
+语法的作者可以将他们想要的任何范围分配给给定的标记。这与事实相结合，有数百个社区维护的语法意味着很难知道要定位的范围。建立[官方范围命名准则](http://www.sublimetext.com/docs/3/scope_naming)是为了帮助语法和配色方案作者使用通用集合，以实现更好的互操作性。“[配色方案中](http://www.sublimetext.com/docs/3/scope_naming#color_schemes)的[用法”](http://www.sublimetext.com/docs/3/scope_naming#color_schemes)部分提供了配色方案作者应该努力处理的基准范围集。
 
-The background color
+### 风格规则
 
-"foreground\_adjust"3179
+每个范围样式规则都包含一个包含`scope`键的对象，以及一个或多个以下可选键：
 
-An adjustment to the"foreground"color, only valid with"background"
+*   `name`\- 范围规则的（任意）名称
+*   `foreground`\- 文字颜色
+*   `background`\- 背景颜色
+*   `selection_foreground`\- 选中时的文本颜色
+*   `font_style`\-零个或更多的`bold`，`italic`由空格分隔
 
-"selection\_foreground"
+### 哈希语法高亮显示
 
-The text color when selected
+该`foreground`键支持一种名为Hashed Syntax Highlighting的特殊模式，其中与指定范围匹配的每个标记将从一个或多个渐变中获得唯一的颜色。一些编辑将这种高亮显示方式称为“语义高亮显示”。
 
-"font\_style"
+要使用“散列语法高亮显示”，`foreground`键必须具有两个或更多颜色列表的值。Sublime Text将创建256种不同的颜色，这些颜色是所提供颜色之间的线性插值（lerp）。插值在HSL空间中完成。
 
-Zero or more of the following, separated by spaces:
+当Sublime Text高亮显示文件中的标记时，它将创建标记的散列值，并使用它来选择256个线性插值中的一个。给定标记的每个实例都将使用相同的颜色。例如，每个实例`first_name`都具有相同的颜色，但每个实例`name`都具有不同的颜色。
 
-*   `bold`
-*   `italic`
-*   `glow`4050
-*   `underline`4074
-*   `stippled_underline`4075
-*   `squiggly_underline`4075
+对于散列语法高亮显示最明显，起点和终点之间的色调差异应尽可能远。以下是使用变量名称的蓝色，紫色和粉红色的示例：
 
-The"foreground\_adjust"key accepts a space-separated list of adjusters that are supported by the[minihtml`color()`mod function](https://www.sublimetext.com/docs/minihtml.html#color-mod_function). It is only supported when the"background"key is also specified, and thus allows modifying all foregrounds used in combination with the background, without having to create different rules for every permutation.
-
-### HASHED SYNTAX HIGHLIGHTING
-
-The"foreground"key supports a special mode called*Hashed Syntax Highlighting*, where each token matching the scope specified will receive a unique color from one, or more, gradients. Some editors refer to this style of highlighting as*Semantic Highlighting*.
-
-To use hashed syntax highlighting, the"foreground"key must have a value that is an array of two or more colors. Sublime Text will create 256 different colors that are linear interpolations (lerp) between the colors provided. The interpolation is done in HSL space.
-
-As Sublime Text highlights the tokens in a file, it will create a hashed value of the token, and use that to pick one of the 256 linear interpolations. Every instance of a given token will use the same color. For instance, each instance of`first_name`would have the same color, but every instance of`name`would have a different color.
-
-For hashed syntax highlighting to be most obvious, the hue difference between the start and end points should be as far apart as possible. Here is an example of using blues, purples and pinks for variable names:
-
-~~~
+~~~js
 {
     "scope": "source - punctuation - keyword",
     "foreground": ["hsl(200, 60%, 70%)", "hsl(330, 60%, 70%)"]
 }
 ~~~
 
-### EXAMPLES
+### 例子
 
-The following scope style rule will color all strings as green:
+以下范围样式规则将所有字符串着色为绿色：
 
-~~~
+~~~js
 {
     "name": "Strings",
     "scope": "string",
@@ -470,9 +358,9 @@ The following scope style rule will color all strings as green:
 }
 ~~~
 
-To style all numbers as bold, italic red, use:
+要将所有数字设置为粗体，斜体红色，请使用：
 
-~~~
+~~~js
 {
     "name": "Numbers",
     "scope": "constant.numeric",
@@ -481,15 +369,15 @@ To style all numbers as bold, italic red, use:
 }
 ~~~
 
-## Customization
+## 定制
 
-Color schemes based on the.sublime-color-schemeformat are specified by filename only, not a package-based file path. This allows users to customize a color scheme by overriding variables or globals, and adding rules.
+基于.sublime-color-scheme格式的配色方案仅由filename指定，而不是基于包的文件路径。这允许用户通过覆盖变量或全局变量以及添加规则来自定义配色方案。
 
-To create a user-specific customization of a color scheme, create a new file with the same filename as the color scheme, but save it in thePackages/User/directory.
+要创建配色方案的用户特定自定义，请创建与配色方案具有相同文件名的新文件，但将其保存在Packages / User /目录中。
 
-For example, to customize the default Monokai color scheme, create a file namedPackages/User/Monokai.sublime-color-scheme. The following settings will change the background color to be a fully-desaturated grey, the yellow to be more vibrant, and will add a new rule change Python docstrings to be colored the same as strings.
+例如，要自定义默认的Monokai配色方案，请创建名为Packages / User / Monokai.sublime-color-scheme的文件。以下设置会将背景颜色更改为完全去饱和的灰色，黄色更加生动，并且将添加新规则更改Python文档字符串，使其与字符串相同。
 
-~~~
+~~~js
 {
     "variables":
     {
@@ -510,157 +398,6 @@ For example, to customize the default Monokai color scheme, create a file namedP
 }
 ~~~
 
-The contents of the"variables"and"globals"keys are merged, with the user's copy overwriting keys with the same name. For the"rules"array, the user's rules are appended.
+合并`variables`和`globals`对象 的内容，用户的副本覆盖具有相同名称的键。对于`rules`列表，附加用户的规则。
 
-## Appendix: CSS Colors
-
-aliceblue  
-antiquewhite  
-aqua  
-aquamarine  
-azure  
-beige  
-bisque  
-black  
-blanchedalmond  
-blue  
-blueviolet  
-brown  
-burlywood  
-cadetblue  
-chartreuse  
-chocolate  
-coral  
-cornflowerblue  
-cornsilk  
-crimson  
-cyan  
-darkblue  
-darkcyan  
-darkgoldenrod  
-darkgray  
-darkgreen  
-darkgrey  
-darkkhaki  
-darkmagenta  
-darkolivegreen  
-darkorange  
-darkorchid  
-darkred  
-darksalmon  
-darkseagreen  
-darkslateblue  
-darkslategray  
-darkslategrey  
-darkturquoise  
-darkviolet  
-deeppink  
-deepskyblue  
-dimgray  
-dimgrey  
-dodgerblue  
-firebrick  
-floralwhite  
-forestgreen  
-fuchsia  
-gainsboro  
-
-ghostwhite  
-gold  
-goldenrod  
-gray  
-green  
-greenyellow  
-grey  
-honeydew  
-hotpink  
-indianred  
-indigo  
-ivory  
-khaki  
-lavender  
-lavenderblush  
-lawngreen  
-lemonchiffon  
-lightblue  
-lightcoral  
-lightcyan  
-lightgoldenrodyellow  
-lightgray  
-lightgreen  
-lightgrey  
-lightpink  
-lightsalmon  
-lightseagreen  
-lightskyblue  
-lightslategray  
-lightslategrey  
-lightsteelblue  
-lightyellow  
-lime  
-limegreen  
-linen  
-magenta  
-maroon  
-mediumaquamarine  
-mediumblue  
-mediumorchid  
-mediumpurple  
-mediumseagreen  
-mediumslateblue  
-mediumspringgreen  
-mediumturquoise  
-mediumvioletred  
-midnightblue  
-mintcream  
-mistyrose  
-moccasin  
-
-navajowhite  
-navy  
-oldlace  
-olive  
-olivedrab  
-orange  
-orangered  
-orchid  
-palegoldenrod  
-palegreen  
-paleturquoise  
-palevioletred  
-papayawhip  
-peachpuff  
-peru  
-pink  
-plum  
-powderblue  
-purple  
-rebeccapurple  
-red  
-rosybrown  
-royalblue  
-saddlebrown  
-salmon  
-sandybrown  
-seagreen  
-seashell  
-sienna  
-silver  
-skyblue  
-slateblue  
-slategray  
-slategrey  
-snow  
-springgreen  
-steelblue  
-tan  
-teal  
-thistle  
-tomato  
-turquoise  
-violet  
-wheat  
-white  
-whitesmoke  
-yellow  
-yellowgreen
+## [附录：CSS颜色](https://www.sublimetext.com/docs/color_schemes#css_colors)
