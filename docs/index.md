@@ -42,8 +42,8 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [模板](themes)Updated
 *   [Menus](menus)
 *   [API 环境变量](api_environments)New!
-*   [API Reference](api_reference)Updated
-*   [Syntax Definitions](syntax)Updated
+*   [插件扩展API参考](api_reference)Updated
+*   [语法定义](syntax)Updated
 *   [范围命名](scope_naming)
 *   [minihtml参考](minihtml)Updated
 *   [插件移植指南](porting_guide)

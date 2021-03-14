@@ -1,35 +1,25 @@
-# 
+# [SUBLIME TEXT 3 中文文档之](index)语法定义
 
-[DOCUMENTATION](index)
+Sublime Text可以使用.sublime-syntax和.tmLanguage文件进行语法高亮显示。本文档描述了.sublime-syntax文件。
 
-Syntax Definitions
+*   [概况](syntax#overview)
+*   [头部定义](syntax#header)
+*   [上下文](syntax#contexts)
+    *   [元模式](syntax#meta_patterns)
+    *   [匹配模式](syntax#match_patterns)
+    *   [包括模式](syntax#include_patterns)
+*   [包括其他文件](syntax#include-syntax)
+*   [变量](syntax#variables)
+*   [选定的例子](syntax#examples)
+*   [测试](syntax#testing)
 
-Version:  
-[Dev](syntax#ver-dev)[3.2](syntax#ver-3.2)[3.1](syntax#ver-3.1)[3.0](syntax#ver-3.0)
+## 概况
 
-Sublime Text can use both.sublime-syntaxand.tmLanguagefiles for syntax highlighting. This document describes.sublime-syntaxfiles.
+Sublime Syntax文件是带有标题的[YAML](http://yaml.org/)文件，后跟一个上下文列表。每个上下文都有一个模式列表，描述如何在该上下文中高亮显示文本，以及如何更改当前文本。
 
-*   [Overview](syntax#overview)
-*   [Header](syntax#header)
-*   [Contexts](syntax#contexts)
-    *   [Meta Patterns](syntax#meta_patterns)
-    *   [Match Patterns](syntax#match_patterns)
-    *   [Include Patterns](syntax#include_patterns)
-    *   [Prototype Context](syntax#prototype_context)
-*   [Including Other Files](syntax#include-syntax)
-*   [Variables](syntax#variables)
-*   [Inheritance](syntax#inheritance)4075
-*   [Selected Examples](syntax#examples)
-*   [Testing](syntax#testing)
-*   [Compatibility](syntax#compatibility)4075
+这是一个用于高亮显示C的语法文件的小示例。
 
-## Overview
-
-Sublime Syntax files are[YAML](http://yaml.org/)files with a small header, followed by a list of contexts. Each context has a list of patterns that describe how to highlight text in that context, and how to change the current text.
-
-Here's a small example of a syntax file designed to highlight C.
-
-~~~
+~~~yaml
 %YAML 1.2
 ---
 name: C
@@ -43,57 +33,29 @@ contexts:
 
 ~~~
 
-At its core, a syntax definition assigns scopes (e.g.,`keyword.control.c`) to areas of the text. These scopes are used by color schemes to highlight the text.
+语法定义的核心是将范围（例如，keyword.control.c）分配给文本的区域。颜色方案使用这些范围来高亮显示文本。
 
-This syntax file contains one context,`main`, that matches the words`[if, else, for, while]`, and assigns them the scope`keyword.control.c`. The context name`main`special: every syntax must define a main context, as it will be used at the start of the file.
+此语法文件包含一个上下文main，它匹配单词\[if，else，for，while\]，并为它们指定范围keyword.control.c。上下文名称mainspecial：每个语法都必须定义一个主上下文，因为它将在文件的开头使用。
 
-Thematchkey is a regex, supporting features from the[Oniguruma regex engine](https://raw.githubusercontent.com/kkos/oniguruma/v6.9.1/doc/RE). In the above example,`\b`is used to ensure only word boundaries are matched, to ensure that words such as`elsewhere`are not considered keywords.
+match键是一个正则表达式，支持[Oniguruma regex engine](https://raw.githubusercontent.com/kkos/oniguruma/5.9.6/doc/RE)的特性。在上面的示例中，\\b用于确保只匹配单词边界，以确保elsewhere单词不被视为关键字。
 
-Note that due to the YAML syntax, tab characters are not allowed within.sublime-syntaxfiles.
+请注意，由于YAML语法，.sublime-syntax文件中不允许使用制表符。
 
-## Header
+## 头部定义
 
-The allowed keys in the header area are:
+标题区域中允许的键有：
 
-name
+*   **name**。这定义了菜单中语法显示的名称。它是可选的，如果不使用，将从文件名派生。
+*   **file\_extensions**。字符串列表，定义此语法应使用的文件扩展名
+*   **first\_line\_match**。在没有可识别扩展名的情况下打开文件时，将针对此正则表达式测试文件内容的第一行，以查看是否应该应用语法。
+*   **scope**。分配给文件中所有文本的默认范围
+*   **hidden**。隐藏的语法定义不会显示在菜单中，但仍可以通过插件分配，或者由其他语法定义包含。
 
-This defines the name shown for the syntax in the menu. It's optional, and will be derived from the file name if not used.
+## 上下文
 
-file\_extensions
+对于大多数语言，您需要多个上下文。例如，在C，我们不想for一个字符串的中间字加以强调的关键词。以下是如何处理此问题的示例：
 
-A list of strings, defining file extensions this syntax should be used for.*Extensions listed here will be shown in file dialog dropdowns on some operating systems.*
-
-If a file does not have a basename, e.g..gitignore, the entirety of the filename including the leading`.`should be specified.
-
-hidden\_file\_extensions4075
-
-A list of strings, also defining file extensions this syntax should be used for. These extensions are not listed in file dialogs.
-
-first\_line\_match
-
-When a file is opened without a recognized extension, the first line of the file contents will be tested against this regex, to see if the syntax should be applied.
-
-scope
-
-The default scope assigned to all text in the file
-
-version4075
-
-An integer, either`1`or`2`, that controls[backwards compatibility](syntax#compatibility).*New syntaxes should target`2`, as it fixes some inconsistencies in how scopes are applied.*
-
-extends4075
-
-A string of a base syntax this syntax should inherit from. The base syntax must be specified using its package path, e.g.Packages/JavaScript/JavaScript.sublime-syntax. See[Inheritance](syntax#inheritance)for an overview of syntax inheritance.
-
-hidden
-
-Hidden syntax definitions won't be shown in the menu, but can still be assigned by plugins, or included by other syntax definitions.
-
-## Contexts
-
-For most languages, you'll need more than one context. For example, in C, we don't want a`for`word in the middle of a string to be highlighted as a keyword. Here's an example of how to handle this:
-
-~~~
+~~~yaml
 %YAML 1.2
 ---
 name: C
@@ -116,244 +78,57 @@ contexts:
 
 ~~~
 
-A second pattern has been added to the main context that matches a double quote character (note that`'"'`is used for this, as a standalone quote would be a YAML syntax error), and pushes a new context,`string`, onto the context stack. This means the rest of the file will be processing using the string context, and not the main context, until the string context is popped off the stack.
+第二个模式已添加到与双引号字符匹配的主上下文中（请注意，'"'用于此，因为独立引用将是YAML语法错误），并将新上下文string推送到上下文这意味着文件的其余部分将使用字符串上下文进行处理，而不是主上下文，直到字符串上下文从堆栈中弹出。
 
-The string context introduces a new key:meta\_scope. This will assign the`string.quoted.double.c`scope to all text while the`string`context is on the stack.
+字符串上下文引入了一种新模式：meta\_scope。这将在字符串上下文位于堆栈上时将string.quoted.double.c范围分配给所有文本。
 
-While editing in Sublime Text, you can check what scopes have been applied to the text under the caret by pressing**control***+***shift***+***p**(Mac) or**ctrl***+***alt***+***shift***+***p**(Windows/Linux).
+在Sublime Text编辑时，您可以通过按Ctrl+shift+p（OSX）或ctrl+alt+shift+p（Windows和Linux）来检查插入符号下文本的范围。
 
-The`string`context has two patterns: the first matches a backslash character followed by any other, and the second matches a quote character. Note that the last pattern specifies an action when an unescaped quote is encountered, the string context will be popped off the context stack, returning to assigning scopes using the main context.
+字符串上下文有两种模式：第一种匹配反斜杠字符后跟任何其他字符，第二种匹配引号字符。请注意，最后一个模式指定了一个操作：当遇到未转义的引用时，字符串上下文将从上下文堆栈中弹出，返回使用主上下文分配范围。
 
-When a context has multiple patterns, the leftmost one will be found. When multiple patterns match at the same position, the first defined pattern will be selected.
+当上下文具有多个模式时，将找到最左边的模式。当多个模式在同一位置匹配时，将选择第一个定义的模式。
 
-### META PATTERNS
+### 元模式
 
-meta\_scope
+*   **meta\_scope**。这会将给定范围分配给此上下文中的所有文本，包括将上下文推入堆栈并将其弹出的模式。
+*   **meta\_content\_scope**。如上所述，但不适用于触发上下文的文本（例如，在上面的字符串示例中，内容范围不会应用于引号字符）。
+*   **meta\_include\_prototype**。用于停止当前上下文自动包含prototype上下文。
+*   **clear\_scopes**。此设置允许从当前堆栈中删除范围名称。它可以是整数，或者值为true以删除所有范围名称。它在meta\_scope和meta\_content\_scope之前应用。这通常仅在一种语法嵌入另一种语法时使用。
 
-This assigns the given scope to all text within this context, including the patterns that push the context onto the stack and pop it off.
+在任何匹配或包含模式之前，元模式必须首先列在上下文中。
 
-meta\_content\_scope
+### 匹配模式
 
-As above, but does not apply to the text that triggers the context (e.g., in the above string example, the content scope would not get applied to the quote characters).
+一个match模式可以包括以下键：
 
-meta\_include\_prototype
+*   **match**。在[正则表达式](https://raw.githubusercontent.com/kkos/oniguruma/5.9.6/doc/RE)用来匹配的文本。YAML允许在没有引号的情况下编写许多字符串，这有助于使正则表达式更清晰，但重要的是要了解何时需要引用正则表达式。如果你的正则表达式包含字符＃，：，\-，{，\[或\>那么你可能需要引用它。正则表达式一次只针对一行文本运行。
+*   **scope**。分配给匹配文本的范围。
+*   **captures**。数字到范围的映射，将范围分配给匹配正则表达式的捕获部分。请参阅下面的示例。
+*   **push**。推入堆栈的上下文。这可以是单个上下文名称，上下文名称列表，也可以是内联的匿名上下文。
+*   **pop**。弹出堆栈中的当前上下文。此键唯一可接受的值是true。
+*   **set**。接受与push相同的参数，但首先关闭此上下文，然后将给定的上下文推送到堆栈。
+*   **embed**。接受要推入的单个上下文的名称。虽然类似于push，但只要找到escape模式，它就会弹出任意数量的嵌套上下文。这使其成为将一种语法嵌入另一种语法的理想工具。
+    *   **escape**。如果使用了embed则此键是必需的，并且是用于退出嵌入式上下文的正则表达式。此模式中的任何反向引用都将引用match正则表达式中的捕获组。
+    *   **embed\_scope**。分配给所有文字作用域后匹配的match和前escape。与meta\_content\_scope类似。
+    *   **escape\_captures**。对于escape模式，捕获组到作用域名称的映射。使用捕获组0将范围应用于整个转义匹配。
 
-Used to stop the current context from automatically including the`prototype`context.
+请注意，操作：push，pop，set和embed是独占的，并且在单个匹配模式中只能使用其中一个。
 
-clear\_scopes
+在此示例中，正则表达式包括两个捕获，捕获键用于为每个捕获键分配不同的范围：
 
-This setting allows removing scope names from the current stack. It can be an integer, or the value`true`to remove all scope names. It is applied beforemeta\_scopeandmeta\_content\_scope. This is typically only used when one syntax is embedding another.
-
-meta\_prepend4075
-
-A boolean, controlling context name conflict resolution during[inheritance](syntax#inheritance). If this is specified, the rules in this context will be inserted before any existing rules from a context with the same name in an ancestor syntax definition.
-
-meta\_append4075
-
-A boolean, controlling context name conflict resolution during[inheritance](syntax#inheritance). If this is specified, the rules in this context will be inserted after to any existing rules from a context with the same name in an ancestor syntax definition.
-
-Meta patterns must be listed first in the context, before any match or include patterns.
-
-### MATCH PATTERNS
-
-A*match*pattern can include the following keys:
-
-match
-
-The[regex](https://raw.githubusercontent.com/kkos/oniguruma/5.9.6/doc/RE)used to match against the text. YAML allows many strings to be written without quotes, which can help make the regex clearer, but it's important to understand when you need to quote the regex. If your regex includes the characters`#`,`:`,`-`,`{`,`[`or`>`then you likely need to quote it. Regexes are only ever run against a single line of text at a time.
-
-scope
-
-The scope assigned to the matched text.
-
-captures
-
-A mapping of numbers to scope, assigning scopes to captured portions of the match regex. See below for an example.
-
-push
-
-The contexts to push onto the stack. This may be either a single context name, a list of context names, or an inline, anonymous context.
-
-pop
-
-Pops contexts off the stack. The value`true`will pop a single context.
-
-An integer greater than zero will pop the corresponding number of contexts.4050
-
-Thepopkey can be combined withpush,set,embedandbranch. When combined, the specified number of contexts will be popped off of the stack before the other action is performed. Forpush,embedandbranchactions, the pop treats the match as if it were a lookahead, which means the match will not receive themeta\_scopeof the contexts that are popped.4075
-
-set
-
-Accepts the same arguments as push, but will first pop this context off, and then push the given context(s) onto the stack.
-
-Any match will receive themeta\_scopeof the context being popped*and*the context being pushed.
-
-embed3153
-
-Accepts the name of a single context to push into. While similar topush, it pops out of any number of nested contexts as soon as theescapepattern is found. This makes it an ideal tool for embedding one syntax within another.
-
-escape
-
-This key is required ifembedis used, and is a regex used to exit from the embedded context. Any backreferences in this pattern will refer to capture groups in thematchregex.
-
-embed\_scope
-
-A scope assigned to all text matched after thematchand before theescape. Similar in concept tometa\_content\_scope.
-
-escape\_captures
-
-A mapping of capture groups to scope names, for theescapepattern. Use capture group`0`to apply a scope to the entire escape match.
-
-branch4050
-
-Accepts the names of two or more contexts, which are attempted in order. If afailaction is encountered, the highlighting of the file will be restarted at the character where thebranchoccured, and the next context will be attempted.
-
-branch\_point
-
-This is the unique identifier for thebranchand is specified when a match uses thefailaction.
-
-Thebranchaction allows for handling syntax constructs that are ambiguous, and also allows handling constructs that span multiple lines.
-
-For ideal performance, the contexts should be listed in the order of how likely they are to be accepted.*Note: because highlighting with branches requires reprocessing an entire branch upon each change to the document, the highlighting engine will not rewind more than 128 lines when afailoccurs.*
-
-fail4050
-
-Accepts the name of abranch\_pointto rewind to and retry the next context of. If afailaction specifies abranch\_pointthat was never pushed on the stack, or has already been popped off of the stack, it will have no effect.
-
-The following keys control behavior that is exclusive, and only one can be specified per match pattern:
-
-*   push
-*   pop
-*   set
-*   embed3153
-*   branch4050
-*   fail4050
-
-#### MATCH EXAMPLES
-
-A basic match assigning a single scope to the entire match:
-
-~~~
-- match: \w+
-  scope: variable.parameter.c++
-
-~~~
-
-Assigning different scopes to the regex capture groups:
-
-~~~
-- match: ^\\s*(#)\\s*\\b(include)\\b
+~~~yaml
+- match: "^\\s*(#)\\s*\\b(include)\\b"
   captures:
     1: meta.preprocessor.c++
     2: keyword.control.include.c++
 
 ~~~
 
-Pushing into another context named`function-parameters`:
+### 包括模式
 
-~~~
-- match: \b\w+(?=\()
-  scope: entity.name.function.c++
-  push: function-parameters
+通常将一个上下文的内容包含在另一个上下文中很方便。例如，您可以定义几种不同的上下文来解析C语言，几乎所有上下文都可以包含注释。您可以将它们包括在内，而不是将相关匹配模式复制到每个上下文中：
 
-~~~
-
-Popping out of a context:
-
-~~~
-- match: \)
-  scope: punctuation.section.parens.end.c++
-  pop: true
-
-~~~
-
-Popping out of the current context and pushing into another:
-
-~~~
-- match: \}
-  scope: punctuation.section.block.end.c++
-  set: file-global
-
-~~~
-
-Embedding another syntax3153:
-
-~~~
-- match: (```)(js|javascript)
-  captures:
-    1: punctuation.section.code.begin.markdown
-    2: constant.other.markdown
-  embed: scope:source.js
-  embed_scope: meta.embedded.js.markdown
-  escape: ^```
-  escape_captures:
-    0: punctuation.section.code.end.markdown
-
-~~~
-
-Usingbranchto attempt one highlighting, with the ability to fallback to another.4050:
-
-~~~
-expression:
-  - match: (?=\()
-    branch_point: open_parens
-    branch:
-      - paren_group
-      - arrow_function
-
-paren_group:
-  - match: \(
-    scope: punctuation.section.parens.begin.js
-    push:
-      - include: expressions
-      - match: \)
-        scope: punctuation.section.parens.begin.js
-        set:
-          - match: =>
-            fail: open_parens
-          - match: (?=\S)
-            pop: 2
-
-arrow_function:
-  - match: \(
-    scope: punctuation.section.parens.begin.js
-    push:
-      - match: \w+
-        scope: variable.parameter.js
-      - match: ','
-        scope: punctuation.separator.comma.js
-      - match: \)
-        scope: punctuation.section.parens.begin.js
-        set:
-          - match: =>
-            scope: storage.type.function.arrow.js
-            push: arrow_function_body
-
-
-~~~
-
-Usingpopwith another action.4075:
-
-~~~
-paragraph:
-  - match: '(```)(py|python)'
-    captures:
-      1: punctuation.definition.code.begin.md
-      2: constant.other.language-name.md
-    pop: 1
-    embed: scope:source.python
-    embed_scope: source.python.embedded
-    escape: ^```
-    escape_captures:
-      0: punctuation.definition.code.end.md
-
-~~~
-
-### INCLUDE PATTERNS
-
-Frequently it's convenient to include the contents of one context within another. For example, you may define several different contexts for parsing the C language, and almost all of them can include comments. Rather than copying the relevant match patterns into each of these contexts, you can include them:
-
-~~~
+~~~yaml
 expr:
   - include: comments
   - match: \b[0-9]+\b
@@ -362,24 +137,11 @@ expr:
 
 ~~~
 
-Here, all the match patterns and include patterns defined in the comments context will be pulled in. They'll be inserted at the position of the include pattern, so you can still control the pattern order. Any meta patterns defined in the comments context will be ignored.
+这里，将引入注释上下文中定义的所有匹配模式和包含模式。它们将被插入到包含模式的位置，因此您仍然可以控制模式顺序。注释上下文中定义的任何元模式都将被忽略。
 
-#### INCLUDING AN EXTERNAL PROTOTYPE4075
+对于诸如注释之类的元素，包含它们是如此常见，以至于使它们在每个上下文中自动包含它们更简单，而只是列出异常。您可以通过创建名为prototype的上下文来完成此操作，它将自动包含在每个其他上下文的顶部，除非上下文使用meta\_include\_prototype元模式。例如：
 
-When including a context from another syntax, it may be desirable to also include any applicable prototype from that syntax. By default, an include pattern does*not*include such a prototype. If the key/value pair`apply_prototype:true`is added to the include pattern, the context does not specify`meta_include_prototype:false`and the other syntax has a`prototype`context, then those patterns will also be included.
-
-~~~
-tags:
-  - include: scope:source.basic
-    apply_prototype: true
-
-~~~
-
-### PROTOTYPE CONTEXT
-
-With elements such as comments, it's so common to include them that it's simpler to make them included automatically in every context, and just list the exceptions instead. You can do this by creating a context named`prototype`, it will be included automatically at the top of every other context, unless the context contains themeta\_include\_prototypekey. For example:
-
-~~~
+~~~yaml
 prototype:
   - include: comments
 
@@ -389,13 +151,13 @@ string:
 
 ~~~
 
-In C, a`/*`inside a string does not start a comment, so the string context indicates that the prototype should not be included.
+在C中，字符串内的/\*不会启动注释，因此字符串上下文指示不应包含原型。
 
-## Including Other Files
+## 包括其他文件
 
-Sublime Syntax files support the notion of one syntax definition including another. For example, HTML can contain embedded JavaScript. Here's an example of a basic syntax defintion for HTML that does so:
+Sublime Syntax文件支持嵌入另一个语法定义的一个语法定义的概念。例如，HTML可以包含嵌入式JavaScript。以下是HTML的基本语法定义示例：
 
-~~~
+~~~yaml
 scope: text
 
 contexts:
@@ -412,15 +174,15 @@ contexts:
 
 ~~~
 
-Note the first rule above. It indicates that when we encounter a`<script>`tag, the main context withinJavaScript.sublime-syntaxshould be pushed onto the context stack. It also defines another key,with\_prototype. This contains a list of patterns that will be inserted into every context defined withinJavaScript.sublime-syntax. Note thatwith\_prototypeis conceptually similar to the`prototype`context, however it will be always be inserted into every referenced context irrespective of theirmeta\_include\_prototypekey.
+请注意上面的第一条规则。它表示当我们遇到标记时，JavaScript.sublime-syntax中的主要上下文应该被推送到上下文堆栈。它还定义了另一个键，with\_prototype。这包含将插入到JavaScript.sublime-syntax中定义的每个上下文中的模式列表。请注意，with\_prototype在概念上与原型上下文类似，但是它将始终插入到每个引用的上下文中，而不管它们的meta\_include\_prototype设置如何。
 
-In this case, the pattern that's inserted will pop off the current context while the next text is a`</script>`tag. Note that it doesn't actually match the`</script>`tag, it's just using a lookahead assertion, which plays two key roles here: It both allows the HTML rules to match against the end tag, highlighting it as-per normal, and it will ensure that all the JavaScript contexts will get popped off. The context stack may be in the middle of a JavaScript string, for example, but when the`</script>`is encountered, both the JavaScript string and main contexts will get popped off.
+在这种情况下，插入的模式将弹出当前上下文，而下一个文本是标记。请注意，它实际上并不匹配标记，它只是使用前瞻断言，它在这里扮演两个关键角色：它都允许HTML规则与结束标记匹配，按照正常情况高亮显示它，以及它将确保弹出所有JavaScript上下文。例如，上下文堆栈可能位于JavaScript字符串的中间，但是当遇到时，JavaScript字符串和主要上下文都将被弹出。
 
-Note that while Sublime Text supports both.sublime-syntaxand.tmLanguagefiles, it's not possible to include a.tmLanguagefile within a.sublime-syntaxone.
+请注意，虽然Sublime Text支持.sublime-syntax和.tmLanguage文件，但是不可能在.sublime-syntax文件中包含.tmLanguage文件。
 
-Another common scenario is a templating language including HTML. Here's an example of that, this time with a subset of[Jinja](http://jinja.pocoo.org/):
+另一种常见的场景是包含HTML的模板语言。这是一个例子，这次是[Jinja的](http://jinja.pocoo.org/)一个子集：
 
-~~~
+~~~yaml
 scope: text.jinja
 contexts:
   main:
@@ -438,17 +200,17 @@ contexts:
 
 ~~~
 
-This is quite different from the HTML-embedding-JavaScript example, because templating languages tend to operate from the inside out: by default, it needs to act as HTML, only escaping to the underlying templating language on certain expressions.
+这与HTML嵌入式JavaScript示例完全不同，因为模板语言倾向于从内到外操作：默认情况下，它需要充当HTML，仅在某些表达式上转义为底层模板语言。
 
-In the example above, we can see it operates in HTML mode by default: the main context includes a single pattern that always matches, consuming no text, just including the HTML syntax.
+在上面的示例中，我们可以看到默认情况下它以HTML模式运行：主要上下文包含一个始终匹配的模式，不使用文本，只包含HTML语法。
 
-Where the HTML syntax is included, the Jinja syntax directives (`{{ ... }}`) are included via thewith\_prototypekey, and thus get injected into every context in the HTML syntax (and JavaScript, by transitivity).
+在包含HTML语法的地方，Jinja语法指令（{{...}}）通过with\_prototype键包含在内，因此可以注入HTML语法中的每个上下文（以及JavaScript，通过传递性）。
 
-## Variables
+## 变量
 
-It's not uncommon for several regexes to have parts in common. To avoid repetitious typing, you can use variables:
+几个正则表达式的共同点并不少见。为避免重复输入，您可以使用变量：
 
-~~~
+~~~yaml
 variables:
   ident: '[A-Za-z_][A-Za-z_0-9]*'
 contexts:
@@ -458,63 +220,15 @@ contexts:
 
 ~~~
 
-Variables must be defined at the top level of the.sublime-syntaxfile, and are referenced within regxes via`{{varname}}`. Variables may themselves include other variables. Note that any text that doesn't match`{{[A-Za-z0-9_]+}}`won't be considered as a variable, so regexes can still include literal`{{`characers, for example.
+变量必须在.sublime-syntax文件的顶层定义，并通过{{varname}}在regxes中引用。变量本身可能包含其他变量。请注意，任何与{{\[A-Za-z0-9 \_\] +}}不匹配的文本都不会被视为变量，因此正则表达式仍然可以包含文字{{characers，例如。
 
-## Inheritance4075
+## 选定的例子
 
-In situations where a syntax is a slight variant of another, with some additions or changes, inheritance is a useful tool.
+### 支架平衡
 
-When inheriting a syntax, the keyextendsis used with a value containing the*packages path*to the parent syntax. The*packages path*will start withPackages/and will contain the package name and syntax filename. For example:
+此示例高亮显示没有相应开括号的结束括号：
 
-~~~
-%YAML 1.2
----
-name: C++
-file_extensions: [cc, cpp]
-scope: source.c++
-extends: Packages/C++/C.sublime-syntax
-
-~~~
-
-A syntax using inheritance will inherit thevariablesandcontextsvalues from its parent syntax. All other top-level keys, such asfile\_extensionsandscopewill*not*be inherited.
-
-### VARIABLES
-
-When extending a syntax, thevariableskey is merged with the parent syntax. Variables with the same name will override previous values.
-
-Variable substitution is performed after all variable values have been realized. Thus, an extending syntax may change a variable from a parent syntax, and all usage of the variable in the parent contexts will use the overridden value.
-
-### CONTEXTS
-
-The contexts in an extending syntax will be a combination of the contexts from the parent syntax, and all those defined under thecontextskey.
-
-Contexts with the same name will override contexts from the parent syntax. To change the behavior when a context name is duplicated, two options are available. These meta key must be specified in the extending syntax:
-
-*   `-meta_prepend:true`  
-    all of the patterns in the extending syntax will be inserted before those in the parent syntax.
-*   `-meta_append:true`  
-    all of the patterns in the extending syntax will be inserted after those in the parent syntax.
-
-### MULTIPLE INHERITANCE4086
-
-When a syntax is derived from a combination of two other syntaxes, multiple inheritance may be used. This allows the keyextendsto be a list of packages paths to two or more parent syntaxes. The parent syntaxes will be processed in order, from top to bottom, and must be derived from the same base.
-
-Two examples of multiple inheritance in the default syntaxes are:
-
-*   **Objective-C++**: extends*C++*and*Objective-C*, both which extend*C*
-*   **TSX**: extends*JSX*and*TypeScript*, both which extend*JavaScript*
-
-### LIMITATIONS
-
-A syntax may extend a syntax that itself extends another syntax. There are no enforced limits on extending, other than that all syntaxes must share the same[version](syntax#compatibility).
-
-## Selected Examples
-
-### BRACKET BALANCING
-
-This example highlights closing brackets without a corresponding open bracket:
-
-~~~
+~~~yaml
 name: C
 scope: source.c
 
@@ -532,11 +246,11 @@ contexts:
 
 ~~~
 
-### SEQUENTIAL CONTEXTS
+### 顺序上下文
 
-This example will highlight a C style for statement containing too many semicolons:
+此示例将高亮显示包含太多分号的C语句：
 
-~~~
+~~~yaml
 for_stmt:
   - match: \(
     set: for_stmt_expr1
@@ -561,13 +275,13 @@ for_stmt_expr3:
 
 ~~~
 
-### ADVANCED STACK USAGE
+### 高级堆栈使用
 
-In C, symbols are often defined with the`typedef`keyword. So that*Goto Definition*can pick these up, the symbols should have the`entity.name.type`scope attached to them.
+在C中，符号通常使用typedef关键字定义。因此，*Goto定义*可以选择它们，符号应该附加entity.name.type范围。
 
-Doing this can be a little tricky, as while typedefs are sometimes simple, they can get quite complex:
+这样做可能有点棘手，因为虽然typedef有时很简单，但它们可能会非常复杂：
 
-~~~
+~~~clike
 typedef int coordinate_t;
 
 typedef struct
@@ -578,9 +292,9 @@ typedef struct
 
 ~~~
 
-To recognise these, after matching the typedef keyword, two contexts will be pushed onto the stack: the first will recognise a typename, and then pop off, while the second will recognise the introduced name for the type:
+要识别这些，在匹配typedef关键字后，两个上下文将被压入堆栈：第一个将识别一个类型名，然后弹出，而第二个将识别该类型的介绍名称：
 
-~~~
+~~~yaml
 main:
   - match: \btypedef\b
     scope: keyword.control.c
@@ -603,17 +317,17 @@ typedef_after_typename:
 
 ~~~
 
-In the above example,`typename`is a reusable context, that will read in a typename and pop itself off the stack when it's done. It can be used in any context where a type needs to be consumed, such as within a typedef, or as a function argument.
+在上面的示例中，typename是一个可重用的上下文，它将读取一个typename，并在完成后从堆栈中弹出。它可以在需要使用类型的任何上下文中使用，例如在typedef中，或作为函数参数。
 
-The`main`context uses a match pattern that pushes two contexts on the stack, with the rightmost context in the list becoming the topmost context on the stack. Once the`typename`context has popped itself off, the`typedef_after_typename`context will be at the top of the stack.
+在主要方面使用了推栈上两个上下文，在列表中的最右边的背景下成为堆栈上的最顶层上下文匹配模式。一旦typename上下文自动弹出，typedef\_after\_typename上下文将位于堆栈的顶部。
 
-Also note above the use of anonymous contexts for brevity within the`typename`context.
+另请注意，在typename上下文中使用匿名上下文是为了简洁起见。
 
 ### PHP HEREDOCS
 
-This example shows how to match against[Heredocs](http://php.net/language.types.string#language.types.string.syntax.heredoc)in PHP. The match pattern in the main context captures the heredoc identifier, and the corresponding pop pattern in the heredoc context refers to this captured text with the`\1`symbol:
+此示例显示如何在PHP 中与[Heredocs](http://php.net/language.types.string#language.types.string.syntax.heredoc)匹配。主上下文中的匹配模式捕获heredoc标识符，并且heredoc上下文中对应的pop模式引用带有\\ 1符号的捕获文本：
 
-~~~
+~~~yaml
 name: PHP
 scope: source.php
 
@@ -629,11 +343,11 @@ contexts:
 
 ~~~
 
-## Testing
+## 测试
 
-When building a syntax definition, rather than manually checking scopes with theshow\_scope\_namecommand, you can define a syntax test file that will do the checking for you:
+构建语法定义时，不是使用show\_scope\_name命令手动检查作用域，而是可以定义一个语法测试文件来执行检查：
 
-~~~
+~~~clike
 // SYNTAX TEST "Packages/C/C.sublime-syntax"
 #pragma once
 // <- source.c meta.preprocessor.c++
@@ -667,249 +381,17 @@ int square(int x)
 
 ~~~
 
-To make one, follow these rules
+要制作一个，请遵循这些规则
 
-1.  Ensure the file name starts withsyntax\_test\_.
-2.  Ensure the file is saved somewhere within the Packages directory: next to the corresponding .sublime-syntax file is a good choice.
-3.  Ensure the first line of the file starts with:`<comment_token> SYNTAX TEST "<syntax_file>"`. Note that the syntax file can either be a.sublime-syntaxor.tmLanguagefile.
+1.  确保文件名以syntax\_test\_开头。
+2.  确保文件保存在Packages目录中的某个位置：相应的.sublime-syntax文件旁边是一个不错的选择。
+3.  确保文件的第一行以： SYNTAX TEST“”开头。请注意，语法文件可以是.sublime-syntax或.tmLanguage文件。
 
-Once the above conditions are met, running thebuildcommand with a syntax test or syntax definition file selected will run all the Syntax Tests, and show the results in an output panel.*Next Result*(F4) can be used to navigate to the first failing test.
+满足上述条件后，运行带有语法测试或语法定义文件的build命令将运行所有语法测试，并在输出面板中显示结果。*下一个结果*（F4）可用于导航到第一个失败测试。
 
-Each test in the syntax test file must first start the comment token (established on the first line, it doesn't actually have to be a comment according to the syntax), and then either a`^`or`<-`token.
+语法测试文件中的每个测试必须首先启动注释标记（在第一行建立，根据语法实际上不必是注释），然后是^或< -标记。
 
-The two types of tests are:
+两种类型的测试是：
 
-*   Caret:`^`this will test the following selector against the scope on the most recent non-test line. It will test it at the same column the`^`is in. Consecutive`^`s will test each column against the selector.
-*   Arrow:`<-`this will test the following selector against the scope on the most recent non-test line. It will test it at the same column as the comment character is in.
-
-## Compatibility
-
-When the syntax highlighting engine of Sublime Text requires changes that will break existing syntaxes, these modifications or bug fixes are gated behind theversionkey.
-
-Currently there exist two versions:**1**and**2**. The absense of theversionkey indicates version 1.
-
-### VERSION 1
-
-The following is a list of bugs and behavior preserved in version 1 that have been fixed or changed in version 2. This list is primarily useful when understanding what to look for when updating the version of syntax.
-
-*   **`embed_scope`Stacks with`scope`of Other Syntax**  
-    
-    *Description*  
-    When embedding a the`main`context from another syntax, theembed\_scopewill be combined with thescopeof the other syntax. In version 2 syntaxes, thescopeof the other syntax will only be included ifembed\_scopeis not specified.
-    
-    *Syntax 1*
-    
-    ~~~
-    scope: source.lang
-    contexts:
-      paragraph:
-        - match: \(
-          scope: punctuation.section.group.begin
-          embed: scope:source.other
-          embed_scope: source.other.embedded
-          escape: \)
-          escape_captures:
-            0: punctuation.section.group.end
-    
-    ~~~
-    
-    *Syntax 2*
-    
-    ~~~
-    scope: source.other
-    contexts:
-      main:
-        - match: '[a-zA-Z0-9_]+'
-          scope: identifier
-    
-    ~~~
-    
-    *Text*
-    
-    ~~~
-    'abc'
-    ~~~
-    
-    *Result*  
-    The text`abc`will get the scope`source.other.embedded source.other identifier`in version 1 syntaxes. In version 2 syntaxes, it will get`source.other.embedded identifier`.
-    
-*   **Match Pattern with`set`and`meta_content_scope`**  
-    
-    *Description*  
-    When performing asetaction on a match, the matched text will get themeta\_content\_scopeof the context being popped, even thoughpopactions don’t, and asetis the equivalent of apopthenpush.
-    
-    *Syntax*
-    
-    ~~~
-    scope: source.lang
-    contexts:
-      function:
-        - meta_content_scope: meta.function
-        - match: '[a-zA-Z0-9_]+'
-          scope: variable.function
-        - match: \(
-          scope: punctuation.section.group.begin
-          set: function-params
-    
-      function-params:
-        - meta_scope: meta.function.params
-        - match: \)
-          scope: punctuation.section.group.end
-          pop: true
-    
-    ~~~
-    
-    *Text*
-    
-    ~~~
-    abc()
-    ~~~
-    
-    *Result*  
-    The text`(`should get the scope`meta.function.params punctuation.section.group.begin`. Instead it gets the incorrect scope`meta.function meta.function.params punctuation.section.group.begin`.
-    
-*   **Match Pattern with`set`and Target with`clear_scopes`**  
-    
-    *Description*  
-    If asetaction has a target with aclear\_scopesvalue, scopes will not be cleared properly.
-    
-    *Syntax*
-    
-    ~~~
-    scope: source.lang
-    contexts:
-      main:
-        - match: \bdef\b
-          scope: keyword
-          push:
-            - function
-            - function-name
-    
-      function:
-        - meta_scope: meta.function
-    
-      function-name:
-        - match: '[a-zA-Z0-9_]+'
-          scope: variable.function
-        - match: \(
-          scope: punctuation.section.group.begin
-          set: function-params
-    
-      function-params:
-        - meta_scope: meta.function.params
-        - clear_scopes: 1
-        - match: \)
-          scope: punctuation.section.group.end
-          pop: 2
-    
-    ~~~
-    
-    *Text*
-    
-    ~~~
-    def abc()
-    ~~~
-    
-    *Result*  
-    The text`(`should get the scope`meta.function.params punctuation.section.group.begin`. Instead it gets the incorrect scope`meta.function meta.function.params punctuation.section.group.begin`.
-    
-*   **Embed Escape Match and Meta Scopes**  
-    
-    *Description*  
-    The text matched by theescapepattern of anembedaction will not get themeta\_scopeormeta\_content\_scopeof the context that contains it.
-    
-    *Syntax*
-    
-    ~~~
-    scope: source.lang
-    contexts:
-      context1:
-        - meta_scope: meta.group
-        - meta_content_scope: meta.content
-        - match: \'
-          scope: punctuation.begin
-          embed: embed
-          escape: \'
-          escape_captures:
-            0: punctuation.end
-    
-      embed:
-        - match: '[a-z]+'
-          scope: word
-    
-    ~~~
-    
-    *Text*
-    
-    ~~~
-    'abc'
-    ~~~
-    
-    *Result*  
-    The second`'`should get the scope`meta.group meta.content punctuation.end`. Instead it gets the incorrect scope`punctuation.end`.
-    
-*   **Multiple Target Push Actions with`clear_scopes`**  
-    
-    *Description*  
-    If multiple contexts are pushed at once, and more than one context specifiesclear\_scopeswith a value greater than`1`, the resulting scopes are incorrect.
-    
-    *Syntax*
-    
-    ~~~
-    scope: source.lang
-    contexts:
-      main:
-        - meta_content_scope: meta.main
-        - match: '[a-zA-Z0-9]+\b'
-          scope: identifier
-          push:
-            - context2
-            - context3
-    
-      context2:
-        - meta_scope: meta.ctx2
-        - clear_scopes: 1
-    
-      context3:
-        - meta_scope: meta.ctx3
-        - clear_scopes: 1
-        - match: \n
-          pop: true
-    
-    ~~~
-    
-    *Text*
-    
-    ~~~
-    abc 1
-    ~~~
-    
-    *Result*  
-    Theclear\_scopesvalues of all target contexts are added up and applied before applying themeta\_scopeandmeta\_content\_scopeof any targets. Thus, the text`abc`will be scoped`meta.ctx2 meta.ctx3 identifier`, instead of the correct scope of`source.lang meta.ctx3 identifier`.
-    
-*   **Regex Capture Group Order**  
-    
-    *Description*  
-    If an lower-numbered capture group matches text that occurs after text matched by a higher-numbered capture group, the lower-numbered capture group will not have its capture scope applied.
-    
-    *Syntax*
-    
-    ~~~
-    scope: source.lang
-    contexts:
-      main:
-        - match: '(?:(x)|(y))+'
-          captures:
-            1: identifier.x
-            2: identifier.y
-    
-    ~~~
-    
-    *Text*
-    
-    ~~~
-    yx
-    ~~~
-    
-    *Result*  
-    The text`y`is matched by capture group 2, and the text`x`is matched by capture group 1.`x`will not get scoped`indentifier.x`since it occurs after the match from capture group 2.
+*   Caret：^这将针对最近的非测试行上的范围测试以下选择器。它将在^所在的同一列测试它。连续的^将针对选择器测试每一列。
+*   箭头：< -这将针对最近的非测试行上的范围测试以下选择器。它将在注释字符所在的同一列中测试它。
