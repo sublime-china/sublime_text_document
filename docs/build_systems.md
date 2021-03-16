@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index)构建系统
+# 构建系统
 
 Sublime Text提供了构建系统，允许用户运行外部程序。构建系统的常见用途示例包括：编译，转换，linting和执行测试。
 

@@ -1,7 +1,4 @@
-# Command Line Interface
-
-Version:  
-[Dev](command_line#ver-dev)[3.2](command_line#ver-3.2)[3.1](command_line#ver-3.1)[3.0](command_line#ver-3.0)
+# 命令行
 
 Sublime Text包含一个命令行工具 `subl`，用于处理命令行中的文件。这可以用来以崇高的文本打开文件和项目，也可以用作unix工具的 `EDITOR`，例如git和subversion。
 

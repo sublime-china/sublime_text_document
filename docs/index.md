@@ -18,7 +18,7 @@
 ## 定制化
 
 *   [设置](settings)
-*   [Key Bindings](key_bindings)
+*   [案件绑定](key_bindings)
 *   [字体设置](font)
 *   [缩进](indentation)
 *   [拼写检查](spell_checking)
@@ -30,7 +30,7 @@
 ## 杂项
 
 *   [GPU 渲染](gpu_rendering)New!
-*   [Operating System Compatibility](os_compatibility)
+*   [操作系统兼容性](os_compatibility)
 *   [Linux Package Manager仓库](linux_repositories)
 *   [安全模式](safe_mode)New!
 *   [恢复初始状态](revert)

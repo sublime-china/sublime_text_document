@@ -1,8 +1,4 @@
-# 
-
-[DOCUMENTATION](index)[TOC](api_environments#toc)[TOP](api_environments#)
-
-API 环境变量
+# API 环境变量
 
 Version:  
 [Dev](api_environments#ver-dev)[3.2](api_environments#ver-3.2)[3.1](api_environments#ver-3.1)[3.0](api_environments#ver-3.0)

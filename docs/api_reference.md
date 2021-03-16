@@ -1,4 +1,4 @@
-# [SUBLIME TEXT 3 中文文档之](index)插件扩展API参考
+# 插件扩展API参考
 
 ### 一般信息
 

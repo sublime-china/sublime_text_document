@@ -1,9 +1,5 @@
-# Completions
-
-Version:  
-[Dev](completions#ver-dev)[3.2](completions#ver-3.2)[3.1](completions#ver-3.1)[3.0](completions#ver-3.0)
-
-Sublime Text includes a few methods to save typing and time by finishing words or inserting boilerplate. Completions include the following sources:
+# 完成
+Sublime文本包括一些通过完成单词或插入样板来节省打字和时间的方法。完成包括以下来源:
 
 *   Words from the current file
 *   Context-aware suggestions4.0
@@ -11,90 +7,75 @@ Sublime Text includes a few methods to save typing and time by finishing words o
 *   Snippet files
 *   Plugins
 
-Various settings exist to customize the behavior of completions. Users can write their own snippets or completions files, and many third-party packages exist to provide completions.
-
-*   [Usage](completions#usage)
-*   [Context-Aware Suggestions](completions#context-aware_suggestions)4.0
-*   [Completion Metadata](completions#completion_metadata)4.0
-*   [Customization](completions#customization)
-    *   [Completion Files](completions#completion_files)
-    *   [Snippets](completions#snippets)
-        *   [Fields](completions#snippet_fields)
-        *   [Variables](completions#snippet_variables)
-        *   [Variable Substitution](completions#variable_substitution)
-        *   [Escaping](completions#snippet_escaping)
-    *   [Plugins](completions#plugins)
-*   [Settings](completions#settings)
+存在各种设置来自定义完成行为。用户可以编写自己的片段或完成文件，并且存在许多第三方包来提供完成。
 
 ## Usage
 
-By default, Sublime Text will automatically show the completions popup when a user is editing source code or markup, but not within prose in comments, strings or markups.
+默认情况下，当用户编辑源代码或标记时，Sublime Text将自动显示补全弹出窗口，但不在注释、字符串或标记中的散文中。
 
-Pressing the**Esc**key will hide the completions popup. To manually show the completions popup, press**Ctrl***+***Space**.*If no completions are available, the message`No available completions`will be displayed in the status bar.*
 
-## Context-Aware Suggestions4.0
+按 **Esc** 键将隐藏完成弹出窗口。手动显示完成弹出，按 **Ctrl** + **Space**。 *如果没有完成可用，message`No available completions` 将显示在状态栏。*
 
-The completion engine in Sublime Text uses background processes to scan all of the files in a project to build a completion index. This index is used to provide suggested completions to the user, based on patterns in existing code.
+## 上下文感知建议 4.0
 
-Some examples:
+Sublime Text中的完成引擎使用后台进程扫描项目中的所有文件以构建完成索引。该索引用于根据现有代码中的模式向用户提供建议的完成。
 
-*   if a property is frequently set to a boolean value, the suggestions will include`true`or`false`
-*   if an identifier is typically "called", the name will be suggested with`()`appended
+示例:
 
-The exact completions offered are based on various heuristics, and are derived from existing code in a project.*Since completions are based on analysing existing code, words not used in a project will not be suggested.*
+*   如果经常将属性设置为布尔值，则建议将包括`true`or`false`
+*   如果标识符通常是 “被调用的”，则该名称将被建议附加 `()`
 
-## Completion Metadata4.0
+所提供的精确完成是基于各种启发式算法，并从项目中的现有代码中导出。*由于完成是基于对现有代码的分析，因此不会建议项目中未使用的单词。*
 
-In addition to their textual contents, completions may also provide additional details to users. These include the*kind*of element the completion represents, a short*annotation*to help in picking a completion, and*details*that may contain links to additional resources.
+## 完成元数据 4.0
 
-&nbsp;Kind infofapply()sapplicationmabsolute()saclsabstract class&nbsp;AnnotationcagentStruct&nbsp;2 Definitions&nbsp;Details
+除文本内容外，补全还可能为用户提供其他详细信息。这些包括完成所代表的元素的 *种类* 、帮助选择完成的简短 *注释* 以及可能包含指向其他资源的链接的 *详细信息*。
+
+&nbsp;Kind info f apply() s application m absolute() s acls abstract class&nbsp; Annotation c agent Struct&nbsp;2 Definitions&nbsp;Details
 
 ### KIND INFO
 
-Completions may provide*kind*info to be presented with the completion trigger. This includes a high-level category, an identifying letter, and a name. The following are some of the most common kinds:
+完成可能会提供与完成触发器一起提供的信息。这包括一个高级类别、一个识别字母和一个名称。以下是一些最常见的种类:
 
-| Icon | Name |
-| --- | --- |
-| k | Keyword |
-| t | Type |
-| f | Function |
-| a | Namespace |
-| n | Navigation |
-| m | Markup |
-| v | Variable |
-| s | Snippet |
+| Icon | Name       |
+|------|------------|
+| k    | Keyword    |
+| t    | Type       |
+| f    | Function   |
+| a    | Namespace  |
+| n    | Navigation |
+| m    | Markup     |
+| v    | Variable   |
+| s    | Snippet    |
 
-*Both in this documentation and in Sublime Text, hovering the mouse over a kind letter will show a tooltip with the full name. The color of kind metadata is determined by the theme, and may not match what is shown above.*
+*在本文档和Sublime Text中，将鼠标悬停在一个字母上会显示一个带有全名的工具提示。种类元数据的颜色由主题决定，可能与上面显示的不匹配。*
 
-.sublime-completionsfiles and plugins can use combinations of any category listed above, along with any Unicode character and name for a custom presentation.
+.sublime-completions文件和插件可以使用上面列出的任何类别的组合，以及自定义演示的任何Unicode字符和名称。
 
-### ANNOTATIONS
+### 注释
 
-Annotations are displayed on the right-hand edge of the completions popup, and may contain any information the author deems useful. Typically the annotations will be a word or two.
+注释显示在完成弹出窗口的右侧边缘，并且可能包含作者认为有用的任何信息。通常，注释将是一两个单词。
 
 ### DETAILS
 
-The`details`field of a completion may contain a rich text description with links. The details for a completion is shown at the bottom of the completions popup when the completion is selected.
+完成的 `details` 字段可能包含带有链接的富文本描述。选择完成时，完成的详细信息显示在完成弹出窗口的底部。
 
-## Customization
+## 定制化
 
-There exist a number of ways in which the engine can be augmented with new completions:
+有许多方法可以通过新的完成来增强引擎:
 
-*   [Completion Files](completions#completion_files)
-*   [Snippets](completions#snippets)
-*   [Plugins](completions#plugins)
+### 完成文件
 
-### COMPLETION FILES
 
-The most basic form of adding completions to Sublime Text is by creating a.sublime-completionsfile. Completions files use the JSON format, and contain an object with the keys"scope"and"completions".
+向Sublime Text添加完成的最基本形式是创建一个.sublime-completions 文件。Completions文件使用JSON格式，并包含具有键 "scope" 和 "completions" 的对象。
 
-The"scope"key’s value is a string containing a[selector](selectors)of the syntax the completions apply to. The"completions"value is an array of completions. Each entry in the array represents a single completion, and may be a string or an object.
+"scope" 键的值是一个字符串，其中包含应用于completions的语法的 [选择器] (selectors)。"completions" 值是完成的数组。数组中的每个条目表示单个完成，并且可以是字符串或对象。
 
-#### SIMPLE FORMAT
+#### 简单格式
 
-When a completion is a string, the string reprents both the trigger text and the completion contents.
+当完成是一个字符串时，该字符串同时代表触发器文本和完成内容。
 
-*A basic.sublime-completionsfile:*
+*一个basic.sublime-completions file:*
 
 ~~~
 {
@@ -109,27 +90,27 @@ When a completion is a string, the string reprents both the trigger text and the
 }
 ~~~
 
-#### RICH FORMAT
+#### 复格式
 
-When a completion is an object, the valid keys include:
+当完成是一个对象时，有效键包括:
 
-triggerstringREQUIRED
+trigger string REQUIRED
 
-The text the user must enter to match the completion
+>用户必须输入的文本以匹配完成
 
-contentsstringREQUIRED
+content sstring REQUIRED
 
-The contents that will be inserted into the file. Supports snippet[fields](completions#snippet_fields)and[variables](completions#snippet_variables).
+>将插入到文件中的内容。支持片段 [fields] (completions#snippet_fields) 和 [variables] (completions#snippet_variables)。 
 
-annotation4.0string
+annotation 4.0 string
 
-The annotation to display for the completion.
+>要显示以完成的注释。
 
-kind4.0string, 3-element array of strings
+kind 4.0 string, 3-element array of strings
 
-The kind metadata for the completion.
+>完成的元数据种类。
 
-If the value is a string, it must be one of:
+如果值是字符串，则它必须是以下之一:
 
 *   `"ambiguous"`
 *   `"function"`
@@ -141,19 +122,19 @@ If the value is a string, it must be one of:
 *   `"type"`
 *   `"variable"`
 
-Example:`"kind":"function"`
+举例:`"kind":"function"`
 
-If the value is a 3-element array of strings, they must be:
+如果值是字符串的3元素数组，则它们必须为:
 
-1.  A string from the list above, which is used by the theme to select the color of the kind metadata
-2.  A single Unicode character to be shown to the left of the trigger
-3.  A description of the kind, viewable in the kind letter tool tip, and the detail pane (when visible)
+1.  上面列表中的一个字符串，主题使用它来选择元数据类型的颜色
+2.  要显示在触发器左侧的单个Unicode字符
+3.  种类的描述，可在种类字母工具提示和详细信息窗格中查看 (当可见时)
 
-Example:`"kind": ["function","m","Method"]`
+举例:`"kind": ["function","m","Method"]`
 
-details4.0string
+details 4.0 string
 
-A single line description of the completion. May contain the following HTML tags for basic formatting:
+完成的单行描述。可能包含以下用于基本格式设置的HTML标记:
 
 *   `<ahref="">`–[protocols](minihtml#protocols)
 *   `<b>`
@@ -164,11 +145,11 @@ A single line description of the completion. May contain the following HTML tags
 *   `<tt>`
 *   `<code>`
 
-*No other attributes or tags are supported other than those listed above.*
+*除了上面列出的属性或标签外，不支持其他属性或标签。*
 
-Example:`"details":"Wraps selection in a <code>&lt;b&gt;</code> tag"`
+举例 :`"details":"Wraps selection in a <code>&lt;b&gt;</code> tag"`
 
-*A.sublime-completionsfile with examples of each field:*
+*A.sublime-completions file with examples of each field:*
 
 ~~~
 {
@@ -190,29 +171,29 @@ Example:`"details":"Wraps selection in a <code>&lt;b&gt;</code> tag"`
 }
 ~~~
 
-### SNIPPETS
+### 片段
 
-Snippets are typically used for boilerplate-type content that isn’t easily authored using the.sublime-completionsformat due to spanning multiple lines.
+片段通常用于样板类型的内容，由于跨越多行，因此不容易使用.sublime-completions 格式进行创作。
 
-Snippets are XML files with the extension.sublime-snippet. They have a top-level tag`<snippet>`, containing the following tags:
+片段是扩展名为.sublime-snippet的XML文件。它们具有顶级标签 `<snippet>`，其中包含以下标签:
 
 scope
 
-The[selector](selectors)of the syntax the snippet should be enabled for
+> 片段应启用的[选择器](selectors)语法
 
 tabTrigger
 
-The text used to match the snippet in the completions popup
+> 用于匹配完成弹出窗口中的片段的文本
 
 contents
 
-The text to insert into the document when the snippet it applied. Supports[fields](completions#snippet_fields)and[variables](completions#snippet_variables).
+> 应用片段时插入文档的文本。支持 [fields](completions#snippet_fields) 和 [variables] (completions#snippet_variables)。
 
-Typically the contents of this tag are wrapped in`<![CDATA[`and`]]>`so that the contents do not need to be XML-escaped.
+> 通常，此标签的内容被包装在 `<![CDATA['and']]>`中，因此不需要对内容进行XML转义。
 
 description
 
-An optional description of the snippet, which is shown in theCommand Palette
+> 片段的可选描述，显示在选项板中
 
 *An example.sublime-snippetfile:*
 
@@ -229,9 +210,9 @@ An optional description of the snippet, which is shown in theCommand Palette
 
 #### FIELDS
 
-Snippets support*fields*, locations within the snippet that the user may**Tab**through after inserting the snippet. Fields may be simple positions, but may also provide default content.
+片段支持 *字段*，用户在插入片段后可以通过片段中的位置tab切换。字段可以是简单的位置，但也可以提供默认内容。
 
-Simple fields are a`$`followed by an integer. Field`$0`is where the selection will be placed once the snippet is completed. Fields`$1`through`$n`are all filled in before moving to`$0`.
+简单字段为 `$`，后跟整数。字段 `$0` 是片段完成后将放置选择的位置。字段 `$1` 到 `$n` 在移动到 `$0` 之前都已填写。
 
 ~~~
 Name: $1
@@ -240,54 +221,54 @@ Description: $0
 
 ~~~
 
-Fields with default content use the format`${1:default text}`. Default content may be literal text, or it may contain[variables](completions#snippet_variables).
+具有默认内容的字段使用格式 `${1:default text}`。默认内容可以是文字文本，也可以包含[变量](completions#snippet_variables)。
 
 ~~~
 Name: ${1:first} ${2:last}
 Email: ${3:user}@${4:example.com}
 ~~~
 
-If a snippet does not contain field`$0`, it is implicitly added at the end.
+如果片段不包含字段 `$0`，则在末尾隐式添加该片段。
 
-#### VARIABLES
+#### 变量
 
-The following variables may be added to a snippet to include information from the file the snippet is being inserted into:
+可以将以下变量添加到代码段中，以包括要插入代码段的文件中的信息:
 
-| Variable | Description |
-| --- | --- |
-| `$SELECTION` | The current selection |
-| `$TM_SELECTED_TEXT` | The current selection |
-| `$TM_LINE_INDEX` | The 0-based line number of the current line |
-| `$TM_LINE_NUMBER` | The 1-based line number of the current line |
-| `$TM_DIRECTORY` | The path to the directory containing the file |
-| `$TM_FILEPATH` | The path to the file |
-| `$TM_FILENAME` | The file name of the file |
-| `$TM_CURRENT_WORD` | The contents of the current word |
-| `$TM_CURRENT_LINE` | The contents of the current line |
-| `$TM_TAB_SIZE` | The number of spaces per tab |
-| `$TM_SOFT_TABS` | `YES`or`NO`– if tabs should be translated to spaces |
-| `$TM_SCOPE` | The base scope name of the file’s syntax |
+| Variable            | Description                                         |
+|---------------------|-----------------------------------------------------|
+| `$SELECTION`        | The current selection                               |
+| `$TM_SELECTED_TEXT` | The current selection                               |
+| `$TM_LINE_INDEX`    | The 0-based line number of the current line         |
+| `$TM_LINE_NUMBER`   | The 1-based line number of the current line         |
+| `$TM_DIRECTORY`     | The path to the directory containing the file       |
+| `$TM_FILEPATH`      | The path to the file                                |
+| `$TM_FILENAME`      | The file name of the file                           |
+| `$TM_CURRENT_WORD`  | The contents of the current word                    |
+| `$TM_CURRENT_LINE`  | The contents of the current line                    |
+| `$TM_TAB_SIZE`      | The number of spaces per tab                        |
+| `$TM_SOFT_TABS`     | `YES`or`NO`– if tabs should be translated to spaces |
+| `$TM_SCOPE`         | The base scope name of the file’s syntax            |
 
-In addition to the named variables above, fields may also be used as variables, allowing a user to enter a single value and have it repeated in multiple places.
+除了上面命名的变量之外，字段还可以用作变量，允许用户输入单个值并在多个位置重复该值。
 
 ~~~
 Name: ${1:first} ${2:last}
 Email: ${3:$1}@${4:example.com}
 ~~~
 
-#### VARIABLE SUBSTITUTION
+#### 变量替换
 
-Variables can be directly referenced, or they may be modified using a regular expression. Variables with substitutions are written in the format`${*name*/*regex*/*replace*/*flags*}`.
+变量可以直接引用，也可以使用正则表达式对其进行修改。 带有替换的变量以以下格式编写`${*name*/*regex*/*replace*/*flags*}`.
 
-The*regex*segment supports[regular expressions](https://www.boost.org/doc/libs/1_64_0/libs/regex/doc/html/boost_regex/syntax/perl_syntax). The*replace*segment supports a corresponding[replace format](https://www.boost.org/doc/libs/1_64_0/libs/regex/doc/html/boost_regex/format/boost_format_syntax). The*flags*segment will contain zero letters from:
+*正则表达式* 段支持[regular expressions](https://www.boost.org/doc/libs/1_64_0/libs/regex/doc/html/boost_regex/syntax/perl_syntax). *replace* 段支持相应的[替换格式](https://www.boost.org/doc/libs/1_64_0/libs/regex/doc/html/boost_regex/format/boost_format_syntax). *标志* 段将包含来自以下内容的零个字母:
 
-*   `g`– all occurences, rather than just the first, should be replaced
-*   `i`– case insensitive matching
-*   `m`– multiline mode, where`^`matches the beginning of each line
+*   `g`– 所有事件，而不仅仅是第一次，都应该被替换
+*   `i`– 不区分大小写匹配
+*   `m`– 多行模式，其中 '^' 匹配每行的开头
 
-Often times variable substitutions are combined with numeric variables referencing fields.
+通常情况下，变量替换与引用字段的数值变量相结合。
 
-*The following uses the first field as the default content of the second field, after removing the first whitespace and everything after:*
+*在删除第一个空格和之后的所有内容之后，以下内容使用第一个字段作为第二个字段的默认内容:*
 
 ~~~
 Name: ${1:name}
@@ -296,15 +277,15 @@ Email: ${2:${1/\s.*//}}@${3:example.com}
 
 #### ESCAPING
 
-Since snippets can contain variables, which start with a`$`, literal`$`characters must be written as`\$`.
+由于片段可以包含以 `$` 开头的变量，因此必须将文字 `$` 字符写成 `\$`。
 
-When performing variable substitution, literal`/`characters must be written as`\/`.
+执行变量替换时，必须将 `/` 字符写成 `\/`。
 
-### PLUGINS
+### 插件
 
-The most powerful tool for adding completions are Python plugins.
+添加完成的最强大的工具是Python插件。
 
-Writing a plugin to provide completions involves implementing the methodon\_query\_completions()on a class that extends[EventListener](api_reference#sublime_plugin.EventListener)or[ViewEventListener](api_reference#sublime_plugin.ViewEventListener).
+编写插件以提供完成包括在扩展的类上实现方法 on\_query\_completions()[事件监听](api_reference#sublime_plugin.EventListener)或[ViewEventListener](api_reference#sublime_plugin.ViewEventListener).
 
 ~~~
 import sublime
@@ -336,19 +317,19 @@ class MyCompletions(sublime_plugin.EventListener):
 
 ~~~
 
-Asynchronous completions can be provided byon\_query\_completions()returning a[CompletionList](api_reference#sublime.CompletionList)object.4050
+异步完成可以通过on\_query\_completions() 返回 一个[CompletionList](api_reference#sublime.CompletionList)对象.4050
 
-Completion details, including kind metadata, are provided by returning[CompletionItem](api_reference#sublime.CompletionItem)objects fromon\_query\_completions().4050
+完成细节，包括种类元数据，由从on\_query\_completions()返回[CompletionItem](api_reference#sublime.CompletionItem)对象提供。4050
 
-## Settings
+## 设置
 
-tab\_completionboolean
+tab\_completion boolean
 
-When enabled, pressing**Tab**will insert the best matching completion. When disabled,**Tab**will only trigger snippets or insert a tab character.**Shift***+***Tab**can be used to insert an explicit tab whentab\_completionis enabled.
+>When enabled, pressing**Tab**will insert the best matching completion. When disabled,**Tab**will only trigger snippets or insert a tab character.**Shift***+***Tab**can be used to insert an explicit tab whentab\_completionis enabled.
 
-*Disabling this setting will not implicitly disableauto\_complete.*
+>*Disabling this setting will not implicitly disableauto\_complete.*
 
-auto\_completeboolean
+auto\_complete boolean
 
 Automatically show the completions popup when typing.
 

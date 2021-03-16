@@ -1,15 +1,9 @@
-# 
+# 操作系统兼容性
 
-[DOCUMENTATION](index)[TOP](os_compatibility#)
 
-Operating System Compatibility
+Sublime Text在Windows、Mac和Linux操作系统上运行。 它支持 x86 (32bit) 和 x86\_64 (64bit) 处理器。
 
-Version:  
-[Dev](os_compatibility#ver-dev)[3.2](os_compatibility#ver-3.2)[3.1](os_compatibility#ver-3.1)[3.0](os_compatibility#ver-3.0)
-
-Sublime Text runs on the Windows, Mac and Linux operating systems. It supports x86 (32bit) and x86\_64 (64bit) processors.
-
-*32bit builds of Sublime Text do not include[Git Integration](git_integration).*
+*Sublime Text的32位版本不包括[Git集成](git_integration).*
 
 ## Windows
 
@@ -20,14 +14,14 @@ Sublime Text runs on the Windows, Mac and Linux operating systems. It supports x
 
 ## Mac
 
-*Only x86\_64 (64bit) builds are available on Mac.*
+*Mac 上 只支持 Only x86\_64 (64bit) .*
 
 *   macOS 10.12+
 *   OS X 10.7+
 
 ## Linux
 
-Linux installs require the following libraries:
+Linux安装需要以下库:
 
 *   GLIBC 2.12 (`libc.6.so`)
 *   GTK 3.10+ (`libgtk-3.so`,`libgdk-3.so`)

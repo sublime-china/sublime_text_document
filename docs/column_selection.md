@@ -1,8 +1,4 @@
-#
-
-[DOCUMENTATION](index)[TOC](column_selection#toc)[TOP](column_selection#)
-
-Column Selection
+# 列选择
 
 列选择可用于选择文件的矩形区域。 列选择不通过单独的模式操作，而是使用多个选择。
 
