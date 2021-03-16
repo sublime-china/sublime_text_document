@@ -3,7 +3,7 @@
 Version:  
 [Dev](command_line#ver-dev)[3.2](command_line#ver-3.2)[3.1](command_line#ver-3.1)[3.0](command_line#ver-3.0)
 
-Sublime Text includes a command line tool,`subl`, to work with files on the command line. This can be used to open files and projects in Sublime Text, as well working as an`EDITOR`for unix tools, such as git and subversion.
+Sublime Text包含一个命令行工具 `subl`，用于处理命令行中的文件。这可以用来以崇高的文本打开文件和项目，也可以用作unix工具的 `EDITOR`，例如git和subversion。
 
 *   [Setup](command_line#setup)
     *   [Windows](command_line#windows)
@@ -14,34 +14,36 @@ Sublime Text includes a command line tool,`subl`, to work with files on the comm
 
 ## Setup
 
-Some operating systems and installation methods will require a configuration change to make`subl`available on the`PATH`.
+一些操作系统和安装方法将需要进行配置更改，以使 `subl` 在 `PATH` 上可用。
 
 ### WINDOWS
 
-On Windows, the command line helper is`subl.exe`. To use this from the*Command Prompt*or*Powershell*, the Sublime Text installation folder needs to be added to the`Path`environment variable:
+在Windows上，命令行帮助程序为 `subl.exe`。要在 *命令提示符* 或 *Powershell* 中使用此命令，需要将Sublime Text安装文件夹添加到 `Path` 环境变量中:
 
 #### WINDOWS 10
 
 *Show instructions for:[Windows 8](command_line#windows-8),[Windows 7](command_line#windows-7)*
 
-*   Open the*Start Menu*and typeenviron
+*   打开*Start Menu*and type environ
 *   Select the item*Edit the system environment variables*
 *   Click the button*Environment Variables*at the bottom of the*System Properties*dialog
 *   Select, or create, the`Path`environment variable in the appropriate section:
     *   For the current user, select`Path`in the*User variables for {username}*section
     *   For all users, select`Path`in the*System variables*section
 *   Click the*New*button and add an entry with the Sublime Text installation directory
-    *   64bit installs are typically inC:\\Program Files\\Sublime Text\\
+    *   64bit installs are typically in C:\\Program Files\\Sublime Text\\
     *   32bit installs on a 64bit version of Windows will be inC:\\Program Files (x86)\\Sublime Text\\
     *   32bit installs on a 32bit version of Windows will be inC:\\Program Files\\Sublime Text\\
 
 ### MAC
 
-To usesubl, the Sublime Textbinfolder needs to be added to the path. For a typical installation of Sublime Text, this will be located at/Applications/Sublime Text.app/Contents/SharedSupport/bin.
+要使用subl，需要将Sublime Text bin文件夹添加到path中。对于Sublime Text的典型安装，它将位于/apps/Sublime Text.app/content/SharedSupport/bin。
+
 
 #### BASH
 
-If using Bash, the default before macOS 10.15, the following command will add thebinfolder to the`PATH`environment variable:
+如果使用Bash (macOS 10.15之前的默认值)，则以下命令会将bin文件夹添加到 `PATH` 环境变量中:
+
 
 ~~~
 echo 'export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"' >> ~/.bash_profile
@@ -50,8 +52,7 @@ echo 'export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PA
 
 #### ZSH
 
-If using Zsh, the default starting with macOS 10.15, the following command will add thebinfolder to the`PATH`environment variable:
-
+如果使用Zsh (默认从macOS 10.15开始)，则以下命令会将bin文件夹添加到 `PATH` 环境变量中:
 ~~~
 echo 'export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"' >> ~/.zprofile
 
@@ -59,20 +60,19 @@ echo 'export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PA
 
 ### LINUX
 
-If Sublime Text is installed via one of the[Linux Package Manager Repositories](linux_repositories)or a package, asublsymlink will automatically be installed into the/usr/bin/directory.
+如果 Sublime Text 安装通过一个[Linux Package Manager Repositories](linux_repositories) 或一个包, a subl 软链将自动安装到 /usr/bin/ 目录。
 
-If installing from a tarball, thesublime\_textexecutable should be symlinked tosubl, with a command such as:
+如果从tarball安装，sublime\_text可执行文件应符号可以手动链接到subl，命令如下:
 
 ~~~
 sudo ln -s /opt/sublime_text/sublime_text /usr/local/bin/subl
 
 ~~~
 
-The exact details of the symlink command will depend on the installation location. Most default`PATH`environment variable values should contain/usr/local/bin, so no further commands should be necessary.
+symlink命令的确切详细信息将取决于安装位置。大多数默认`PATH`环境变量值应包含/usr/local/bin，因此不需要其他命令。
 
-## Usage
-
-To see the available flags, run`subl --help`.*The available flags will vary per operating system – the following example is from a Mac.*
+## 用法
+查看可用参数 运行subl --help。*每个操作系统的可用标志都会有所不同-以下示例来自Mac。*
 
 ~~~
 Sublime Text build 3211
@@ -100,13 +100,13 @@ Filenames may be given a :line or :line:column suffix to open at a specific loca
 
 ~~~
 
-### CONFIGURING AS EDITOR
+### 配置为编辑器
 
-To use Sublime Text as the editor for many commands that prompt for input, set your`EDITOR`environment variable:
+要使用Sublime Text作为提示输入的许多命令的编辑器，请设置您的`EDITOR`环境变量：
 
 ~~~
 export EDITOR='subl -w'
 
 ~~~
 
-Specifying`-w`will cause the`subl`command to not exit until the file is closed.
+指定`-w`将导致`subl`命令在文件关闭之前不退出。

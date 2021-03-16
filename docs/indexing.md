@@ -7,7 +7,7 @@ Indexing
 Version:  
 [Dev](indexing#ver-dev)[3.2](indexing#ver-3.2)[3.1](indexing#ver-3.1)[3.0](indexing#ver-3.0)
 
-Sublime Text includes an indexing engine that scans all of the files and folders in a window/project and uses that information to provide the ability to jump to definitionsand provide context-aware completions4.0.
+Sublime Text包括一个索引引擎，该引擎扫描窗口/项目中的所有文件和文件夹，并使用该信息来提供跳转到定义的功能，并提供上下文感知的完成4.0。
 
 *   [Features](indexing#features)
     *   [Goto Definition](indexing#goto_definition)
@@ -19,75 +19,76 @@ Sublime Text includes an indexing engine that scans all of the files and folders
 
 ### GOTO DEFINITION
 
-When scanning the files in a project, the indexing engine records a list of every symbol and its location. Each syntax has the ability to define what is classified as a symbol, but typically functions, methods, classes and other data types are indexed. In addition to recording the location of definitions, the indexer records references – calls or invocations of known symbols.
+扫描项目中的文件时，索引引擎会记录每个符号及其位置的列表。每种语法都能够定义分类为符号的内容，但通常对函数、方法、类和其他数据类型进行索引。除了记录定义的位置之外，索引器还记录引用-已知符号的调用或调用。
 
-The index of symbols can be accessed via:
+符号索引可以通过以下方式访问:
 
-*   Hovering over a word to show the*Goto Definition Popup*
-*   Invoking*Goto Symbol in Project*to fuzzy-search through symbols
+
+*   将鼠标悬停在一个单词上以显示*Goto Definition Popup*
+*   调用 *在项目中转到符号* 以模糊搜索符号
     *   **Windows/Linux:****Ctrl***+***Shift***+***R**
     *   **Mac:****⌘***+***Shift***+***R**
-*   Executing*Goto Definition*for the word under the caret
+*   对插入符号下的单词执行 *跳转定义*
     *   **All OSes:****F12**
-*   Executing*Goto Reference*for the word under the caret
+*   对插入符号下的单词执行 *跳转引用 *
     *   **All OSes:****Shift***+***F12**
 
-All of the*Goto*commands can also be invoked via theGotomenu.
+所有 *Goto* 命令也可以通过Goto菜单调用。
 
-### CONTEXT-AWARE COMPLETIONS4.0
+### CONTEXT-AWARE COMPLETIONS 4.0
 
-In addition to providing information about symbols, the index is used to provide context-aware completions. The indexer makes a list of all words present in the project, along with information about sequences of words and any trailing punctuation.
+除了提供有关符号的信息外，索引还用于提供上下文感知的完成。索引器列出项目中存在的所有单词，以及有关单词序列和任何尾随标点的信息。
 
-When completions are shown, the index is queried to provide intelligent suggestions. Without the index, Sublime Text will only suggest matching words from the current file. With the index, it provides completions from all files, uses the preceeeding words to help suggest better matches and will suggest trailing punctuation when appropriate.
+当显示完成时，查询索引以提供智能建议。如果没有索引，Sublime Text 将只建议当前文件中的匹配单词。使用索引，它提供所有文件的完成，使用前面的单词来帮助建议更好的匹配，并在适当的时候建议尾随标点符号。
 
 ## Status
 
-The current status and activity of the indexing engine can be seen via theHelp![▶](images/right.svg)Indexing Status…menu entry. This will show a window with the current status, progress bar and log of indexing messages.
+索引引擎的当前状态和活动可以通过 帮助![▶](images/right.svg)索引状态菜单项。 这将显示一个窗口，其中包含索引消息的当前状态、进度条和日志。
 
-When the indexing engine is active, the status bar will contain a text label with a percentage. This percentage indicates indexing is active, and how far along in the process it is. Clicking the percentage will open the*Indexing Status*window.
+当索引引擎处于活动状态时，状态栏将包含带有百分比的文本标签。 该百分比表示索引是活动的，以及它在流程中的进展程度。单击百分比将打开 *索引状态* 窗口。
 
 ## Settings
 
-The indexing engine uses low-priority background processes to load and analyse the files in the project. Depending on the machine and available resources, it may be desirable to modify the configuration to ensure the processes don't interfere with other usage of the machine.
+索引引擎使用低优先级后台进程来加载和分析项目中的文件。根据机器和可用资源，可能需要修改配置以确保进程不会干扰机器的其他使用。
 
-index\_filesboolean
+index\_files boolean
 
-If the indexing engine is enabled
+是否索引引擎已启用
 
 Default:`true`
 
-index\_workersinteger
+index\_workers integer
 
-The number of background processes to use. A value of`0`causes Sublime Text to automatically pick the number of porcesses based on the number of CPU cores.
+要使用的后台进程的数量。值 `0` 会导致Sublime Text根据CPU内核的数量自动选择响应的数量。
 
 Default:`0`
 
-index\_exclude\_gitignore4.0boolean
+index\_exclude\_gitignore 4.0 boolean
 
-If files ignored via.gitignoreare excluded from indexing
-
-Default:`true`
-
-index\_skip\_unknown\_extensions4.0boolean
-
-If files with unknown extensions are excluded from indexing
+是否文件通过忽略。gitignore被排除在索引之外
 
 Default:`true`
 
-index\_exclude\_patternsarray of strings
+index\_skip\_unknown\_extensions 4.0 boolean
 
-[File patterns](file_patterns)used to exclude files from indexing
+是否扩展名未知的文件被排除在索引之外
+
+Default:`true`
+
+index\_exclude\_patterns array of strings
+
+[文件模式](file_patterns)用于从索引中排除文件
 
 Default:`["*.log"]`
 
-show\_definitionsboolean
+show\_definitions boolean
 
-If the*Goto Definition*popup will appear when hovering the mouse over a word that has been indexed
+将鼠标悬停在已编制索引的单词上时，是否出现 *跳转定义* 弹出窗口
 
 Default:`true`
 
-auto\_complete\_use\_index4.0boolean
+auto\_complete\_use\_index 4.0 boolean
 
-If completions should utilize information from the index
+是否完成应使用来自索引的信息
 
 Default:`true`

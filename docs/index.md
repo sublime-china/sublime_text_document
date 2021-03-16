@@ -6,8 +6,8 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 
 *   [Git集成](git_integration)
 *   [增量差异](incremental_diff)
-*   [Indexing](indexing)Updated
-*   [Command Line Interface](command_line)Updated
+*   [索引](indexing)Updated
+*   [命令行](command_line)Updated
 *   [列选择](column_selection)
 *   [使用快捷键进行多重选择](multiple_selection_with_the_keyboard)
 *   [Completions](completions)Updated
@@ -47,4 +47,4 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [范围命名](scope_naming)
 *   [minihtml参考](minihtml)Updated
 *   [插件移植指南](porting_guide)
-*   [How to Create a Sublime Text Plugin](http://net.tutsplus.com/tutorials/python-tutorials/how-to-create-a-sublime-text-2-plugin/)
+*   [如何 Sublime Text 创建一个插件](http://net.tutsplus.com/tutorials/python-tutorials/how-to-create-a-sublime-text-2-plugin/)
