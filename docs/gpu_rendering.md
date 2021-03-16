@@ -2,22 +2,22 @@
 
 [DOCUMENTATION](index)
 
-GPU Rendering
+GPU 渲染
 
 Added in:4.0
 
-Sublime Text includes both a software rendering mode, and a hardware-accelerated mode using the GPU via OpenGL. The OpenGL renderer can improve performance on high DPI screens, although some graphics card drivers may produce incorrect results.*By default, Macs will use OpenGL, whereas Windows and Linux machines will use software.*
+Sublime Text包括软件渲染模式和通过OpenGL使用GPU的硬件加速模式。OpenGL渲染器可以提高高DPI屏幕上的性能，尽管一些显卡驱动程序可能会产生不正确的结果。*默认情况下，mac将使用OpenGL，而Windows和Linux机器将使用软件。*
 
 *   [Setting](gpu_rendering#setting)
 *   [Diagnostics](gpu_rendering#diagnostics)
 
 ## Setting
 
-The settinghardware\_accelerationcontrols the rendering mode. A value of`"none"`causes Sublime Text to use the software rendering mode, whereas a value of`"opengl"`results in the OpenGL renderer being used.
+hardware\_acceleration 设置控制渲染模式。`"none"` 会导致Sublime Text使用软件渲染模式，而 `"opengl"` 会导致使用OpenGL渲染器。
 
-## Diagnostics
+## 诊断
 
-Whenhardware\_accelerationis set to`"opengl"`, diagnostic information will be printed in the Console on startup. The following is an example of the output:
+当 hardware\_acceleration 设置为 `"opengl"` 时，诊断信息将在启动时打印在控制台中。以下是输出示例:
 
 ~~~
 OpenGL Context Information:

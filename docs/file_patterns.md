@@ -2,12 +2,12 @@
 
 [DOCUMENTATION](index)[TOC](file_patterns#toc)[TOP](file_patterns#)
 
-File Patterns
+文件模式
 
 Version:  
 [Dev](file_patterns#ver-dev)[3.2](file_patterns#ver-3.2)[3.1](file_patterns#ver-3.1)[3.0](file_patterns#ver-3.0)
 
-Various features in Sublime Text use file patterns. These patterns are used to match against file/directory names and paths. They are similar in functionality to shell glob patterns, but have some unique behavior.
+Sublime文本中的各种功能使用文件模式。这些模式用于匹配文件/目录名称和路径。它们在功能上与shell全局模式相似，但具有一些独特的行为。
 
 *   [Basic Syntax](file_patterns#syntax)
 *   [Path Rules](file_patterns#path_rules)
@@ -15,49 +15,49 @@ Various features in Sublime Text use file patterns. These patterns are used to m
 
 ## Basic Syntax
 
-File patterns allow two matching operators:
+文件模式允许两个匹配运算符:
 
-*   **`*`:**matches zero or more characters, except`/`
-*   **`?`:**matches exactly one character, except`/`
+*   **`*`:**匹配零个或多个字符，除了`/`
+*   **`?`:**完全匹配一个字符，除了`/`
 
-*Neither character classes,`[abc]`, nor the globstar operator,`**`, from Bash are supported.*
+*不支持来自Bash的字符类 [abc] 或globstar运算符 \*\*。*
 
 ### EXAMPLES
 
-*   The pattern`abc`will match`abc`but not`abcd`
-*   The pattern`a?c`will match`abc`but not`ac`
-*   The pattern`a*c`will match`abc`,`ac`and`abdc`
+*   模式`abc`将匹配`abc`不匹配`abcd`
+*   模式`a?c`将匹配`abc`不匹配`ac`
+*   模式`a*c`将匹配`abc`,`ac`和`abdc`
 
 ## Path Rules
 
-When`/`*is not present*in a pattern, it is only compared against the file or directory name and only the basic syntax applies. When a`/`*is included*in a pattern, it changes the behavior to:
+当模式中不存在 `/`* 时，仅将其与文件或目录名称进行比较，并且仅应用基本语法。当模式中包含 `/`* 时，它将行为更改为:
 
-*   The pattern is matched against the entire file or directory path
-*   In a`*/`prefix or`/*`suffix, the`*`will match`/`characters
-*   `*/`will be implicitly prefixed if the pattern does not start with a`/`or`*`
-*   `*`will be implicitly suffixed if the pattern does not start with a`/`or`*`<4.0
-*   If the pattern ends in`/`it will be treated as a directory pattern, and will matchboth a directory with that name and4.0any contained files or subdirectories
-*   If a pattern begins with a single`/`, it will be compared as an absolute path
-*   If pattern begins with`//`, it will be compared as a relative path from the project root4.0
+*   模式与整个文件或目录路径匹配
+*   在 `*/` 前缀或 `/*` 后缀中，`*` 将匹配 `/` 字符
+*   `*/` 如果模式不以a`/`or`*` 开头，则将隐式前缀
+*   如果模式不以 `/`或`*`开头，`*`将是隐式后缀 <4.0
+*   如果模式以/结尾，它将被视为目录模式，并将匹配具有该名称的目录和 4.0任何包含的文件或子目录
+*   如果模式以单 `/` 开头，则将其作为绝对路径进行比较
+*   如果pattern以 '//' 开头，则将其作为来自项目根的相对路径进行比较 4.0。
 
 ### EXAMPLES
 
-*   The pattern`mydir/one`will match`/parent/mydir/one`,`/mydir/one`and`/mydir/one/sub`
-*   The pattern`mydir/two`will match`/parent/mydir/two`and`/parent/mydir/two_sub`
-*   The pattern`/mydir/three`will match`/mydir/three`but not`/nested/mydir/three`
-*   The pattern`mydir/three/`will match`/parent/mydir/three/sub`but not`/parent/mydir/three`
-*   The pattern`//mydir/five`will match`/project1/mydir/five`and`/project2/mydir/five`but not`/project1/nested/mydir/five`4.0
+*   模式及`mydir/one`将匹配`/parent/mydir/one`,`/mydir/one`和`/mydir/one/sub`
+*   模式及`mydir/two`将匹配`/parent/mydir/two`和`/parent/mydir/two_sub`
+*   模式及`/mydir/three`将匹配`/mydir/three` 但不匹配`/nested/mydir/three`
+*   模式及`mydir/three/`将匹配`/parent/mydir/three/sub`但不匹配`/parent/mydir/three`
+*   模式及`//mydir/five`将匹配`/project1/mydir/five`和`/project2/mydir/five`但不匹配`/project1/nested/mydir/five`4.0
 
 ## Uses
 
-File patterns are used in:
+文件模式用于:
 
-*   *Find in Files*panel*Where*input
-*   Various settings
-    *   folder\_exclude\_patterns:*[Settings](settings)*and*[Project Folders](projects#folders)*
-    *   folder\_include\_patterns:*[Project Folders](projects#folders)*
-    *   file\_exclude\_patterns:*[Settings](settings)*and*[Project Folders](projects#folders)*
-    *   file\_include\_patterns:*[Project Folders](projects#folders)*
-    *   binary\_file\_patterns:*[Settings](settings)*and*[Project Folders](projects#folders)*
-    *   index\_exclude\_patterns:*[Settings](settings)*and*[Project Folders](projects#folders)*
-    *   index\_include\_patterns:*[Settings](settings)*and*[Project Folders](projects#folders)*
+*   *Find in Files*面板*Where*input
+*   各种设置
+    *   folder\_exclude\_patterns:*[设置](settings)*和*[项目目录](projects#folders)*
+    *   folder\_include\_patterns:*[项目目录](projects#folders)*
+    *   file\_exclude\_patterns:*[设置](settings)*和*[项目目录](projects#folders)*
+    *   file\_include\_patterns:*[项目目录](projects#folders)*
+    *   binary\_file\_patterns:*[设置](settings)*和*[项目目录](projects#folders)*
+    *   index\_exclude\_patterns:*[设置](settings)*和*[项目目录](projects#folders)*
+    *   index\_include\_patterns:*[设置](settings)*和*[项目目录](projects#folders)*

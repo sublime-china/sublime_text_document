@@ -2,7 +2,7 @@
 
 The following pages contain the official documentation for Sublime Text. The[Sublime Text Unofficial Documentation](https://docs.sublimetext.io/)is an excellent supplementary resource, with a huge amount of information not covered in the official documentation.
 
-## Usage
+## 用法
 
 *   [Git集成](git_integration)
 *   [增量差异](incremental_diff)
@@ -15,7 +15,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [复古模式](vintage)
 *   [项目](projects)
 
-## Customization
+## 定制化
 
 *   [设置](settings)
 *   [Key Bindings](key_bindings)
@@ -24,19 +24,19 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 *   [拼写检查](spell_checking)
 *   [构建系统](build_systems)
 *   [包管理](packages)
-*   [Selectors](selectors)
-*   [File Patterns](file_patterns)New!
+*   [选择器](selectors)
+*   [文件模式](file_patterns)New!
 
-## Miscellaneous
+## 杂项
 
-*   [GPU Rendering](gpu_rendering)New!
+*   [GPU 渲染](gpu_rendering)New!
 *   [Operating System Compatibility](os_compatibility)
 *   [Linux Package Manager仓库](linux_repositories)
 *   [安全模式](safe_mode)New!
 *   [恢复初始状态](revert)
 *   [连字-双击文件选中的范围](ligatures)
 
-## Package Development
+## 包开发
 
 *   [配色方案](color_schemes)Updated
 *   [模板](themes)Updated
