@@ -2,19 +2,13 @@
 
 [DOCUMENTATION](index)[TOC](menus#toc)[TOP](menus#)
 
-Menus
+菜单
 
-Menus in Sublime Text are defined by files ending in.sublime-menu. Menus use JSON, with the top-level structure being an array. Each binding is a JSON object containing information to define the text of the menu entry and what action it should perform.
-
-*   [Example](menus#example)
-*   [Entries](menus#entries)
-*   [Available Menus](menus#available_menus)
-*   [Adding to Submenus](menus#adding_to_submenus)
-*   [Customization](menus#customization)
+Sublime Text中的菜单由以.sublime-菜单结尾的文件定义。菜单使用JSON，顶级结构为数组。每个绑定都是一个JSON对象，其中包含用于定义菜单条目的文本及其应执行的操作的信息。
 
 ## Example
 
-*The following is an example of the format of a.sublime-menufile.*
+* 以下是.sublime-menu 文件格式的示例。*
 
 ~~~
 [
@@ -34,79 +28,79 @@ Menus in Sublime Text are defined by files ending in.sublime-menu. Menus use JSO
 ]
 ~~~
 
-## Entries
+## 条目
 
-Each menu entry is a JSON object with one or more keys. The list of supported keys includes:
+每个菜单项都是具有一个或多个键的JSON对象。支持的键列表包括:
 
 "caption"
 
-The text of the menu entry
+菜单项的文本
 
 "mnemonic"
 
-The character to use as the key to press to activate the entry. Only applies to Windows and Linux. Must match the case of the character in the"caption".
+用作激活条目的键的字符。仅适用于Windows和Linux。必须与 "caption" 中字符的大小写匹配。
 
 "command"
 
-A string of the command to execute when the entry is activated
+激活条目时要执行的命令的字符串
 
 "args"
 
-A JSON object of args to send to the command
+要发送到命令的args的JSON对象
 
 "children"
 
-A JSON array of entries to create a submenu from
+用于创建子菜单的JSON条目数组
 
 "id"
 
-A unique string for the menu entry. Used for menu entries with"children"to allow adding additional child entries.
+菜单项的唯一字符串。用于带有 "children" 的菜单项，以允许添加其他子级条目。
 
 "platform"
 
-One of the strings:`"OSX"`,`"!OSX"`,`"Windows"`,`"!Windows"`,`"Linux"`or`"!Linux"`. Controls what platforms the entry is shown on.
+字符串之一: `"OSX"`，`"!OSX"`，`"Windows"`，`"!Windows"`，`"Linux"` 或 `"!Linux"`。控制条目显示在哪个平台上。
 
-Each menu entry requires at minimum, the key`"caption"`for a non-functionality entry, or`"command"`for an entry that performs an action.
+每个菜单条目至少需要非功能条目的键 `"caption"`，或执行操作的条目的 `"command"`。
 
-## Available Menus
+## 可用菜单
 
-Sublime Text has seven menus that may be customized:
+Sublime Text有七个可以自定义的菜单:
 
 Main.sublime-menu
 
-Primary menu for the application
+>应用程序的主菜单
 
 Side Bar Mount Point.sublime-menu
 
-Context menu for top-level folders in the side bar
+>侧栏中顶级文件夹的上下文菜单
 
 Side Bar.sublime-menu
 
-Context menu for files and folders in the side bar. Has "magic" args for passing file and folder names to commands.
+>侧栏中文件和文件夹的上下文菜单。具有用于将文件和文件夹名称传递给命令的 “魔术” 参数。
 
-Entries with an arg`"files": []`will be enabled for files and will pass file names to the command via the arg`files`. Entries with an arg`"dirs": []`will be enabled for folders and will pass file names to the command via the arg`dirs`. Entries with an arg`"paths": []`will be enabled for files and folders and will pass file and folder names to the command via the arg`paths`.
+>将为文件启用带有arg `"files": []` 的条目，并通过arg`files` 将文件名传递给命令。将为文件夹启用带有arg`"dirs": []`的条目，并通过arg`dirs` 将文件名传递给命令。将为文件和文件夹启用带有arg`"paths": []`的条目，并通过arg`paths`将文件和文件夹名称传递给命令。 
 
 Tab Context.sublime-menu
 
-Context menu for file tabs
+>文件选项卡的上下文菜单
 
 Context.sublime-menu
 
-Context menu for text areas
+>文本区域的上下文菜单
 
 Find in Files.sublime-menu
 
-Menu shown when clicking the`...`button in Find in Files panel
+>单击 `在文件中查找` 面板中的 `...` 按钮时显示的菜单
 
 Widget Context.sublime-menu
 
-Context menu for text inputs in various panels.*Technically this file name can be changed via thecontext\_menusetting inside*ofWidget.sublime-settings.
+> 各种面板中文本输入的上下文菜单。* 从技术上讲，可以通过Widget.sublime-settings内部的上下文菜单设置来更改此文件名。
 
-## Adding to Submenus
+## 添加自菜单
 
-Using the"id"key of an entry, it is possible to add entries to submenus. When adding submenu entries, specify only the"id"and"children"keys of the parent entry, and set the value of"children"to an array of entries to append to the submenu.
+使用条目的 "id" 键，可以将条目添加到子菜单。添加子菜单条目时，仅指定父条目的 "id" 和 "children" 键，并将 "children" 的值设置为要附加到子菜单的条目数组。
 
-For example, to add a new layout to theView![▶](https://www.sublimetext.com/images/right.svg)Layoutmenu, create an entry such as:
+例如，向视图添加新布局![▶](images/right.svg)布局菜单, 创建条目，例如:
 
 ~~~
 [
@@ -134,13 +128,13 @@ For example, to add a new layout to theView![▶](https://www.sublimetext.com/im
 ]
 ~~~
 
-To find the"id"of entries in theMain.sublime-menu, use theView Package Filecommand from the command palette and selectDefault/Main.sublime-menu.
+要在Main.sublime-菜单中查找条目的 "id"，请使用命令选项板中的视图包文件管理器，然后选择 default/Main.sublime-menu。
 
-## Customization
+## 定制化
 
-Users can customize the available menus by creating an appropriately-named file in theirPackages/User/directory.
+用户可以通过在包/用户/目录中创建一个适当命名的文件来自定义可用菜单。
 
-For example, to customize the context menu for files and folders in the side bar, create a file namedPackages/User/Side Bar.sublime-menu. Adding the following would create an entry that would execute a (hypothetical) command that would copy the path to the clipboard.
+例如，要自定义侧栏中文件和文件夹的上下文菜单，请创建名为package/User/side bar.sublime-菜单的文件。添加以下内容将创建一个条目，该条目将执行将路径复制到剪贴板的 (假设) 命令。
 
 ~~~
 [

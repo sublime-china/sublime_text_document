@@ -1,6 +1,6 @@
 # Documentation
 
-The following pages contain the official documentation for Sublime Text. The[Sublime Text Unofficial Documentation](https://docs.sublimetext.io/)is an excellent supplementary resource, with a huge amount of information not covered in the official documentation.
+以下页面包含 Sublime Text 的官方文档。.[Sublime Text 非官方文档](https://docs.sublimetext.io/)是一个极好的补充资源，有大量的信息没有包括在官方文件中。
 
 ## 用法
 
@@ -40,7 +40,7 @@ The following pages contain the official documentation for Sublime Text. The[Sub
 
 *   [配色方案](color_schemes)Updated
 *   [模板](themes)Updated
-*   [Menus](menus)
+*   [菜单](menus)
 *   [API 环境变量](api_environments)New!
 *   [插件扩展API参考](api_reference)Updated
 *   [语法定义](syntax)Updated
