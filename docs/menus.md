@@ -1,8 +1,4 @@
-# 
-
-[DOCUMENTATION](index)[TOC](menus#toc)[TOP](menus#)
-
-菜单
+# 菜单
 
 Sublime Text中的菜单由以.sublime-菜单结尾的文件定义。菜单使用JSON，顶级结构为数组。每个绑定都是一个JSON对象，其中包含用于定义菜单条目的文本及其应执行的操作的信息。
 

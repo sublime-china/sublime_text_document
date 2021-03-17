@@ -1,8 +1,4 @@
-# 
-
-[DOCUMENTATION](docs/index)[TOC](docs/selectors#toc)[TOP](docs/selectors#)
-
-Selectors 选择器
+# 选择器
 
 Sublime Text中的语法定义使用范围名称提供有关令牌的元数据。范围是虚线字符串，从最小到最具体地指定。例如，可以通过范围名称 `keyword.control.php` 指定PHP中的 `if` 关键字。令牌可能有一个或多个与之关联的范围名称。多个范围名称以有序的方式与令牌关联。
 

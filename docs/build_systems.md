@@ -2,17 +2,9 @@
 
 Sublime Text提供了构建系统，允许用户运行外部程序。构建系统的常见用途示例包括：编译，转换，linting和执行测试。
 
-构建系统通过JSON指定并保存在扩展名为.sublime-build的文件中。可以通过Tools![▶](http://www.sublimetext.cn/images/right.svg)Build System![▶](http://www.sublimetext.cn/images/right.svg)New Build System ...菜单项或Build: New Build System命令选项板条目创建新的构建系统。
+构建系统通过JSON指定并保存在扩展名为.sublime-build的文件中。可以通过Tools![▶](images/right.svg)Build System![▶](images/right.svg)New Build System ...菜单项或Build: New Build System命令选项板条目创建新的构建系统。
 
 构建系统有各种方式可以将自己与文件和项目相关联。使用此信息，Sublime Text可以智能地仅向用户显示可行的构建系统。内置`exec`目标提供了快速启动和运行的常用选项。对于更复杂的需求，构建系统可以定位用Python编写的自定义Sublime Text命令。
-
-*   [基本例子](build_systems#basic_example)
-*   [用法](build_systems#usage)
-*   [选项](build_systems#options)
-*   [`exec`目标选项](build_systems#exec_options)
-*   [自定义选项](build_systems#custom_options)
-*   [变量](build_systems#variables)
-*   [高级示例](build_systems#advanced_example)
 
 ## 基本例子
 

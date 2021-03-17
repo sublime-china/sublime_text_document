@@ -1,21 +1,10 @@
-# [SUBLIME TEXT中文文档之](index)模板详解
+# 模板详解
 
 Sublime Text界面的外观由模板控制。术语*模板*严格指UI的外观 - 按钮，选择列表，侧边栏，标签等。源代码，标记和散文的突出显示由[颜色方案](color_schemes)控制 。
 
 Sublime Text的模板引擎基于光栅图形。PNG用于防止纹理退化并提供完整的alpha控制。UI中的每个元素最多可以应用四层纹理或填充，并具有控制不透明度和填充的属性。可以根据用户交互和设置有条件地更改在每个元素上设置的属性。
 
 Sublime Text模板通过.sublime-theme格式实现。它是一种JSON格式，用于指定匹配元素和修改其外观的规则。
-
-*   [示例](themes#example)
-*   [术语](themes#terminology)
-*   [一般信息](themes#general_information)
-*   [特性](themes#attributes)
-*   [设置](themes#settings)
-*   [属性](themes#properties)
-*   [分子](themes#elements)
-*   [弃用](themes#deprecated)
-*   [过时的](themes#obsolete)
-*   [定制](themes#customization)
 
 ## 示例
 

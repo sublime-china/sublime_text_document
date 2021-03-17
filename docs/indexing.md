@@ -1,19 +1,6 @@
-# 
-
-[DOCUMENTATION](index)[TOC](indexing#toc)[TOP](indexing#)
-
-Indexing
-
-Version:  
-[Dev](indexing#ver-dev)[3.2](indexing#ver-3.2)[3.1](indexing#ver-3.1)[3.0](indexing#ver-3.0)
+# 索引
 
 Sublime Text包括一个索引引擎，该引擎扫描窗口/项目中的所有文件和文件夹，并使用该信息来提供跳转到定义的功能，并提供上下文感知的完成4.0。
-
-*   [Features](indexing#features)
-    *   [Goto Definition](indexing#goto_definition)
-    *   [Context-Aware Completions](indexing#context-aware_completions)4.0
-*   [Status](indexing#status)
-*   [Settings](indexing#settings)
 
 ## Features
 
@@ -32,7 +19,7 @@ Sublime Text包括一个索引引擎，该引擎扫描窗口/项目中的所有�
     *   **All OSes:****F12**
 *   对插入符号下的单词执行 *跳转引用 *
     *   **All OSes:****Shift***+***F12**
-
+*
 所有 *Goto* 命令也可以通过Goto菜单调用。
 
 ### CONTEXT-AWARE COMPLETIONS 4.0

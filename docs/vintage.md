@@ -1,8 +1,4 @@
-# 
-
-[DOCUMENTATION](index)[TOC](vintage#toc)[TOP](vintage#)
-
-Vintage Mode 复古模式
+# 复古模式
 
 Vintage是一个用于Sublime Text的vi模式编辑包。它允许您将vi的命令模式与Sublime Text的功能相结合，包括多种选择。
 

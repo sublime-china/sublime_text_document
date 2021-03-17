@@ -10,7 +10,7 @@
 *   [命令行](command_line)Updated
 *   [列选择](column_selection)
 *   [使用快捷键进行多重选择](multiple_selection_with_the_keyboard)
-*   [Completions](completions)Updated
+*   [完成](completions)Updated
 *   [免干扰模式](distraction_free)
 *   [复古模式](vintage)
 *   [项目](projects)

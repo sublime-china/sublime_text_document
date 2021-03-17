@@ -1,20 +1,8 @@
-# 
-
-[DOCUMENTATION](index)[TOC](settings#toc)[TOP](settings#)
-
-设置
+# 设置
 
 Sublime Text有许多不同的设置来自定义其行为。通过编辑文本文件来更改设置: 虽然这比使用图形用户界面要复杂一点，但你会得到一个灵活的系统。
 
 通过首选项访问![▶](images/right.svg) 设置菜单项目。左侧窗格包含所有默认设置以及每个设置的说明。右侧窗格可保存自定义。
-
-*   [Categories](settings#categories)
-*   [Settings Files](settings#settings_files)
-*   [Syntax-Specific Settings](settings#syntax-specific_settings)
-*   [Project Settings](settings#project_settings)
-*   [Distraction Free Settings](settings#distraction_free_settings)
-*   [Key Bindings](settings#key_bindings)
-*   [Troubleshooting](settings#troubleshooting)
 
 ## Categories
  

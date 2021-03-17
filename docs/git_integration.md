@@ -1,4 +1,4 @@
-Sublime Text的Git集成包括以下组件：
+# Git集成包括以下组件：
 
 *   [侧栏](git_integration#side_bar)
 *   [状态栏](git_integration#status_bar)

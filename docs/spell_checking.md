@@ -1,8 +1,4 @@
-# 
-
-[DOCUMENTATION](index)[TOC](spell_checking#toc)[TOP](spell_checking#)
-
-拼写检查
+# 拼写检查
 
 Sublime Text 使用[Hunspell](http://hunspell.sourceforge.net/)作为它的拼写检查支持。 在[OpenOffice.org Extension List](http://extensions.services.openoffice.org/en/dictionaries)可以找到额外词典。
 

@@ -1,8 +1,4 @@
-#
-
-[文档](index)
-
-Projects
+# 项目
 
 Sublime Text中的项目由两个文件组成：
 

@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index)范围命名
+# 范围命名
 
 Sublime Text中的语法定义和颜色方案通过使用范围名称进行交互。范围是虚线字符串，从最少到最具体指定。例如，`if`PHP中的关键字可以通过范围名称指定`keyword.control.php`。
 

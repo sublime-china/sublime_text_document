@@ -1,15 +1,6 @@
 # API 环境变量
 
-Version:  
-[Dev](api_environments#ver-dev)[3.2](api_environments#ver-3.2)[3.1](api_environments#ver-3.1)[3.0](api_environments#ver-3.0)
-
  Sublime Text 中的插件是由 在[package](包)根下的python文件。以下文档描述了运行插件的Python环境。
-
-*   [Overview](api_environments#overview)
-*   [Python Version](api_environments#python_version)
-    *   [Selecting the Python Version](api_environments#selecting_python_version)4050
-*   [Modules](api_environments#modules)
-*   [Pre-Installed Packages](api_environments#preinstalled_packages)4050
 
 ## Overview
 
@@ -27,7 +18,7 @@ plugin_host 进程包含Python编程语言的嵌入式版本，并暴露 [API](a
 
 从内部版本4050开始，插件也可以使用Python 3.8运行。Python 3.8对语言进行了许多改进，具有更好的性能，并从Python软件基金会获得了持续的支持和错误修复。4050
 
-### 选择 PYTHON 版本4050
+### 选择 PYTHON 版本 4050
 
 为了提供向下兼容性，Sublime Text 4050将继续在 Python 3.3 上运行所有插件。
 
@@ -59,7 +50,7 @@ plugin_host 进程包含Python编程语言的嵌入式版本，并暴露 [API](a
 *   turtle
 *   wave
 
-## 预装的包4050
+## 预装的包 4050
 
 以下包在Python 3.3 和 3.8 环境变量里都预装了：
 

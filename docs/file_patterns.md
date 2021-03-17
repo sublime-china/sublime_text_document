@@ -1,17 +1,6 @@
-# 
-
-[DOCUMENTATION](index)[TOC](file_patterns#toc)[TOP](file_patterns#)
-
-文件模式
-
-Version:  
-[Dev](file_patterns#ver-dev)[3.2](file_patterns#ver-3.2)[3.1](file_patterns#ver-3.1)[3.0](file_patterns#ver-3.0)
+# 文件模式
 
 Sublime文本中的各种功能使用文件模式。这些模式用于匹配文件/目录名称和路径。它们在功能上与shell全局模式相似，但具有一些独特的行为。
-
-*   [Basic Syntax](file_patterns#syntax)
-*   [Path Rules](file_patterns#path_rules)
-*   [Uses](file_patterns#uses)
 
 ## Basic Syntax
 

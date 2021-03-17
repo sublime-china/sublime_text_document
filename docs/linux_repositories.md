@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index)Linux Package Manager仓库
+# Linux Package Manager仓库
 
 Sublime Text 3在Windows和OS X上包含一个自动升级机制，可以快速进行升级。大多数主要发行版都提供了软件包和软件包存储库，而不是违背Linux生态系统的要求。
 
@@ -50,7 +50,7 @@ sudo apt-get install sublime-text
 
 ~~~
 
-## 吃豆子
+## Debian
 
 安装GPG密钥：
 

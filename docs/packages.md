@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index)包管理
+# 包管理
 
 包是Sublime Text使用的资源文件的集合：插件，语法突出显示定义，菜单，代码片段等。Sublime Text附带了几个包，可以使用更多用户创建的包。
 
@@ -27,7 +27,7 @@
 
 ## 创建一个新包
 
-要创建新包，只需在 / Installed Packages /下创建一个新目录。您可以从“首选项![▶](http://www.sublimetext.cn/images/right.svg)浏览包”菜单访问此目录。
+要创建新包，只需在 / Installed Packages /下创建一个新目录。您可以从“首选项![▶](images/right.svg)浏览包”菜单访问此目录。
 
 ## 从压缩包中覆盖文件
 

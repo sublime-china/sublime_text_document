@@ -1,8 +1,4 @@
-#
-
-[DOCUMENTATION](index)[TOC](safe_mode#toc)[TOP](safe_mode#)
-
-安全模式
+# 安全模式
 
 Added in:4.0
 

@@ -325,39 +325,39 @@ class MyCompletions(sublime_plugin.EventListener):
 
 tab\_completion boolean
 
->When enabled, pressing**Tab**will insert the best matching completion. When disabled,**Tab**will only trigger snippets or insert a tab character.**Shift***+***Tab**can be used to insert an explicit tab whentab\_completionis enabled.
+> 启用后，按 **Tab** 将插入最佳匹配完成。禁用时，**Tab**只会触发片段或插入制表符。**Shift***+***Tab**可使用明确选项卡标签。
 
->*Disabling this setting will not implicitly disableauto\_complete.*
+> *禁用此设置不会隐式禁用自动完成。*
 
 auto\_complete boolean
 
-Automatically show the completions popup when typing.
+> 键入时自动显示完成弹出窗口。
 
-*This behavior is not influenced by the settingtab\_completion.*
+> *此行为不受设置选项卡 tab\_completion 的影响。*
 
-auto\_complete\_size\_limitinteger
+auto\_complete\_size\_limit integer
 
-If the filesize in bytes of the current file is larger than this, the completions popup will not be automatically shown.
+> 如果当前文件的文件大小 (以字节为单位) 大于此大小，则不会自动显示完成弹出窗口。
 
-auto\_complete\_delayinteger
+auto\_complete\_delay integer
 
-The number of milliseconds to wait before showing the completions popup automatically.
+> 自动显示完成弹出窗口之前要等待的毫秒数。
 
-auto\_complete\_selectorstring
+auto\_complete\_selector string
 
-A[selector](selectors)to limit when the completions popup will be automatically shown.
+> 一个 [选择器](selectors)，用于限制何时自动显示完成弹出窗口。
 
-Example:`"meta.tag, source - comment - string.quoted.double.block - string.quoted.single.block - string.unquoted.heredoc"`
+> 示例:`"meta.tag, source - comment - string.quoted.double.block - string.quoted.single.block - string.unquoted.heredoc"`
 
-*Theauto\_complete\_triggers"setting may be used to re-enable the automatic completions popup in specific situations.*
+> *`auto\_complete\_triggers` 设置可用于在特定情况下重新启用自动完成弹出窗口。*
 
-auto\_complete\_triggersarray of objects
+auto\_complete\_triggers array of objects
 
-Provides explicit triggers for when to automatically show the completions popup.
+> 为何时自动显示完成弹出窗口提供显式触发器。
 
-Each object must contain the keys`"selector"`with a string value containing a[selector](selectors)to match the caret position against, and a`"characters"`key with a string value specifying what characters must be present to the left of the caret.
+> 每个对象必须包含键 `"selector"` ，其字符串值包含 [选择器](selectors)，以匹配插入符号位置，和带有字符串值的 “字符” 键，指定插入符号左侧必须存在哪些字符。
 
-Example:
+>Example:
 
 ~~~
 [
@@ -368,63 +368,62 @@ Example:
 ]
 ~~~
 
-*Triggers will override the settingauto\_complete\_selector.*
+> *触发器将覆盖设置 auto\_complete\_selector 。*
 
-auto\_complete\_commit\_on\_tabboolean
+auto\_complete\_commit\_on\_tab boolean
 
-By default, auto complete will commit the current completion on**Enter**. This setting can be used to make it complete on**Tab**instead.
+> 默认情况下，自动完成将在**Enter**上提交当前完成。此设置可用于在**Tab** 上完成。
 
-Completing on**Tab**is generally a superior option, as it removes ambiguity between committing the completion and inserting a newline.
+> 在**Tab** 上完成通常是一个更好的选择，因为它消除了提交完成和插入换行符之间的歧义。
 
-auto\_complete\_with\_fieldsboolean
+auto\_complete\_with\_fields boolean
 
-Controls if the completions popup is automatically shown when snippet fields are active. Only relevant ifauto\_complete\_commit\_on\_tabis enabled.
+> 控制片段字段处于活动状态时是否自动显示完成弹出窗口。仅在启用了 auto\_complete\_commit\_on\_tab 选项卡上的 “提交” 时才相关。
 
-auto\_complete\_cycleboolean
+auto\_complete\_cycle boolean
 
-Controls what happens when pressing**⬆**while the first item in the completions popup is selected: if`false`, the popup is hidden, otherwise the last completion in the popup is selected.
+> 控制按**⬆**时会发生什么 当选择完成弹出窗口中的第一项时: 如果为 `false`，则隐藏弹出窗口，否则选择弹出窗口中的最后一个完成。
 
-Also causes the first completion to be selected when**⬇**is pressed on the last completion.
+> 也使第一完成选择当 **⬇**在最后一次完成时按下。
 
-auto\_complete\_use\_historyboolean
+auto\_complete\_use\_history boolean
 
-If previously-selected completions should be automatically selected
+> 是否应该自动选择先前选择的完成
 
-auto\_complete\_use\_index4.0boolean
+auto\_complete\_use\_index 4.0 boolean
 
-When enabled, the completions popup will show context-aware suggestions based on other files in the project
+> 启用后，完成弹出窗口将显示基于项目中其他文件的上下文感知建议。
 
-auto\_complete\_preserve\_order4.0string
+auto\_complete\_preserve\_order 4.0 string
 
-Controls how the auto complete results are reordered when typing:
+> 控制在键入时如何重新排序自动完成结果:
 
-*   `"none"`– fully reorder the results according to how well the completion matches the typed text
-*   `"some"`– partially reorder the results, taking into account how well the completion matches whats typed, and likelihood of the completion
-*   `"strict"`– never reorder the results
+*   `"none"`– 根据完成与键入的文本的匹配程度对结果进行完全重新排序
+*   `"some"`– 部分重新排序结果，考虑到完成与类型匹配的程度以及完成的可能性
+*   `"strict"`– 永远不对结果重新排序
 
-auto\_complete\_trailing\_symbols4.0boolean
+auto\_complete\_trailing\_symbols 4.0 boolean
 
-Add trailing symbols (e.g.,`.`,`()`) if the completion engine thinks they‘re likely enough
+> 是否完成引擎认为尾随符号可能足够，则添加尾随符号 (例如`.`,`()`)
 
-auto\_complete\_trailing\_spaces4.0boolean
+auto\_complete\_trailing\_spaces 4.0 boolean
 
-Add a space after completions if the completion engine thinks they‘re likely enough
+> 是否完成引擎认为它们可能足够，则在完成后添加一个空格
 
-auto\_complete\_include\_snippets4.0boolean
+auto\_complete\_include\_snippets 4.0 boolean
 
-Controls if snippets will not be included in the completions popup.
+> 控制片段是否不会包含在完成弹出窗口中。
 
-*When disabled, snippets can still be triggered by typing their tab trigger in, and pressing**Tab**when the completion popup is not showing.*
+> *禁用后，仍然可以通过输入选项卡触发器并在未显示完成弹出窗口时按**Tab**来触发片段。*
+auto\_complete\_include\_snippets\_when\_typing 4.0 boolean
 
-auto\_complete\_include\_snippets\_when\_typing4.0boolean
+> 当它被设置为 `false`动触发时，片段不会出现在完成弹出窗口中。如果手动触发，将显示它们。
 
-When this is set to`false`, snippets won‘t be present in the completions popup when it is automatically triggered. They will be shown if it is manually triggered.
+ignored\_snippets4.0 array of strings
 
-ignored\_snippets4.0array of strings
+> [文件模式](file_patterns) 指定要忽略的片段文件。
 
-[File patterns](file_patterns)specifying which snippet files to ignore.
-
-*For example, to ignore all the default C++ snippets:*
+> *例如，忽略所有默认的 C++ snippets:*
 
 ~~~
 [

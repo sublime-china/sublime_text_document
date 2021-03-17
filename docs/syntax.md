@@ -1,17 +1,6 @@
-# [SUBLIME TEXT 3 中文文档之](index)语法定义
+# 语法定义
 
 Sublime Text可以使用.sublime-syntax和.tmLanguage文件进行语法高亮显示。本文档描述了.sublime-syntax文件。
-
-*   [概况](syntax#overview)
-*   [头部定义](syntax#header)
-*   [上下文](syntax#contexts)
-    *   [元模式](syntax#meta_patterns)
-    *   [匹配模式](syntax#match_patterns)
-    *   [包括模式](syntax#include_patterns)
-*   [包括其他文件](syntax#include-syntax)
-*   [变量](syntax#variables)
-*   [选定的例子](syntax#examples)
-*   [测试](syntax#testing)
 
 ## 概况
 

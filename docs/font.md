@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index)字体设置（Font Settings）
+# 字体设置
 
 可以通过将这些行添加到Preferences![▶](images/right.svg)Settings的右侧窗口来更改字体：
 

@@ -4,11 +4,6 @@
 
 您可以使用添加剂选择来选择多个文本块，或使用减色选择来删除块。
 
-*   [使用鼠标](column_selection#using_the_mouse)
-*   [使用键盘](column_selection#using_the_keyboard)
-
-
-
 ## 使用鼠标
 
 每个平台使用不同的鼠标按钮：

@@ -2,13 +2,6 @@
 
 Sublime Text包含一个命令行工具 `subl`，用于处理命令行中的文件。这可以用来以崇高的文本打开文件和项目，也可以用作unix工具的 `EDITOR`，例如git和subversion。
 
-*   [Setup](command_line#setup)
-    *   [Windows](command_line#windows)
-    *   [Mac](command_line#mac)
-    *   [Linux](command_line#linux)
-*   [Usage](command_line#usage)
-    *   [Configuring as`EDITOR`](command_line#editor)
-
 ## Setup
 
 一些操作系统和安装方法将需要进行配置更改，以使 `subl` 在 `PATH` 上可用。

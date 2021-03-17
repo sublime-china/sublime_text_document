@@ -1,16 +1,10 @@
-# [SUBLIME TEXT中文文档之](index) 增量差异  
+# 增量差异  
 
 Sublime Text 包含一个内置的diff功能，该功能可跟踪对正在编辑的文件的更改。差异计算是递增的，在执行时跟踪每个缓冲区修改。它不需要将文件存储在版本控制系统（如Git）中。
 
 跟踪每个添加，修改和删除的确切位置。这用于在装订线中显示标记，允许在每个更改之间导航，显示内联差异，并允许还原更改。
 
 差异是根据磁盘上文件的版本计算得出的，但是可以将[Git仓库](git_integration#diff_markers)配置为与HEAD进行差异比较，并且该API允许将文件与任何内容进行差异比较。
-
-*   [差异标记](incremental_diff#diff_markers)
-*   [导航](incremental_diff#navigation)
-*   [内联差异](incremental_diff#inline_diffs)
-*   [正在还原](incremental_diff#reverting)
-*   [设定值](incremental_diff#settings)
 
 ## 差异标记
 
@@ -26,8 +20,8 @@ Sublime Text 包含一个内置的diff功能，该功能可跟踪对正在编辑
 
 *   **Ctrl***+***。**
 *   **Ctrl***+***，**
-*   转到![▶](http://www.sublimetext.cn/images/right.svg)下一个修改
-*   转到![▶](http://www.sublimetext.cn/images/right.svg)上一个修改
+*   转到![▶](images/right.svg)下一个修改
+*   转到![▶](images/right.svg)上一个修改
 
 *键盘快捷键往往是在编辑中的文件周围跳转的非常自然的方法。*
 
@@ -39,7 +33,7 @@ Sublime Text 包含一个内置的diff功能，该功能可跟踪对正在编辑
 
 在文件的修改区域上单击鼠标右键时，将显示一个菜单项Show Diff Hunk。该菜单项将在当前内容下方内联显示先前的内容。再次右键单击将显示一个菜单项“隐藏差异”，以隐藏嵌入式差异。
 
-可以通过“编辑![▶](http://www.sublimetext.cn/images/right.svg)文本![▶](http://www.sublimetext.cn/images/right.svg)切换大块差异” 菜单来执行内联差异。
+可以通过“编辑![▶](images/right.svg)文本![▶](images/right.svg)切换大块差异” 菜单来执行内联差异。
 
 除了基于菜单的激活外，差异还可通过键盘快捷键进行切换：
 
@@ -69,7 +63,7 @@ Sublime Text 包含一个内置的diff功能，该功能可跟踪对正在编辑
 *   Windows / Linux：**Ctrl***+***K**，**Ctrl***+***Z**
 *   Mac：**⌘***+***K**，**⌘***+***Z**
 
-或者，可以使用菜单“编辑![▶](http://www.sublimetext.cn/images/right.svg)文本![▶](http://www.sublimetext.cn/images/right.svg)还原修改”。
+或者，可以使用菜单“编辑![▶](images/right.svg)文本![▶](images/right.svg)还原修改”。
 
 ## 设定值
 

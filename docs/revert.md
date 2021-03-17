@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index) 恢复初始状态
+# 恢复初始状态
 
 通过删除数据文件夹，可以将Sublime Text还原为恢复初始状态。根据您的操作系统，此文件夹位于：
 
@@ -16,7 +16,7 @@
 
 ### OS X.
 
-在OS X上，默认情况下隐藏〜/ Library文件夹。要在那里导航，请在Finder中选择Go![▶](http://www.sublimetext.cn/images/right.svg)Go to Folder菜单项，然后输入〜/ Library。
+在OS X上，默认情况下隐藏〜/ Library文件夹。要在那里导航，请在Finder中选择Go![▶](images/right.svg)Go to Folder菜单项，然后输入〜/ Library。
 
 ### 视窗
 

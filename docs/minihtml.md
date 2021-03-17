@@ -1,4 +1,4 @@
-# [SUBLIME TEXT中文文档之](index)minihtml参考
+# minihtml参考
 
 Sublime Text包含一个名为minihtml的自定义HTML和CSS引擎 ，用于在编辑器窗格中显示样式化内容。HTML内容可以在弹出窗口和幻像中显示。
 

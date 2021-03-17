@@ -4,28 +4,6 @@ Sublime Text中源代码和文本的高亮显示由配色方案控制。*配色�
 
 Sublime Text配色方案使用.sublime-color-scheme文件实现，其语法为JSON。 Sublime Text还支持使用TextMate[.tmTheme格式](color_schemes_tmtheme)。
 
-*   [示例](color_schemes#example)
-*   [颜色](color_schemes#colors)
-*   [变量](color_schemes#variables)
-*   [全局设置](color_schemes#global_settings)
-    *   [强调提示](color_schemes#global_settings-accents)
-    *   [CSS](color_schemes#global_settings-css)
-    *   [插槽](color_schemes#global_settings-gutter)
-    *   [选择](color_schemes#global_settings-selection)
-    *   [查找](color_schemes#global_settings-find)
-    *   [指南](color_schemes#global_settings-guides)
-    *   [括号](color_schemes#global_settings-brackets)
-    *   [标签](color_schemes#global_settings-tags)
-    *   [阴影](color_schemes#global_settings-shadows)
-*   [范围规则](color_schemes#scope_rules)
-    *   [匹配](color_schemes#matching)
-    *   [命名](color_schemes#naming)
-    *   [风格规则](color_schemes#style_rules)
-    *   [哈希语法高亮](color_schemes#hashed_syntax_highlighting)
-    *   [例子](color_schemes#examples)
-*   [定制](color_schemes#customization)
-*   [附录：CSS颜色](color_schemes#css_colors)
-
 ## 例
 
 *以下是.sublime-color-scheme文件格式的示例 。完整的配色方案将有更多规则来涵盖标准范围名称。*
